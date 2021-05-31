@@ -19,7 +19,6 @@
 
 ### tell other person to merge commit in remote,delete the remote branch after merge
 
-
 ## NOW update master in local
 
 ```git checkout master```
