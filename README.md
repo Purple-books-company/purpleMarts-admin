@@ -1,3 +1,36 @@
+# HOW TO COLLABORATE?
+
+``` git pull```
+
+## After pull checkout with your new branch
+
+```git checkout -b branchname```
+
+## after above comand you redirect to new branch with created name,to push remotely
+
+```git add .```
+
+## commit with message
+
+```git commit -m "mssg"```
+
+## push
+```git push origin branchname```
+
+### tell other person to merge commit in remote,delete the remote branch after merge
+
+
+## NOW update master in local
+
+```git checkout master```
+
+```git pull```
+
+```git branch -d yourbranchname```
+
+Then again checkout for new branch with new name repeat the process
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
