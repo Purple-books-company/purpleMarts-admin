@@ -1,12 +1,9 @@
-import { Heading } from "./styles/test";
+import RouteApp from './routes/RouteApp';
+import AdminHome from './screens/AdminHome';
+import { ColorOne, ColorTwo } from './styles/color';
 
 function App() {
-  return (
-    <div>
-      <Heading>HELLO</Heading>
-      <h3>Purple Mart</h3>
-    </div>
-  );
+  return <RouteApp />;
 }
 
 export default App;
