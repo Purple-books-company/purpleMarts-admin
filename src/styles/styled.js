@@ -1,3 +1,4 @@
+
 import styled from 'styled-components';
 import { ColorOne, ColorTwo } from './color';
 
@@ -43,5 +44,5 @@ export const ContainerColumn = styled.div.attrs((props) => ({
   className: props.className,
 }))`
   background-color: none;
-  margin-top: 1%;
-`;
+  margin-top: 1%`;
+
