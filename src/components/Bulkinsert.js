@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Card, Submitbutton, Title } from '../styles/styled';
 import { ColorTwo } from '../styles/color';
 
+
 function Bulkinsert() {
   const [isfile, setFile] = useState(false);
   const [details, setDetails] = useState([]);
