@@ -1,3 +1,5 @@
+
+
 import { useState } from "react";
 
 const Search = ({ data, searchKeys }) => {
@@ -5,6 +7,7 @@ const Search = ({ data, searchKeys }) => {
 
   let dataKeys = Object.keys(data[0]);
   dataKeys = dataKeys.splice(0, 4);
+
 
   return (
     <div className="container">
@@ -14,11 +17,14 @@ const Search = ({ data, searchKeys }) => {
         type="text"
         className="form-control my-3"
         placeholder="Search by name or email"
+
         onChange={(e) => setSearchVal(e.target.value.trim().toLowerCase())}
+
       />
 
       <table className="table my-4">
         <thead>
+
           <tr>
             <th scope="col">#</th>
             {dataKeys.map((key, index) => (
@@ -26,10 +32,12 @@ const Search = ({ data, searchKeys }) => {
                 {key}
               </th>
             ))}
+
           </tr>
         </thead>
 
         <tbody>
+
           {data
             .filter((item) => {
               if (searchVal === "") {
@@ -47,6 +55,7 @@ const Search = ({ data, searchKeys }) => {
                 {dataKeys.map((key, index) => (
                   <td key={key}>{item[key]}</td>
                 ))}
+
               </tr>
             ))}
         </tbody>

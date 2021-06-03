@@ -18,10 +18,17 @@ export const Title = styled.h5`
 `;
 
 export const Card = styled.div`
-  width: 94%;
-  min-height: 94%;
+  width:${props=>props.width?props.width:"94%"} ;
+  height: ${props=>props.height?props.height:"94%"};
   text-align: center;
-  max-height: auto;
+  
+  margin:3%;
+  overflow: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 
   box-shadow: 4px 4px 7px 0px ${ColorTwo};
   background: linear-gradient(
@@ -33,6 +40,7 @@ export const Card = styled.div`
   color: ${ColorTwo};
   border-radius: 10px;
   border-top-right-radius: 50px;
+  border-bottom-left-radius: 50px;
 
   &:hover {
     background: ${(props) => (props.nohover ? '' : ColorOne)};
@@ -44,8 +52,9 @@ export const Container = styled.div.attrs(() => ({
   className: 'container-fluid',
 }))`
   background-color: white;
-  width: 100%;
   height: 100%;
+  width: 100%;
+
 `;
 
 const Testing = ({ className, ...rest }) => (
@@ -54,7 +63,7 @@ const Testing = ({ className, ...rest }) => (
 export const ContainerRow = styled.div.attrs((props) => ({
   className: 'row',
 }))`
-  min-height: ${(props) => {
+  height: ${(props) => {
     if (props.half) return '48%';
     else if (props.full) return '100%';
     else if (props.auto) return '10%';
@@ -86,9 +95,14 @@ export const Formlable = styled.p`
 export const Imageview = styled.img.attrs((props) => ({
   src: props.src,
 }))`
-  width: 70%;
-  height: 20%;
+  height:40%;
+  width:50%;
+ 
 `;
+
+export const ImageTag = styled.image.attrs((props)=>({
+   src:props.src,
+}))`width:20%;height:20%`;
 export const Submitbutton = styled.button.attrs((props) => ({
   type: 'button',
   className: 'form-control',
