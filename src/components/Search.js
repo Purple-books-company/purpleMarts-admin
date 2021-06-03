@@ -30,7 +30,7 @@ const Search = () => {
 
       <table className="table my-4">
         <thead>
-          <tr>
+          <tr >
             <th scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">Username</th>

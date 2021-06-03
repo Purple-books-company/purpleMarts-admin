@@ -1,3 +1,4 @@
+import CardTest from '../components/CardTest';
 import {
   Heading,
   Card,
@@ -16,6 +17,7 @@ function AdminHome() {
           <ContainerRow half>
             <ContainerColumn className='col-md-6'>
               <Card deg='-45'>Hello</Card>
+             
             </ContainerColumn>
             <ContainerColumn className='col-md-6'>
               <Card deg='-65'>Hello</Card>

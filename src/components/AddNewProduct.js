@@ -66,7 +66,7 @@ function AddNewProduct() {
                 placeholder='original price'
               />
             </ContainerColumn>
-            <ContainerColumn className='col-md-4' auto>
+            <ContainerColumn className='col-md-4'>
               <Input
                 type='number'
                 onChange={handleChange}
@@ -74,7 +74,7 @@ function AddNewProduct() {
                 placeholder='our price'
               />
             </ContainerColumn>
-            <ContainerColumn className='col-md-4' auto>
+            <ContainerColumn className='col-md-4'>
               <Input
                 type='text'
                 onChange={handleChange}
@@ -82,7 +82,7 @@ function AddNewProduct() {
                 placeholder='Original Image'
               />
             </ContainerColumn>
-            <ContainerColumn className='col-md-4' auto>
+            <ContainerColumn className='col-md-4'>
               <Input
                 type='text'
                 onChange={handleChange}
@@ -90,7 +90,7 @@ function AddNewProduct() {
                 placeholder='Image url 1'
               />
             </ContainerColumn>
-            <ContainerColumn className='col-md-4' auto>
+            <ContainerColumn className='col-md-4'>
               <Input
                 type='text'
                 onChange={handleChange}
@@ -109,25 +109,25 @@ function AddNewProduct() {
           </ContainerRow>
           <ContainerRow auto>
             {detail.originalUrl.length > 10 && (
-              <ContainerColumn className='col-md-2'>
+              <ContainerColumn className='col-md-3'>
                 <Imageview src={detail.originalUrl} />
                 <Formlable>originalUrl</Formlable>
               </ContainerColumn>
             )}
             {detail.imageUrl1.length > 10 && (
-              <ContainerColumn className='col-md-2'>
+              <ContainerColumn className='col-md-3'>
                 <Imageview src={detail.imageUrl1}></Imageview>
                 <Formlable>Image 1</Formlable>
               </ContainerColumn>
             )}
             {detail.imageUrl2.length > 10 && (
-              <ContainerColumn className='col-md-2'>
+              <ContainerColumn className='col-md-3'>
                 <Imageview src={detail.imageUrl2}></Imageview>
                 <Formlable>Image 2</Formlable>
               </ContainerColumn>
             )}
             {detail.imageUrl3.length > 10 && (
-              <ContainerColumn className='col-md-2'>
+              <ContainerColumn className='col-md-3'>
                 <Imageview src={detail.imageUrl3} />
                 <Formlable>Image 3</Formlable>
               </ContainerColumn>
