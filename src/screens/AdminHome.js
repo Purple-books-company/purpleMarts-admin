@@ -1,4 +1,4 @@
-import CardTest from '../components/CardTest';
+
 import {
   Heading,
   Card,
@@ -6,13 +6,13 @@ import {
   ContainerRow,
   ContainerColumn,
 } from "../styles/styled";
-import CardTest from "../screens/CardTest";
+
 function AdminHome() {
   return (
     <Container>
       <ContainerRow>
         <ContainerColumn className="col-md-6">
-          <CardTest />
+          <Card/>
         </ContainerColumn>
         <ContainerColumn className="col-md-6">
           <ContainerRow half>
