@@ -1,21 +1,13 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
 
-const Search = () => {
-  const [users, setUsers] = useState([]);
+
+import { useState } from "react";
+
+const Search = ({ data, searchKeys }) => {
   const [searchVal, setSearchVal] = useState("");
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  let dataKeys = Object.keys(data[0]);
+  dataKeys = dataKeys.splice(0, 4);
 
-  const fetchData = async (e) => {
-    const request = await axios.get(
-      "https://jsonplaceholder.typicode.com/users"
-    );
-    const data = request.data;
-    setUsers(data);
-  };
 
   return (
     <div className="container">
@@ -25,39 +17,45 @@ const Search = () => {
         type="text"
         className="form-control my-3"
         placeholder="Search by name or email"
-        onChange={(e) => setSearchVal(e.target.value.toLowerCase())}
+
+        onChange={(e) => setSearchVal(e.target.value.trim().toLowerCase())}
+
       />
 
       <table className="table my-4">
         <thead>
-          <tr >
+
+          <tr>
             <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Username</th>
-            <th scope="col">Email</th>
-            <th scope="col">Website</th>
+            {dataKeys.map((key, index) => (
+              <th key={index} scope="col">
+                {key}
+              </th>
+            ))}
+
           </tr>
         </thead>
 
         <tbody>
-          {users
-            .filter((user) => {
+
+          {data
+            .filter((item) => {
               if (searchVal === "") {
-                return user;
+                return item;
               } else if (
-                user.name.toLowerCase().indexOf(searchVal) !== -1 ||
-                user.email.toLowerCase().indexOf(searchVal) !== -1
+                item[searchKeys[0]].toLowerCase().indexOf(searchVal) !== -1 ||
+                item[searchKeys[1]].toLowerCase().indexOf(searchVal) !== -1
               ) {
-                return user;
+                return item;
               }
             })
-            .map((user, index) => (
+            .map((item, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
-                <td>{user.name}</td>
-                <td>{user.username}</td>
-                <td>{user.email} Hr</td>
-                <td>{user.website}</td>
+                {dataKeys.map((key, index) => (
+                  <td key={key}>{item[key]}</td>
+                ))}
+
               </tr>
             ))}
         </tbody>
