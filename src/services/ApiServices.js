@@ -1,3 +1,4 @@
+
 import axios from 'axios';
 import { Token } from '../env';
 const API = `http://purplemart.pythonanywhere.com`;
@@ -16,10 +17,13 @@ async function ApiGetService(method) {
     url += allSupplier;
   }
 
+
   axios
+
     .get(url, {
       headers: {
         Authorization: Token,
+
       },
     })
     .then((res) => {
