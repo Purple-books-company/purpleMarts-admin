@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import ApiServices from '../services/ApiServices';
+import { ApiGetService } from '../services/ApiServices';
 import {
   Heading,
   Card,
@@ -10,13 +10,13 @@ import {
 
 function AdminHome() {
   useEffect(async () => {
-    await ApiServices();
+    await ApiGetService(`allCategory`);
   }, []);
   return (
     <Container>
       <ContainerRow>
         <ContainerColumn className='col-md-6'>
-          <Card />
+          <Card deg='45'>hello</Card>
         </ContainerColumn>
         <ContainerColumn className='col-md-6'>
           <ContainerRow half>

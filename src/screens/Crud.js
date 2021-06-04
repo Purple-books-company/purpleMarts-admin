@@ -7,10 +7,13 @@ import {
   Imageview,
   RightAlign,
   Title,
-} from "../styles/styled";
-import logo from "../assets/logo/logo.png";
-import CatagoryForm from "../components/CatagoryForm";
-import ProductForm from "../components/ProductForm";
+
+} from '../styles/styled';
+import logo from '../assets/logo/logo.png';
+import ProductForm from '../components/ProductForm';
+import CatagoryForm from '../components/CatagoryForm';
+import SupplierForm from '../components/SupplierForm';
+
 
 function Crud() {
   let initialForm = {
@@ -23,6 +26,7 @@ function Crud() {
   useEffect(() => {
     let newState = initialForm;
     newState.newProduct = true;
+    console.log(newState);
     setForm(newState);
   }, []);
 
@@ -36,7 +40,9 @@ function Crud() {
 
   return (
     <Container>
-      <Card deg="-40" nohover>
+
+      <Card deg='-40' width='100%' height='100%' margin='0%' nohover>
+
         <RightAlign>
           <div class="dropdown">
             <button
@@ -79,8 +85,11 @@ function Crud() {
           </div>
         </RightAlign>
         <Title>{currentForm}</Title>
-        {/* <CatagoryForm /> */}
-        <ProductForm />
+
+        {!form.newSupplier && !form.newCatagory && <ProductForm />}
+        {form.newSupplier && <SupplierForm />}
+        {form.newCatagory && <CatagoryForm />}
+
       </Card>
     </Container>
   );

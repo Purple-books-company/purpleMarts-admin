@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { ApiPostService } from '../services/ApiServices';
 import { ColorOne } from '../styles/color';
 import {
   ContainerColumn,
@@ -7,46 +8,104 @@ import {
   Submitbutton,
   RightAlign,
   Imageview,
+  SuccessText,
+  ErrorText,
 } from '../styles/styled';
 
 function CatagoryForm() {
+  let initialstate = {
+    image: '',
+    description: '',
+    name: '',
+  };
+  const [detail, setDetail] = useState(initialstate);
   const [image, setImage] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
+  const [successMsg, setSuccessMsg] = useState('');
+  function handleChange(e) {
+    setDetail({ ...detail, [e.target.name]: e.target.value });
+  }
+  async function handleSubmit() {
+    setSuccessMsg('');
+    setErrorMsg('');
+    const res = await ApiPostService('categoryAdd', detail);
+    if (res == null) {
+      alert('some error occured,try later');
+      return;
+    }
+    if (res == true) {
+      setDetail(initialstate);
+      setSuccessMsg('Category saved!');
+    } else if (res != false) {
+      let datakey = Object.keys(res);
+      let errors;
+      console.log(res);
+      if (datakey.length > 0) {
+        errors = `invalid data on ${datakey.length} fields check!!`;
+      }
+
+      setErrorMsg(errors);
+    }
+  }
   return (
     <ContainerColumn className='col-md-12'>
-      <ContainerRow>
-        <ContainerColumn className='col-md-5'>
-          <RightAlign>Catagoryname</RightAlign>
-        </ContainerColumn>
-        <ContainerColumn className='col-md-5'>
-          <Input type='text' placeholder='name' name='name' />
-        </ContainerColumn>
-        <ContainerColumn className='col-md-5'>
-          <RightAlign>CatagoryDescription</RightAlign>
-        </ContainerColumn>
-        <ContainerColumn className='col-md-5'>
-          <textarea
-            name='description'
-            className='form-control'
-            rows='3'
-            placeholder='description'
-            style={{ borderColor: ColorOne, margin: '2%' }}
-          />
-        </ContainerColumn>
-        <ContainerColumn className='col-md-5'>
-          <RightAlign>Image</RightAlign>
-          <br></br>
-          {image.length > 10 && <Imageview src={image}></Imageview>}
-        </ContainerColumn>
-        <ContainerColumn className='col-md-5'>
-          <Input
-            type='text'
-            name='image'
-            placeholder='imageUrl'
-            onChange={(e) => setImage(e.target.value)}
-          />
-        </ContainerColumn>
-      </ContainerRow>
-      <Submitbutton>POST</Submitbutton>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
+        }}
+      >
+        <SuccessText>{successMsg}</SuccessText>
+        <ErrorText>{errorMsg}</ErrorText>
+        <ContainerRow>
+          <ContainerColumn className='col-md-5'>
+            <RightAlign>Catagoryname</RightAlign>
+          </ContainerColumn>
+          <ContainerColumn className='col-md-5'>
+            <Input
+              type='text'
+              placeholder='name'
+              name='name'
+              onChange={handleChange}
+              value={detail.name}
+              required
+            />
+          </ContainerColumn>
+          <ContainerColumn className='col-md-5'>
+            <RightAlign>CatagoryDescription</RightAlign>
+          </ContainerColumn>
+          <ContainerColumn className='col-md-5'>
+            <textarea
+              name='description'
+              className='form-control'
+              rows='3'
+              placeholder='description'
+              value={detail.description}
+              onChange={handleChange}
+              style={{ borderColor: ColorOne, margin: '2%' }}
+              required
+            />
+          </ContainerColumn>
+          <ContainerColumn className='col-md-5'>
+            <RightAlign>Image</RightAlign>
+            <br></br>
+            {detail.image.length > 10 && (
+              <Imageview src={detail.image}></Imageview>
+            )}
+          </ContainerColumn>
+          <ContainerColumn className='col-md-5'>
+            <Input
+              type='text'
+              name='image'
+              placeholder='imageUrl'
+              value={detail.image}
+              onChange={handleChange}
+              required
+            />
+          </ContainerColumn>
+        </ContainerRow>
+        <Submitbutton type='submit'>POST</Submitbutton>
+      </form>
     </ContainerColumn>
   );
 }

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { ColorOne, ColorTwo } from './color';
+import logo from '../assets/logo/logo.png';
 
 export const Heading = styled.h2.attrs(() => ({
   className: 'text-primary',
@@ -22,9 +23,9 @@ export const Card = styled.div`
   height: ${(props) => (props.height ? props.height : '94%')};
   text-align: center;
 
-  margin: 3%;
-  max-height: auto;
-  overflow: scroll;
+  margin: ${(props) => (props.margin ? props.margin : '3%')};
+
+  overflow: auto;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -32,12 +33,13 @@ export const Card = styled.div`
   scrollbar-width: none;
 
   box-shadow: 4px 4px 7px 0px ${ColorTwo};
-  background: linear-gradient(
+  background-image: linear-gradient(
     ${(props) => props.deg}deg,
     ${ColorOne} 10%,
     white 10% 90%,
     ${ColorTwo} 90%
   );
+
   color: ${ColorTwo};
   border-radius: 10px;
   border-top-right-radius: 50px;
@@ -81,6 +83,10 @@ export const Input = styled.input.attrs((props) => ({
   type: props.type,
   name: props.name,
   className: 'form-control',
+  value: props.value,
+  required: props.required,
+  min: props.min ? props.min : 'auto',
+  pattern: props.pattern ? props.pattern : null,
 
   placeholder: props.placeholder,
 }))`
@@ -106,7 +112,7 @@ export const ImageTag = styled.image.attrs((props) => ({
   height: 20%;
 `;
 export const Submitbutton = styled.button.attrs((props) => ({
-  type: 'button',
+  type: props.type ? props.type : 'button',
   className: 'form-control',
 }))`
   background-color: ${ColorOne};
@@ -124,4 +130,10 @@ export const RightAlign = styled.p`
   margin-right: 4%;
   font-weight: bold;
   margin-top: 2%;
+`;
+export const ErrorText = styled.p`
+  color: red;
+`;
+export const SuccessText = styled.p`
+  color: green;
 `;
