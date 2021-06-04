@@ -18,11 +18,12 @@ export const Title = styled.h5`
 `;
 
 export const Card = styled.div`
-  width:${props=>props.width?props.width:"94%"} ;
-  height: ${props=>props.height?props.height:"94%"};
+  width: ${(props) => (props.width ? props.width : '94%')};
+  height: ${(props) => (props.height ? props.height : '94%')};
   text-align: center;
-  
-  margin:3%;
+
+  margin: 3%;
+  max-height: auto;
   overflow: scroll;
   &::-webkit-scrollbar {
     display: none;
@@ -54,7 +55,6 @@ export const Container = styled.div.attrs(() => ({
   background-color: white;
   height: 100%;
   width: 100%;
-
 `;
 
 const Testing = ({ className, ...rest }) => (
@@ -95,14 +95,16 @@ export const Formlable = styled.p`
 export const Imageview = styled.img.attrs((props) => ({
   src: props.src,
 }))`
-  height:40%;
-  width:50%;
- 
+  height: 40%;
+  width: 50%;
 `;
 
-export const ImageTag = styled.image.attrs((props)=>({
-   src:props.src,
-}))`width:20%;height:20%`;
+export const ImageTag = styled.image.attrs((props) => ({
+  src: props.src,
+}))`
+  width: 20%;
+  height: 20%;
+`;
 export const Submitbutton = styled.button.attrs((props) => ({
   type: 'button',
   className: 'form-control',
@@ -115,4 +117,11 @@ export const Submitbutton = styled.button.attrs((props) => ({
   &:hover {
     background-color: ${ColorTwo};
   }
+`;
+
+export const RightAlign = styled.p`
+  text-align: right;
+  margin-right: 4%;
+  font-weight: bold;
+  margin-top: 2%;
 `;

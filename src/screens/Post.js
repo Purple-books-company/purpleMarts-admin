@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import AddNewProduct from '../components/AddNewProduct';
+
 import Bulkinsert from '../components/Bulkinsert';
+import ProductForm from '../components/ProductForm';
 
 function Post() {
   const [bulk, isbulk] = useState(false);
@@ -9,7 +10,7 @@ function Post() {
       <button onClick={() => isbulk(!bulk)}>
         {bulk ? 'add single' : 'bulk update'}
       </button>
-      {bulk ? <Bulkinsert /> : <AddNewProduct />}
+      {bulk ? <Bulkinsert /> : <ProductForm />}
     </>
   );
 }
