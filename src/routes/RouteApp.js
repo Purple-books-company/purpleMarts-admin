@@ -5,6 +5,7 @@ import SearchTest from '../screens/SearchTest';
 import Nav from '../screens/Nav';
 import Crud from '../screens/Crud';
 import Bulkinsert from '../components/Bulkinsert';
+import Loader from '../components/Loader';
 
 function RouteApp() {
   return (
@@ -14,7 +15,7 @@ function RouteApp() {
         <Route exact path='/Post' component={Crud} />
         <Route path='/search' component={SearchTest} />
         <Route path='/nav' component={Nav} />
-        <Route path='/bulk' component={Bulkinsert} />
+        <Route path='/bulk' component={Loader} />
       </Switch>
     </Router>
   );
