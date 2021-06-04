@@ -1,15 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import { ColorOne, ColorTwo } from '../styles/color';
+import { ColorOne, ColorTwo } from "../styles/color";
 import {
   Card,
   Container,
   Imageview,
   RightAlign,
   Title,
-} from '../styles/styled';
-import logo from '../assets/logo/logo.png';
-import CatagoryForm from '../components/CatagoryForm';
+} from "../styles/styled";
+import logo from "../assets/logo/logo.png";
+import CatagoryForm from "../components/CatagoryForm";
+import ProductForm from "../components/ProductForm";
 
 function Crud() {
   let initialForm = {
@@ -18,7 +19,7 @@ function Crud() {
     newCatagory: false,
   };
   const [form, setForm] = useState(initialForm);
-  const [currentForm, setCurrentForm] = useState('product section');
+  const [currentForm, setCurrentForm] = useState("product section");
   useEffect(() => {
     let newState = initialForm;
     newState.newProduct = true;
@@ -26,7 +27,7 @@ function Crud() {
   }, []);
 
   const handleChange = (e) => {
-    console.log('change');
+    console.log("change");
     let newState = initialForm;
     newState[e.target.name] = true;
     setForm(newState);
@@ -35,41 +36,41 @@ function Crud() {
 
   return (
     <Container>
-      <Card deg='-40' nohover>
+      <Card deg="-40" nohover>
         <RightAlign>
-          <div class='dropdown'>
+          <div class="dropdown">
             <button
-              class='btn btn-secondary dropdown-toggle'
-              type='button'
-              id='dropdownMenuButton'
-              data-toggle='dropdown'
-              aria-haspopup='true'
+              class="btn btn-secondary dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton"
+              data-toggle="dropdown"
+              aria-haspopup="true"
               style={{ background: ColorTwo }}
-              aria-expanded='false'
+              aria-expanded="false"
             >
               {currentForm}
             </button>
-            <div class='dropdown-menu' aria-labelledby='dropdownMenuButton'>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <button
-                class='dropdown-item'
-                name='newCatagory'
-                value={'catagory section'}
+                class="dropdown-item"
+                name="newCatagory"
+                value={"catagory section"}
                 onClick={handleChange}
               >
                 catagory section
               </button>
               <button
-                class='dropdown-item'
-                name='newSupplier'
-                value={'supplier section'}
+                class="dropdown-item"
+                name="newSupplier"
+                value={"supplier section"}
                 onClick={handleChange}
               >
                 supplier section
               </button>
               <button
-                class='dropdown-item'
-                name='newProduct'
-                value={'product section'}
+                class="dropdown-item"
+                name="newProduct"
+                value={"product section"}
                 onClick={handleChange}
               >
                 product section
@@ -78,7 +79,8 @@ function Crud() {
           </div>
         </RightAlign>
         <Title>{currentForm}</Title>
-        <CatagoryForm />
+        {/* <CatagoryForm /> */}
+        <ProductForm />
       </Card>
     </Container>
   );

@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { ColorOne } from '../styles/color';
-import logo from '../assets/logo/logo.png';
+import { useState } from "react";
+import { ColorOne } from "../styles/color";
+import logo from "../assets/logo/logo.png";
 import {
   Card,
   Container,
@@ -11,120 +11,173 @@ import {
   Formlable,
   Imageview,
   Submitbutton,
-} from '../styles/styled';
-const imgSrc = require('../assets/logo/logo.png');
+} from "../styles/styled";
+const imgSrc = require("../assets/logo/logo.png");
 
 function ProductForm() {
   let initialDetail = {
-    productName: '',
-    brandName: '',
-    originalPrice: '',
-    ourPrice: '',
-    originalUrl: '',
-    imageUrl1: '',
-    imageUrl2: '',
-    imageUrl3: '',
+    name: "",
+    description: "",
+    unitPrice: "",
+    categoryId: "",
+    supplierId: "",
+    images: [],
+    unitweight: 0,
+    quantityPerUnit: 0,
+    discount: 0,
+    unitInStock: 0,
   };
+
   const [detail, setDetail] = useState(initialDetail);
+  const [images, setImages] = useState([]);
+  const [imageUrlVal, setImageUrlVal] = useState("");
+
   const handleChange = (e) => {
     setDetail({ ...detail, [e.target.name]: e.target.value });
   };
+
+  const addImageUrl = (e) => {
+    if (imageUrlVal.length > 0 && imageUrlVal.startsWith("http")) {
+      setImages([...images, { image: imageUrlVal }]);
+      setImageUrlVal("");
+    }
+  };
+
+  const removeImage = (val) => {
+    setImages(images.filter((item) => item.image !== val));
+    // console.log(images);
+    // images.splice(val, 1);
+    // console.log(images);
+  };
+
   return (
     <>
       {/* <ContainerRow style={{ backgroundColor: 'white', margin: '2%' }} full> */}
 
-      <ContainerColumn className='col-md-12'>
+      <ContainerColumn className="col-md-12">
         <ContainerRow>
-          <ContainerColumn className='col-md-4' auto>
+          <ContainerColumn className="col-md-4" auto>
             <Input
-              type='text'
-              name='productName'
-              placeholder='product name'
+              type="text"
+              name="name"
+              value={detail.name}
+              placeholder="Name of the Product"
               onChange={handleChange}
             />
           </ContainerColumn>
-          <ContainerColumn className='col-md-4' auto>
+          <ContainerColumn className="col-md-4" auto>
             <Input
-              type='text'
+              type="number"
+              name="unitPrice"
+              value={detail.unitPrice}
               onChange={handleChange}
-              name='brandName'
-              placeholder='brand name'
+              placeholder="original price"
             />
           </ContainerColumn>
-          <ContainerColumn className='col-md-4' auto>
+          <ContainerColumn className="col-md-4">
             <Input
-              type='number'
+              type="text"
+              onChange={(e) => setImageUrlVal(e.target.value)}
+              name="images"
+              value={imageUrlVal}
+              placeholder="Image Url "
+            />
+            <button
+              className="btn btn-danger"
+              name="addImages"
+              onClick={addImageUrl}
+            >
+              +
+            </button>
+          </ContainerColumn>
+          <ContainerColumn className="col-md-4">
+            <select
+              className="form-control"
+              style={{ margin: "2%", borderColor: ColorOne }}
+              name="categoryId"
               onChange={handleChange}
-              name='originalPrice'
-              placeholder='original price'
+              value={detail.categoryId}
+            >
+              <option selected>Select category Id </option>
+              <option value="ambani">Ambani</option>
+              <option value="bezos">Bezos</option>
+            </select>
+          </ContainerColumn>
+          <ContainerColumn className="col-md-4">
+            <select
+              className="form-control"
+              style={{ margin: "2%", borderColor: ColorOne }}
+              name="supplierId"
+              onChange={handleChange}
+              value={detail.supplierId}
+            >
+              <option selected>Select Supplier Id</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+            </select>
+          </ContainerColumn>
+          <ContainerColumn className="col-md-4" auto>
+            <textarea
+              name="description"
+              value={detail.description}
+              onChange={handleChange}
+              className="form-control"
+              rows="1"
+              placeholder="Description"
+              style={{ borderColor: ColorOne, margin: "2%" }}
             />
           </ContainerColumn>
-          <ContainerColumn className='col-md-4'>
+          <ContainerColumn className="col-md-4">
             <Input
-              type='number'
+              type="number"
               onChange={handleChange}
-              name='ourPrice'
-              placeholder='our price'
+              name="unitweight"
+              value={detail.unitweight}
+              placeholder="unitweight"
             />
           </ContainerColumn>
-          <ContainerColumn className='col-md-4'>
+          <ContainerColumn className="col-md-4">
             <Input
-              type='text'
+              type="number"
               onChange={handleChange}
-              name='originalUrl'
-              placeholder='Original Image'
+              name="quantityPerUnit"
+              value={detail.quantityPerUnit}
+              placeholder="quantityPerUnit"
             />
           </ContainerColumn>
-          <ContainerColumn className='col-md-4'>
+          <ContainerColumn className="col-md-4">
             <Input
-              type='text'
+              type="number"
               onChange={handleChange}
-              name='imageUrl1'
-              placeholder='Image url 1'
+              name="discount"
+              value={detail.discount}
+              placeholder="discount"
             />
           </ContainerColumn>
-          <ContainerColumn className='col-md-4'>
+          <ContainerColumn className="col-md-4">
             <Input
-              type='text'
+              type="number"
               onChange={handleChange}
-              name='imageUrl2'
-              placeholder='Image url2'
-            />
-          </ContainerColumn>
-          <ContainerColumn className='col-md-4'>
-            <Input
-              type='text'
-              onChange={handleChange}
-              name='imageUrl3'
-              placeholder='Image url3'
+              name="unitInStock"
+              value={detail.unitInStock}
+              placeholder="unitInStock"
             />
           </ContainerColumn>
         </ContainerRow>
         <ContainerRow auto>
-          {detail.originalUrl.length > 10 && (
-            <ContainerColumn className='col-md-3'>
-              <Imageview src={detail.originalUrl} />
-              <Formlable>originalUrl</Formlable>
+          {images.map((item, index) => (
+            <ContainerColumn className="col-md-3">
+              <Imageview src={item.image} />
+              <Formlable>Image Url</Formlable>
+              <button
+                className="btn btn-danger"
+                name="deleteImage"
+                onClick={() => removeImage(item.image)}
+              >
+                Remove
+              </button>
             </ContainerColumn>
-          )}
-          {detail.imageUrl1.length > 10 && (
-            <ContainerColumn className='col-md-3'>
-              <Imageview src={detail.imageUrl1}></Imageview>
-              <Formlable>Image 1</Formlable>
-            </ContainerColumn>
-          )}
-          {detail.imageUrl2.length > 10 && (
-            <ContainerColumn className='col-md-3'>
-              <Imageview src={detail.imageUrl2}></Imageview>
-              <Formlable>Image 2</Formlable>
-            </ContainerColumn>
-          )}
-          {detail.imageUrl3.length > 10 && (
-            <ContainerColumn className='col-md-3'>
-              <Imageview src={detail.imageUrl3} />
-              <Formlable>Image 3</Formlable>
-            </ContainerColumn>
-          )}
+          ))}
         </ContainerRow>
       </ContainerColumn>
       <Submitbutton>POST</Submitbutton>
