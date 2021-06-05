@@ -1,3 +1,5 @@
+import { ApiGetService } from './ApiServices';
+
 export const ExcelSchema = {
   productName: {
     prop: 'productName',
@@ -42,3 +44,38 @@ export const ExcelSchema = {
     required: true,
   },
 };
+
+let Catagoryarray = [];
+let Supplierarray = [];
+
+async function getAllData() {
+  await getAllCategory();
+  await getAllSupplier();
+  await getAllProduct();
+}
+
+export async function getAllCategory() {
+  let res = await ApiGetService('allCategory');
+  if (res) {
+    Catagoryarray = res;
+    console.log(Catagoryarray);
+  } else console.log('error');
+}
+
+export async function getAllSupplier() {
+  let res = await ApiGetService('allSupplier');
+  if (res) {
+    Supplierarray = res;
+    console.log(res);
+  } else console.log('error');
+}
+function CategoryData() {
+  console.log(Catagoryarray);
+  return Catagoryarray;
+}
+function SupplierData() {
+  return Supplierarray;
+}
+
+export async function getAllProduct() {}
+export { CategoryData, SupplierData };

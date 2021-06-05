@@ -24,8 +24,8 @@ export const Card = styled.div`
   text-align: center;
 
   margin: ${(props) => (props.margin ? props.margin : '3%')};
-
   overflow: auto;
+
   &::-webkit-scrollbar {
     display: none;
   }
@@ -42,8 +42,6 @@ export const Card = styled.div`
 
   color: ${ColorTwo};
   border-radius: 10px;
-  border-top-right-radius: 50px;
-  border-bottom-left-radius: 50px;
 
   &:hover {
     background: ${(props) => (props.nohover ? '' : ColorOne)};
@@ -56,7 +54,9 @@ export const Container = styled.div.attrs(() => ({
 }))`
   background-color: white;
   height: 100%;
+
   width: 100%;
+  max-height: auto;
 `;
 
 const Testing = ({ className, ...rest }) => (
@@ -76,7 +76,7 @@ export const ContainerColumn = styled.div.attrs((props) => ({
   className: props.className,
 }))`
   background-color: none;
-  margin-top: 1%;
+  height: ${(props) => (props.height ? props.height : '30%')};
 `;
 
 export const Input = styled.input.attrs((props) => ({
@@ -136,4 +136,13 @@ export const ErrorText = styled.p`
 `;
 export const SuccessText = styled.p`
   color: green;
+`;
+export const LeftAlign = styled.p`
+  text-align: left;
+`;
+export const CenterAlign = styled.p`
+  text-align: center;
+`;
+export const MarginText = styled.p`
+  margin-top: 20%;
 `;

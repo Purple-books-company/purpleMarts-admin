@@ -6,6 +6,8 @@ import Nav from '../screens/Nav';
 import Crud from '../screens/Crud';
 import Bulkinsert from '../components/Bulkinsert';
 import Loader from '../components/Loader';
+import { getAllCategory, getAllSupplier } from '../services/AdminServices';
+import { useEffect } from 'react';
 
 function RouteApp() {
   return (

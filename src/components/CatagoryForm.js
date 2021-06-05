@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { getAllCategory } from '../services/AdminServices';
 import { ApiPostService } from '../services/ApiServices';
 import { ColorOne } from '../styles/color';
 import {
@@ -32,7 +33,7 @@ function CatagoryForm() {
     setErrorMsg('');
     setLoader(true);
     //change initial
-    const res = await ApiPostService('categoryAdd', initialstate);
+    const res = await ApiPostService('categoryAdd', detail);
 
     if (res == null) {
       alert('some error occured,try later');
@@ -42,6 +43,7 @@ function CatagoryForm() {
     if (res == true) {
       setDetail(initialstate);
       setSuccessMsg('Category saved!');
+      await getAllCategory();
     } else if (res != false) {
       let datakey = Object.keys(res);
       let errors;

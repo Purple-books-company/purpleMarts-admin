@@ -10,6 +10,7 @@ import {
 } from '../styles/styled';
 import { ApiPostService } from '../services/ApiServices';
 import Loader from './Loader';
+import { getAllSupplier } from '../services/AdminServices';
 
 function SupplierForm() {
   let initialDetail = {
@@ -65,6 +66,7 @@ function SupplierForm() {
       //success
       setDetail(initialDetail);
       setSuccessMsg('Supplier saved');
+      await getAllSupplier();
     } else if (res != false) {
       let datakey = Object.keys(res);
       let errors;
