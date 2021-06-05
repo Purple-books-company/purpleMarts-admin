@@ -1,10 +1,10 @@
-
 import axios from 'axios';
 import { Token } from '../env';
 const API = `http://purplemart.pythonanywhere.com`;
 const allCategory = `/api/category/all/`;
 const addSupplier = `/api/supplier/add/`;
 const addCatagory = `/api/category/add/`;
+const addProduct =`/api/product/add/`
 const allSupplier = `/api/supplier/all/`;
 
 console.log(Token);
@@ -16,22 +16,21 @@ async function ApiGetService(method) {
   } else {
     url += allSupplier;
   }
-
-
-  axios
-
-    .get(url, {
+  try {
+    const res = await axios.get(url, {
       headers: {
         Authorization: Token,
-
       },
-    })
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      console.log(err);
     });
+    if (res.data.success) {
+      return res.data.data;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
 }
 
 async function ApiPostService(method, data) {
@@ -40,6 +39,9 @@ async function ApiPostService(method, data) {
     url += addSupplier;
   } else if (method == 'categoryAdd') {
     url += addCatagory;
+  }
+  else if(method=='productAdd'){
+    url+=addProduct;
   }
   console.log(data);
   try {
@@ -51,7 +53,7 @@ async function ApiPostService(method, data) {
 
     console.log(res);
     if (res.data.success) {
-      alert(res.data.description);
+     
 
       return true;
     } else {

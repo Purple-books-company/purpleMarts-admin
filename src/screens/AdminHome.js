@@ -1,4 +1,14 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { Redirect } from 'react-router';
+import { Link } from 'react-router-dom';
+import AssetComponents from '../components/dashBoardcomponents/AssetComponents';
+import CategoryDashboard from '../components/dashBoardcomponents/CategoryDashboard';
+import {
+  CategoryData,
+  getAllCategory,
+  getAllSupplier,
+  SupplierData,
+} from '../services/AdminServices';
 import { ApiGetService } from '../services/ApiServices';
 import {
   Heading,
@@ -9,52 +19,50 @@ import {
 } from '../styles/styled';
 
 function AdminHome() {
-  useEffect(async () => {
-    await ApiGetService(`allCategory`);
+  const [categoryData, setCategoryData] = useState();
+  const [supplierData, setSupplierData] = useState();
+  useEffect(() => {
+    fetchData();
   }, []);
+  const fetchData = async () => {
+    if (CategoryData().length == 0) {
+      await getAllCategory();
+      await getAllSupplier();
+    }
+
+    setCategoryData(CategoryData().length);
+    setSupplierData(SupplierData().length);
+  };
   return (
     <Container>
-      <ContainerRow>
-        <ContainerColumn className='col-md-6'>
-          <Card deg='45'>hello</Card>
+      <ContainerRow full>
+        <ContainerColumn style={{ height: '25%' }} className='col-md-6'>
+          <Link to='/post'>
+            <Card
+              deg='45'
+              onClick={() => {
+                console.log('clicking');
+              }}
+            >
+              hello
+            </Card>
+          </Link>
         </ContainerColumn>
-        <ContainerColumn className='col-md-6'>
-          <ContainerRow half>
-            <ContainerColumn className='col-md-6'>
-              <Card deg='-45'>Hello</Card>
-            </ContainerColumn>
-            <ContainerColumn className='col-md-6'>
-              <Card deg='-65'>Hello</Card>
-            </ContainerColumn>
-          </ContainerRow>
-
-          <ContainerRow half>
-            <ContainerColumn className='col-md-6'>
-              <Card deg='55'>Hello</Card>
-            </ContainerColumn>
-            <ContainerColumn className='col-md-6'>
-              <Card deg='100'>Hello</Card>
-            </ContainerColumn>
-          </ContainerRow>
+        <ContainerColumn style={{ height: '25%' }} className='col-md-6'>
+          <AssetComponents catCount={categoryData} supCount={supplierData} />
         </ContainerColumn>
-      </ContainerRow>
-      <br />
 
-      <ContainerRow>
-        <ContainerColumn className='col-md-12'>
+        <ContainerColumn height='40%' className='col-md-12'>
           <Card deg='-33'>Hello</Card>
         </ContainerColumn>
-      </ContainerRow>
-      <br />
 
-      <ContainerRow>
-        <ContainerColumn className='col-md-4'>
+        <ContainerColumn style={{ height: '25%' }} className='col-md-4'>
           <Card deg='-70'>Hello</Card>
         </ContainerColumn>
-        <ContainerColumn className='col-md-4'>
+        <ContainerColumn style={{ height: '25%' }} className='col-md-4'>
           <Card deg='-45'>Hello</Card>
         </ContainerColumn>
-        <ContainerColumn className='col-md-4'>
+        <ContainerColumn style={{ height: '25%' }} className='col-md-4'>
           <Card deg='40'>Hello</Card>
         </ContainerColumn>
       </ContainerRow>
