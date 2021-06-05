@@ -63,6 +63,7 @@ function CatagoryForm() {
           <Loader />
         ) : (
           <form
+            style={{ margin: '6%' }}
             onSubmit={(e) => {
               e.preventDefault();
               handleSubmit();
@@ -99,7 +100,7 @@ function CatagoryForm() {
                   required
                 />
               </ContainerColumn>
-              <ContainerColumn className='col-md-5'>
+              <ContainerColumn height='20%' className='col-md-5'>
                 <RightAlign>Image</RightAlign>
                 <br></br>
                 {detail.image.length > 10 && (
@@ -117,7 +118,10 @@ function CatagoryForm() {
                 />
               </ContainerColumn>
             </ContainerRow>
-            <Submitbutton type='submit'>POST</Submitbutton>
+            <Submitbutton type='submit' style={{ marginBottom: '2%' }}>
+              POST
+            </Submitbutton>
+            <br />
           </form>
         )}
       </ContainerColumn>
