@@ -21,7 +21,7 @@ function AssetComponents({ catCount, supCount }) {
             <MarginText>
               <b>NEW</b>
               <br />
-              <Link>
+              <Link to='/post'>
                 <FcAddDatabase
                   style={{ width: '50%', height: '20%', marginTop: '15%' }}
                 />
@@ -36,7 +36,7 @@ function AssetComponents({ catCount, supCount }) {
               <h1>{catCount}</h1>
 
               <Link
-                to='/View'
+                to={{ pathname: '/View', state: { show: 'category' } }}
                 style={{ textDecoration: 'none', color: ColorTwo }}
               >
                 Show Category
@@ -49,7 +49,10 @@ function AssetComponents({ catCount, supCount }) {
               <br />
               <h1>{supCount}</h1>
 
-              <Link style={{ textDecoration: 'none', color: ColorTwo }}>
+              <Link
+                to={{ pathname: '/View', state: { show: 'supplier' } }}
+                style={{ textDecoration: 'none', color: ColorTwo }}
+              >
                 Show Suppliers
               </Link>
             </MarginText>
