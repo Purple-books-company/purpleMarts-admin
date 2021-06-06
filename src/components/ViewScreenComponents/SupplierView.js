@@ -1,43 +1,57 @@
-import { useEffect, useState } from 'react';
-import { SupplierData } from '../../services/AdminServices';
-import { Container } from '../../styles/styled';
+import { useEffect, useState } from "react";
+import { SupplierData } from "../../services/AdminServices";
+import { Container } from "../../styles/styled";
+import { AiFillCaretDown, AiFillDelete, AiFillEdit } from "react-icons/ai";
+import Search from "../Search";
 
 function SupplierView() {
   const [supplierData, setSupplierData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
 
   useEffect(() => {
     let data = SupplierData();
 
     setSupplierData(data);
+    setFilteredData(data);
   }, []);
+
+  const updateFilteredData = (filterData) => {
+    setFilteredData(filterData);
+  };
+
   return (
     <Container>
-      <table class='table'>
-        <thead class='thead-dark'>
+      <Search
+        data={supplierData}
+        searchKeys={["name", "companyName"]}
+        updateFilteredData={updateFilteredData}
+      />
+      <table class="table">
+        <thead class="thead-dark">
           <tr>
-            <th scope='col'>name</th>
-            <th scope='col'>contact description</th>
-            <th scope='col'>company Name</th>
-            <th scope='col'>personalInfo</th>
-            <th scope='col'>View/delete</th>
+            <th scope="col">Name</th>
+            <th scope="col">Contact Description</th>
+            <th scope="col">Company Name</th>
+            <th scope="col">Personal Info</th>
+            <th scope="col">Delete/Edit</th>
           </tr>
         </thead>
         <tbody>
-          {supplierData.map((value, index) => (
+          {filteredData.map((value, index) => (
             <tr>
-              <th scope='row'>{value.name}</th>
+              <th scope="row">{value.name}</th>
               <td>{value.contactDescription}</td>
               <td>{value.companyName}</td>
               <td>
-                <b>deliveryname:</b>
+                <b>Delivery name:</b>
                 {value.personalInfo.deliveryName}
                 <br />
-                <b>phone:</b>
+                <b>Phone number:</b>
                 {value.personalInfo.phoneNumber}
-                <br />
+                {"  "}
 
-                <p class='collapse' id={'showdata' + index}>
-                  <b>address:</b>
+                <p class="collapse" id={"showdata" + index}>
+                  <b>Address:</b>
                   {value.personalInfo.address},
                   <br />
                   {value.personalInfo.city}-{value.personalInfo.pincode},
@@ -45,17 +59,22 @@ function SupplierView() {
                   {value.personalInfo.state},
                   <br />
                   {value.personalInfo.nation}.
-                  <br />
                 </p>
-                <a href={'#showdata' + index} data-toggle='collapse'>
-                  showmore
+                <a
+                  href={"#showdata" + index}
+                  // className="ml-2"
+                  data-toggle="collapse"
+                >
+                  <AiFillCaretDown />
                 </a>
               </td>
               <td>
-                <button className='btn btn-danger form-control'>delete</button>
-                <br />
-                <br />
-                <button className='btn btn-info form-control'>edit</button>
+                <button className="btn btn-danger mr-2">
+                  <AiFillDelete />
+                </button>
+                <button className="btn btn-info">
+                  <AiFillEdit />
+                </button>
               </td>
             </tr>
           ))}

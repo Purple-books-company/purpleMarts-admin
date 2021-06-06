@@ -1,9 +1,9 @@
-import styled from 'styled-components';
-import { ColorOne, ColorTwo } from './color';
-import logo from '../assets/logo/logo.png';
+import styled from "styled-components";
+import { ColorOne, ColorTwo } from "./color";
+import logo from "../assets/logo/logo.png";
 
 export const Heading = styled.h2.attrs(() => ({
-  className: 'text-primary',
+  className: "text-primary",
 }))`
   font-weight: bold;
 `;
@@ -19,11 +19,11 @@ export const Title = styled.h5`
 `;
 
 export const Card = styled.div`
-  width: ${(props) => (props.width ? props.width : '94%')};
-  height: ${(props) => (props.height ? props.height : '94%')};
+  width: ${(props) => (props.width ? props.width : "94%")};
+  height: ${(props) => (props.height ? props.height : "94%")};
   text-align: center;
 
-  margin: ${(props) => (props.margin ? props.margin : '3%')};
+  margin: ${(props) => (props.margin ? props.margin : "3%")};
   overflow: scroll;
 
   &::-webkit-scrollbar {
@@ -44,13 +44,13 @@ export const Card = styled.div`
   border-radius: 10px;
 
   &:hover {
-    background: ${(props) => (props.nohover ? '' : ColorOne)};
+    background: ${(props) => (props.nohover ? "" : ColorOne)};
     box-shadow: 4px 4px 7px 0px ${ColorOne};
     color: ${ColorTwo};
   }
 `;
 export const Container = styled.div.attrs(() => ({
-  className: 'container-fluid',
+  className: "container-fluid",
 }))`
   background-color: white;
   height: 100%;
@@ -63,29 +63,29 @@ const Testing = ({ className, ...rest }) => (
   <div className={className} {...rest} />
 );
 export const ContainerRow = styled.div.attrs((props) => ({
-  className: 'row',
+  className: "row",
 }))`
   height: ${(props) => {
-    if (props.half) return '48%';
-    else if (props.full) return '100%';
-    else if (props.auto) return '10%';
-    else return '30%';
+    if (props.half) return "48%";
+    else if (props.full) return "100%";
+    else if (props.auto) return "10%";
+    else return "30%";
   }};
 `;
 export const ContainerColumn = styled.div.attrs((props) => ({
   className: props.className,
 }))`
   background-color: none;
-  height: ${(props) => (props.height ? props.height : '30%')};
+  height: ${(props) => (props.height ? props.height : "30%")};
 `;
 
 export const Input = styled.input.attrs((props) => ({
   type: props.type,
   name: props.name,
-  className: 'form-control',
+  className: "form-control",
   value: props.value,
   required: props.required,
-  min: props.min ? props.min : 'auto',
+  min: props.min ? props.min : "auto",
   pattern: props.pattern ? props.pattern : null,
 
   placeholder: props.placeholder,
@@ -100,9 +100,10 @@ export const Formlable = styled.p`
 
 export const Imageview = styled.img.attrs((props) => ({
   src: props.src,
+  alt: props.alternate,
 }))`
   height: 50%;
-  width: ${(props) => (props.width ? props.width : '50%')};
+  width: ${(props) => (props.width ? props.width : "50%")};
 `;
 
 export const ImageTag = styled.image.attrs((props) => ({
@@ -112,8 +113,8 @@ export const ImageTag = styled.image.attrs((props) => ({
   height: 20%;
 `;
 export const Submitbutton = styled.button.attrs((props) => ({
-  type: props.type ? props.type : 'button',
-  className: 'form-control',
+  type: props.type ? props.type : "button",
+  className: "form-control",
 }))`
   background-color: ${ColorOne};
   color: white;
