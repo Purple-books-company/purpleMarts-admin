@@ -35,7 +35,10 @@ function AssetComponents({ catCount, supCount }) {
               <br />
               <h1>{catCount}</h1>
 
-              <Link style={{ textDecoration: 'none', color: ColorTwo }}>
+              <Link
+                to='/View'
+                style={{ textDecoration: 'none', color: ColorTwo }}
+              >
                 Show Category
               </Link>
             </MarginText>

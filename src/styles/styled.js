@@ -24,7 +24,7 @@ export const Card = styled.div`
   text-align: center;
 
   margin: ${(props) => (props.margin ? props.margin : '3%')};
-  overflow: auto;
+  overflow: scroll;
 
   &::-webkit-scrollbar {
     display: none;
@@ -101,8 +101,8 @@ export const Formlable = styled.p`
 export const Imageview = styled.img.attrs((props) => ({
   src: props.src,
 }))`
-  height: 40%;
-  width: 50%;
+  height: 50%;
+  width: ${(props) => (props.width ? props.width : '50%')};
 `;
 
 export const ImageTag = styled.image.attrs((props) => ({

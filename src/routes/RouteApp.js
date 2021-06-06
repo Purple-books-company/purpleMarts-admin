@@ -8,6 +8,7 @@ import Bulkinsert from '../components/Bulkinsert';
 import Loader from '../components/Loader';
 import { getAllCategory, getAllSupplier } from '../services/AdminServices';
 import { useEffect } from 'react';
+import ViewScreens from '../screens/ViewScreens';
 
 function RouteApp() {
   return (
@@ -18,6 +19,7 @@ function RouteApp() {
         <Route path='/search' component={SearchTest} />
         <Route path='/nav' component={Nav} />
         <Route path='/bulk' component={Loader} />
+        <Route path='/View' component={ViewScreens} />
       </Switch>
     </Router>
   );
