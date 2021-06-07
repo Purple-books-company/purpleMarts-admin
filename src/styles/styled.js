@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { ColorOne, ColorTwo } from './color';
 import logo from '../assets/logo/logo.png';
+import { Link } from 'react-router-dom';
 
 export const Heading = styled.h2.attrs(() => ({
   className: 'text-primary',
@@ -147,3 +148,12 @@ export const CenterAlign = styled.div`
 export const MarginText = styled.p`
   margin-top: 20%;
 `;
+
+export const NavLink = styled(Link)`
+  color: white;
+  text-decoration: none;
+  &:hover {
+    color: ${ColorOne};
+  }
+`;
+

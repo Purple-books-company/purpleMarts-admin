@@ -8,6 +8,7 @@ import SupplierView from '../components/ViewScreenComponents/SupplierView';
 import { SupplierData } from '../services/AdminServices';
 import { ColorOne, ColorTwo } from '../styles/color';
 import { RightAlign } from '../styles/styled';
+import Nav from '../components/Nav';
 
 function ViewScreens() {
   const initialState = {
@@ -44,11 +45,12 @@ function ViewScreens() {
   };
   return (
     <>
+      <Nav navItems={['Dashboard']} navLinks={['/']} Show={handleChange} />
       {loader ? (
         <Loader />
       ) : (
         <>
-          <RightAlign>
+          {/* <RightAlign>
             <select
               onChange={handleChange}
               style={{
@@ -67,7 +69,7 @@ function ViewScreens() {
               <option value='supplier'>supplier</option>
               <option value='product'>product</option>
             </select>
-          </RightAlign>
+          </RightAlign> */}
 
           {!mountView.supplier && !mountView.product && <CatagoryView />}
           {mountView.supplier && <SupplierView />}

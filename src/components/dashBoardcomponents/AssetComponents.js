@@ -35,12 +35,9 @@ function AssetComponents({ catCount, supCount }) {
               <br />
               <h1>{catCount}</h1>
 
-              <Link
-                to={{ pathname: '/View', state: { show: 'category' } }}
-                style={{ textDecoration: 'none', color: ColorTwo }}
-              >
-                Show Category
-              </Link>
+              <p style={{ textDecoration: 'none', color: ColorTwo }}>
+                Category
+              </p>
             </MarginText>
           </ContainerColumn>
           <ContainerColumn className='col-3'>
@@ -49,12 +46,9 @@ function AssetComponents({ catCount, supCount }) {
               <br />
               <h1>{supCount}</h1>
 
-              <Link
-                to={{ pathname: '/View', state: { show: 'supplier' } }}
-                style={{ textDecoration: 'none', color: ColorTwo }}
-              >
-                Show Suppliers
-              </Link>
+              <p style={{ textDecoration: 'none', color: ColorTwo }}>
+                Suppliers
+              </p>
             </MarginText>
           </ContainerColumn>
           <ContainerColumn className='col-3'>

@@ -2,7 +2,7 @@ import { Link, BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import AdminHome from '../screens/AdminHome';
 import Post from '../screens/Post';
 // import SearchTest from '../screens/SearchTest';
-import Nav from '../screens/Nav';
+import Nav from '../components/Nav';
 import Crud from '../screens/Crud';
 import Bulkinsert from '../components/Bulkinsert';
 import Loader from '../components/Loader';
