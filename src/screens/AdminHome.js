@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import AssetComponents from '../components/dashBoardcomponents/AssetComponents';
-import CategoryDashboard from '../components/dashBoardcomponents/CategoryDashboard';
+
 import Loader from '../components/Loader';
 import {
   CategoryData,
@@ -18,6 +18,7 @@ import {
   ContainerRow,
   ContainerColumn,
 } from '../styles/styled';
+import Nav from '../components/Nav';
 
 function AdminHome() {
   const [categoryData, setCategoryData] = useState();
@@ -39,6 +40,7 @@ function AdminHome() {
   };
   return (
     <>
+      <Nav navItems={['logout']} navLinks={['/logout']} View={true} />
       <Container style={{ textAlign: 'center' }}>
         {loader ? (
           <Loader />

@@ -7,6 +7,7 @@ function Post() {
   const [bulk, isbulk] = useState(false);
   return (
     <>
+      
       <button onClick={() => isbulk(!bulk)}>
         {bulk ? 'add single' : 'bulk update'}
       </button>

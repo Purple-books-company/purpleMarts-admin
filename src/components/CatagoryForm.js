@@ -11,6 +11,7 @@ import {
   Imageview,
   SuccessText,
   ErrorText,
+  Title,
 } from '../styles/styled';
 import Loader from './Loader';
 
@@ -59,6 +60,7 @@ function CatagoryForm() {
   return (
     <>
       <ContainerColumn className='col-md-12'>
+        
         {loader ? (
           <Loader />
         ) : (

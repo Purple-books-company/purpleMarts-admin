@@ -1,8 +1,10 @@
-import { useState, useEffect } from "react";
-import { AiOutlineSearch } from "react-icons/ai";
+import { useState, useEffect } from 'react';
+import { AiOutlineSearch } from 'react-icons/ai';
+import { ColorOne, ColorTwo } from '../styles/color';
+import { ContainerColumn, ContainerRow } from '../styles/styled';
 
 const Search = ({ data, searchKeys, updateFilteredData }) => {
-  const [searchVal, setSearchVal] = useState("");
+  const [searchVal, setSearchVal] = useState(null);
 
   useEffect(() => {
     filterData();
@@ -10,27 +12,28 @@ const Search = ({ data, searchKeys, updateFilteredData }) => {
 
   const filterData = () => {
     let filteredList = data.filter((item) => {
-      if (searchVal === "") {
+      if (searchVal === '') {
         return item;
       } else if (
         item[searchKeys[0]].toLowerCase().indexOf(searchVal) !== -1 ||
-        (searchKeys[1] !== "" &&
+        (searchKeys[1] !== '' &&
           item[searchKeys[1]].toLowerCase().indexOf(searchVal) !== -1)
       ) {
         return item;
       }
     });
-
-    updateFilteredData(filteredList);
+    if (searchVal != null) updateFilteredData(filteredList);
   };
 
   return (
-    <input
-      type="text"
-      className="form-control my-3"
-      placeholder={"Search by " + searchKeys[0] + " or " + searchKeys[1]}
-      onChange={(e) => setSearchVal(e.target.value.trim().toLowerCase())}
-    />
+    <>
+      <input
+        type='text'
+        className='form-control'
+        placeholder={'Search by ' + searchKeys[0] + ' or ' + searchKeys[1]}
+        onChange={(e) => setSearchVal(e.target.value.trim().toLowerCase())}
+      />
+    </>
   );
 };
 
