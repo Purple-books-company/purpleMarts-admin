@@ -28,21 +28,31 @@ function ProductForm() {
   let initialDetail = {
     name: "",
     description: "",
-    unitPrice: "",
+    originalPrice: "",
+    offerPrice: "",
     categoryId: "",
     supplierId: "",
     images: [],
-    unitweight: "",
-    quantityPerUnit: "",
     discount: "",
-    unitInStock: "",
+  };
+
+  let initialVariant = {
+    sizeValue: "",
+    sizeOriginalPrice: "",
+    sizeOfferPrice: "",
+    colorValue: "",
+    colorOriginalPrice: "",
+    colorOfferPrice: "",
+    image: "",
   };
 
   const [detail, setDetail] = useState(initialDetail);
-  const [images, setImages] = useState([]);
-  const [imageUrlVal, setImageUrlVal] = useState("");
+  const [varientDetails, setVarientDetails] = useState([]);
+  const [variant, setVarient] = useState(initialVariant);
+
   const [catagoryData, setCategorydata] = useState([]);
   const [supplierData, setSupplierdata] = useState([]);
+
   const [loader, setLoader] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
@@ -64,60 +74,83 @@ function ProductForm() {
     setDetail({ ...detail, [e.target.name]: e.target.value });
   };
 
-  const addImageUrl = (e) => {
-    if (imageUrlVal.length > 0 && imageUrlVal.startsWith("http")) {
-      setImages([...images, imageUrlVal]);
-      setImageUrlVal("");
-    }
+  const handleVariantsChange = (e) => {
+    setVarient({ ...variant, [e.target.name]: e.target.value });
   };
 
-  const removeImage = (e) => {
-    // setImages(images.filter((item) => item.image !== val));
-    console.log(e.target.value);
-    let newImages = [];
+  const handleVariantAdd = (e) => {
+    let variantKeys = Object.keys(variant);
 
-    for (let i in images) {
-      if (i == e.target.value) {
-        continue;
+    for (let i in variantKeys) {
+      let key = variantKeys[i];
+
+      if (key === "sizeValue" && variant[key] !== "") {
+        if (
+          variant["sizeOriginalPrice"] == "" ||
+          variant["sizeOfferPrice"] == ""
+        ) {
+          setErrorMsg("Please enter prices of respective size");
+          return;
+        }
       }
-      newImages.push(images[i]);
+
+      if (variant[key] == "" && i > 2) {
+        console.log(key);
+        setErrorMsg("Please enter details of " + key);
+        return;
+      }
     }
 
-    console.log(newImages);
-    setImages(newImages);
+    setVarientDetails([...varientDetails, variant]);
+    setVarient(initialVariant);
   };
+
+  // const removeImage = (e) => {
+  //   console.log(e.target.value);
+  //   let newImages = [];
+
+  //   for (let i in images) {
+  //     if (i == e.target.value) {
+  //       continue;
+  //     }
+  //     newImages.push(images[i]);
+  //   }
+
+  //   console.log(newImages);
+  //   setImages(newImages);
+  // };
+
   const handleSubmit = async () => {
-    setLoader(true);
-    let data = detail;
-    let imageData = [];
-    for (let i in images) {
-      let temp = { image: images[i] };
-      imageData.push(temp);
-    }
-    data.images = imageData;
-    const res = await ApiPostService("productAdd", data);
-    if (res == null) {
-      alert("some error occured,try later");
-      setLoader(false);
-      return;
-    }
-    if (res == true) {
-      setDetail(initialDetail);
-      setSuccessMsg("Product Saved!");
-      setImages([]);
-      await getAllCategory();
-    } else if (res != false) {
-      let datakey = Object.keys(res);
-      let errors;
-      console.log(res);
-      if (datakey.length > 0) {
-        errors = `invalid data on ${datakey.length} fields check!!`;
-      }
-
-      setErrorMsg(errors);
-    }
-    setLoader(false);
-    console.log(data);
+    // setLoader(true);
+    // let data = detail;
+    // let imageData = [];
+    // for (let i in images) {
+    //   let temp = { image: images[i] };
+    //   imageData.push(temp);
+    // }
+    // data.images = imageData;
+    // const res = await ApiPostService("productAdd", data);
+    // if (res == null) {
+    //   alert("some error occured,try later");
+    //   setLoader(false);
+    //   return;
+    // }
+    // if (res == true) {
+    //   setDetail(initialDetail);
+    //   setSuccessMsg("Product Saved!");
+    //   setImages([]);
+    //   await getAllCategory();
+    // } else if (res != false) {
+    //   let datakey = Object.keys(res);
+    //   let errors;
+    //   console.log(res);
+    //   if (datakey.length > 0) {
+    //     errors = `invalid data on ${datakey.length} fields check!!`;
+    //   }
+    //   setErrorMsg(errors);
+    // }
+    // setLoader(false);
+    // console.log(data);
   };
 
   return (
@@ -142,30 +175,29 @@ function ProductForm() {
             <ContainerColumn className="col-md-4" auto>
               <Input
                 type="number"
-                name="unitPrice"
-                value={detail.unitPrice}
+                name="originalPrice"
+                value={detail.originalPrice}
                 onChange={handleChange}
-                placeholder="original price"
+                placeholder="Original price"
+              />
+            </ContainerColumn>
+            <ContainerColumn className="col-md-4" auto>
+              <Input
+                type="number"
+                name="offerPrice"
+                value={detail.offerPrice}
+                onChange={handleChange}
+                placeholder="offer price"
               />
             </ContainerColumn>
             <ContainerColumn className="col-md-4">
-              <div class="input-group mb-2 mr-sm-2">
-                <Input
-                  type="text"
-                  onChange={(e) => setImageUrlVal(e.target.value)}
-                  name="images"
-                  value={imageUrlVal}
-                  placeholder="Image Url "
-                />
-                <button
-                  className="btn btn-success"
-                  style={{ margin: "2%" }}
-                  name="addImages"
-                  onClick={addImageUrl}
-                >
-                  +
-                </button>
-              </div>
+              <Input
+                type="number"
+                onChange={handleChange}
+                name="discount"
+                value={detail.discount}
+                placeholder="Discount"
+              />
             </ContainerColumn>
             <ContainerColumn height="auto" className="col-md-4">
               <select
@@ -204,6 +236,79 @@ function ProductForm() {
                 })}
               </select>
             </ContainerColumn>
+            <ContainerColumn height="auto" className="col-md-4">
+              <Input
+                type="number"
+                onChange={handleVariantsChange}
+                name="sizeValue"
+                value={variant.sizeValue}
+                placeholder="Size"
+              />
+            </ContainerColumn>
+            <ContainerColumn className="col-md-4">
+              <Input
+                type="number"
+                onChange={handleVariantsChange}
+                name="sizeOriginalPrice"
+                value={variant.sizeOriginalPrice}
+                placeholder="Original price for size"
+              />
+            </ContainerColumn>
+            <ContainerColumn className="col-md-4">
+              <Input
+                type="number"
+                onChange={handleVariantsChange}
+                name="sizeOfferPrice"
+                value={variant.sizeOfferPrice}
+                placeholder="Offer price for size"
+              />
+            </ContainerColumn>
+            <ContainerColumn className="col-md-4">
+              <Input
+                type="text"
+                onChange={handleVariantsChange}
+                name="colorValue"
+                value={variant.colorValue}
+                placeholder="Color"
+              />
+            </ContainerColumn>
+            <ContainerColumn className="col-md-4">
+              <Input
+                type="number"
+                onChange={handleVariantsChange}
+                name="colorOriginalPrice"
+                value={variant.colorOriginalPrice}
+                placeholder="Original price for Color"
+              />
+            </ContainerColumn>
+            <ContainerColumn className="col-md-4">
+              <Input
+                type="number"
+                onChange={handleVariantsChange}
+                name="colorOfferPrice"
+                value={variant.colorOfferPrice}
+                placeholder="Offer price for Color"
+              />
+            </ContainerColumn>
+            <ContainerColumn className="col-md-4">
+              <div class="input-group mb-2 mr-sm-2">
+                <Input
+                  type="text"
+                  onChange={handleVariantsChange}
+                  name="image"
+                  value={variant.image}
+                  placeholder="Image Url "
+                />
+                <button
+                  className="btn btn-success"
+                  style={{ margin: "2%" }}
+                  name="addImages"
+                  onClick={handleVariantAdd}
+                >
+                  +
+                </button>
+              </div>
+            </ContainerColumn>
             <ContainerColumn className="col-md-4" auto>
               <textarea
                 name="description"
@@ -215,44 +320,8 @@ function ProductForm() {
                 style={{ borderColor: ColorOne, margin: "2%" }}
               />
             </ContainerColumn>
-            <ContainerColumn height="auto" className="col-md-4">
-              <Input
-                type="number"
-                onChange={handleChange}
-                name="unitweight"
-                value={detail.unitweight}
-                placeholder="Unit Weight"
-              />
-            </ContainerColumn>
-            <ContainerColumn className="col-md-4">
-              <Input
-                type="number"
-                onChange={handleChange}
-                name="quantityPerUnit"
-                value={detail.quantityPerUnit}
-                placeholder="Quantity per Unit"
-              />
-            </ContainerColumn>
-            <ContainerColumn className="col-md-4">
-              <Input
-                type="number"
-                onChange={handleChange}
-                name="discount"
-                value={detail.discount}
-                placeholder="Discount"
-              />
-            </ContainerColumn>
-            <ContainerColumn className="col-md-4">
-              <Input
-                type="number"
-                onChange={handleChange}
-                name="unitInStock"
-                value={detail.unitInStock}
-                placeholder="Unit In Stock"
-              />
-            </ContainerColumn>
           </ContainerRow>
-          <ContainerRow auto>
+          {/* <ContainerRow auto>
             {images.length > 0 &&
               images.map((item, index) => (
                 <ContainerColumn className="col-md-3">
@@ -268,7 +337,7 @@ function ProductForm() {
                   </button>
                 </ContainerColumn>
               ))}
-          </ContainerRow>
+          </ContainerRow> */}
           {/* <div class='input-group mb-2 mr-sm-2'>
           <input
             type='text'
