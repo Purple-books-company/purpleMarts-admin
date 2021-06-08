@@ -3,13 +3,17 @@ import '../assets/nav.css';
 import { ColorOne, ColorTwo } from '../styles/color';
 import { ErrorText, Imageview, Title } from '../styles/styled';
 import Logo from '../assets/logo/logo.png';
+import { useState } from 'react';
 
 function Nav({ navItems, navLinks, View, Show }) {
   return (
-    <nav className='navbar navbar-light navbar-expand-lg sticky-top colour'>
+    <nav
+      className='navbar sticky-top navbar-light navbar-expand-lg  colour'
+      style={{ display: '' }}
+    >
       <div className='container'>
         <span className='navbar-brand mb-0 h1  font-weight-bold'>
-          <h4 style={{ color: 'white' }}>Purple Marts Admin</h4>
+          <h4 style={{ color: ColorOne }}>Purple Marts Admin</h4>
         </span>
         <button
           className='navbar-toggler text-light bg-light'
@@ -28,13 +32,12 @@ function Nav({ navItems, navLinks, View, Show }) {
               <li className='nav-item dropdown'>
                 <a
                   href='#'
-                  className='nav-link text-light mt-2  h6 font-weight-bold'
+                  className='nav-link  mt-2  h6 font-weight-bold'
                   id='navbarDropdown'
                   role='button'
                   data-toggle='dropdown'
                   aria-haspopup='true'
                   aria-expanded='false'
-                  id='check'
                 >
                   View All
                 </a>
@@ -89,10 +92,10 @@ function Nav({ navItems, navLinks, View, Show }) {
             )}
 
             {navItems.map((value, index) => (
-              <li className='nav-item text-light ' id='check'>
+              <li className='nav-item  ' id='check'>
                 <NavLink
                   to='/'
-                  className='nav-link text-light h6 font-weight-bold'
+                  className='nav-link  h6 font-weight-bold'
                   id='check'
                 >
                   {value == 'logout' ? (

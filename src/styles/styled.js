@@ -18,6 +18,14 @@ export const Title = styled.h5`
   border-radius: 10px;
   margin-left: 35%;
 `;
+let linear1 = (deg) => {
+  let temp = `${deg}deg,${ColorTwo} 10%,white 10%`;
+  console.log(temp);
+  return temp;
+};
+let linear2 = (deg) => {
+  return `${deg}deg,${ColorOne} 10%,white 10% 90% ,${ColorTwo} 90%`;
+};
 
 export const Card = styled.div`
   width: ${(props) => (props.width ? props.width : '94%')};
@@ -34,16 +42,12 @@ export const Card = styled.div`
   scrollbar-width: none;
 
   box-shadow: 4px 4px 7px 0px ${ColorTwo};
-  background-image: linear-gradient(
-    ${(props) => props.deg}deg,
-    ${ColorOne} 10%,
-    white 10% 90%,
-    ${ColorTwo} 90%
-  );
 
   color: ${ColorTwo};
   border-radius: 10px;
-
+  background: linear-gradient(
+    ${(props) => (props.single ? linear1(140) : linear2(props.deg))}
+  );
   &:hover {
     background: ${(props) => (props.nohover ? '' : ColorOne)};
     box-shadow: 4px 4px 7px 0px ${ColorOne};
@@ -70,6 +74,7 @@ export const ContainerRow = styled.div.attrs((props) => ({
     if (props.half) return '48%';
     else if (props.full) return '100%';
     else if (props.auto) return '10%';
+    else if (props.dynamic) return 'auto';
     else return '30%';
   }};
 `;
@@ -92,6 +97,7 @@ export const Input = styled.input.attrs((props) => ({
   placeholder: props.placeholder,
 }))`
   margin: 2%;
+
   border-color: ${ColorOne};
 `;
 
@@ -144,6 +150,8 @@ export const LeftAlign = styled.p`
 `;
 export const CenterAlign = styled.div`
   text-align: center;
+  color: ${(props) => props.dark && ColorOne};
+  font-weight: 500;
 `;
 export const MarginText = styled.p`
   margin-top: 20%;
@@ -156,4 +164,3 @@ export const NavLink = styled(Link)`
     color: ${ColorOne};
   }
 `;
-
