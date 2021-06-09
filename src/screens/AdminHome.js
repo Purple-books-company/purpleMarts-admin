@@ -10,7 +10,7 @@ import {
   getAllSupplier,
   SupplierData,
 } from '../services/AdminServices';
-import { ApiGetService } from '../services/ApiServices';
+import { ApiGetService, ApiPostService } from '../services/ApiServices';
 import {
   Heading,
   Card,
@@ -19,6 +19,7 @@ import {
   ContainerColumn,
 } from '../styles/styled';
 import Nav from '../components/Nav';
+import { FaCommentsDollar } from 'react-icons/fa';
 
 function AdminHome() {
   const [categoryData, setCategoryData] = useState();
@@ -26,6 +27,15 @@ function AdminHome() {
   const [loader, setLoader] = useState(false);
   useEffect(() => {
     fetchData();
+    // let data = {
+    //   categoryId: 'Point',
+    //   page: 2,
+    // };
+    // ApiPostService('dd', data)
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((err) => {});
   }, []);
   const fetchData = async () => {
     setLoader(true);

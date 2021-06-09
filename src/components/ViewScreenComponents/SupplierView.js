@@ -45,7 +45,7 @@ function SupplierView() {
         </div>
       ) : (
         <Container>
-          <Title>Category Page</Title>
+          <Title>Supplier Page</Title>
           <Search
             data={supplierData}
             searchKeys={['name', 'companyName']}

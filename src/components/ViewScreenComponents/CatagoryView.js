@@ -74,7 +74,7 @@ function CatagoryView() {
           <ContainerRow full>
             {filteredData.map((value, index) => (
               <ContainerColumn key={index} className='col-md-3' height='50%'>
-                <Card deg='40' nohover>
+                <Card deg='40' nohover single>
                   <Imageview
                     src={value.image}
                     width='50%'
@@ -96,7 +96,10 @@ function CatagoryView() {
                         className='btn btn-danger mr-2 form-control'
                         value={value.name}
                       >
-                        <AiFillDelete size='18' />
+                        <AiFillDelete
+                          size='18'
+                          style={{ marginBottom: '5px' }}
+                        />
                         {'  '}
                         Delete
                       </button>
