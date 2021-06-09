@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { useLocation } from 'react-router';
-import ProductDetail from '../components/ProductEditComponents/ProductDetail';
-import VarientDetail from '../components/ProductEditComponents/VarientDetail';
-import ProductView from '../components/ViewScreenComponents/ProductView';
-import { Card, Container } from '../styles/styled';
+import { useState } from "react";
+import { useEffect } from "react";
+import { useLocation } from "react-router";
+import ProductDetail from "../components/ProductEditComponents/ProductDetail";
+import VarientDetail from "../components/ProductEditComponents/VarientDetail";
+import ProductView from "../components/ViewScreenComponents/ProductView";
+import { Card, Container } from "../styles/styled";
 
 function ProductEditScreen() {
   const product = useLocation();
@@ -18,12 +18,12 @@ function ProductEditScreen() {
   return (
     <>
       <Container>
-        <select className='form-control'>
-          {' '}
-          <option value=''>hello</option>
+        <select className="form-control">
+          {" "}
+          <option value="">hello</option>
         </select>
 
-        {detail && <ProductDetail data={detail} />}
+        {detail && <VarientDetail data={detail} />}
       </Container>
     </>
   );
