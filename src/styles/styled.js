@@ -3,6 +3,16 @@ import { ColorOne, ColorTwo } from './color';
 import logo from '../assets/logo/logo.png';
 import { Link } from 'react-router-dom';
 
+// Data not found
+export const Msg = styled.h1`
+  margin: auto;
+  width: 400px;
+  padding-top: 175px;
+  color: ${ColorOne};
+
+`;
+// End
+
 export const Heading = styled.h2.attrs(() => ({
   className: 'text-primary',
 }))`
@@ -148,7 +158,9 @@ export const CenterAlign = styled.div`
 export const MarginText = styled.p`
   margin-top: 20%;
 `;
-
+export const CenterText = styled.h1`
+  text-align:center`
+;
 export const NavLink = styled(Link)`
   color: white;
   text-decoration: none;
