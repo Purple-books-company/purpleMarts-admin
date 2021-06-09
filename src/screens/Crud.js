@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 
 import { ColorTwo } from '../styles/color';
 import { Card, Container, Title } from '../styles/styled';
-
+import { useLocation } from 'react-router';
 import ProductForm from '../components/ProductForm';
 import CatagoryForm from '../components/CatagoryForm';
 import SupplierForm from '../components/SupplierForm';
 import Nav from '../components/Nav';
-import { useLocation } from 'react-router';
+
 
 function Crud() {
   let initialForm = {
