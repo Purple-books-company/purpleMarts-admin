@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router';
@@ -8,6 +9,7 @@ import SupplierView from '../components/ViewScreenComponents/SupplierView';
 
 import Nav from '../components/Nav';
 
+
 function ViewScreens() {
   const initialState = {
     category: false,
@@ -17,33 +19,38 @@ function ViewScreens() {
   const show = useLocation();
   const [loader, setLoader] = useState(false);
   const [mountView, setMountView] = useState(initialState);
+  const [editData, setEditData] = useState(null);
 
   useEffect(() => {
     setLoader(true);
     let newState = { ...initialState };
 
-    if (show && show.state) newState[show.state.show] = true;
-    else newState['category'] = true;
+    if (show && show.state) {
+      newState[show.state.show] = true;
+      if (show.state.value) {
+        setEditData(show.state.value);
+      }
+    } else newState["category"] = true;
 
     setMountView(newState);
     setLoader(false);
   }, []);
   const handleChange = (e) => {
-    if (e.target.value != '') {
+    if (e.target.value != "") {
       console.log(e.target.value);
 
       let newState = { ...initialState };
       console.log(newState);
       newState[e.target.value] = true;
 
-      console.log('state changed');
+      console.log("state changed");
 
       setMountView(newState);
     }
   };
   return (
     <>
-      <Nav navItems={['Dashboard']} navLinks={['/']} Show={handleChange} />
+      <Nav navItems={["Dashboard"]} navLinks={["/"]} Show={handleChange} />
       {loader ? (
         <Loader />
       ) : (
@@ -69,7 +76,9 @@ function ViewScreens() {
             </select>
           </RightAlign> */}
 
-          {!mountView.supplier && !mountView.product && <CatagoryView />}
+          {!mountView.supplier && !mountView.product && (
+            <CatagoryView data={editData} />
+          )}
           {mountView.supplier && <SupplierView />}
           {mountView.product && <ProductView />}
         </>
