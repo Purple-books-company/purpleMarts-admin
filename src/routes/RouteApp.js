@@ -12,6 +12,7 @@ import { getAllCategory, getAllSupplier } from '../services/AdminServices';
 import { useEffect } from 'react';
 import ViewScreens from '../screens/ViewScreens';
 import { FaWindows } from 'react-icons/fa';
+import ProductEditScreen from '../screens/ProductEditScreen';
 
 function RouteApp() {
   return (
@@ -23,8 +24,12 @@ function RouteApp() {
         <Route path='/nav' component={Nav} />
         <Route path='/bulk' component={Loader} />
         <Route path='/View' component={ViewScreens} />
+
         <Route path='/nodata' component={Nodata} />
         <Route path='/error' component={Error} />
+
+        <Route path="/editproduct" component={ProductEditScreen} />
+
       </Switch>
     </Router>
   );

@@ -72,6 +72,24 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
+    <script>
+       
+      var prevScrollpos = window.pageYOffset;
+        window.onscroll = function () {
+          
+          var currentScrollPos = window.pageYOffset;
+          if (prevScrollpos > currentScrollPos) {
+           let nav = document.querySelector(".navbar");
+            nav.style.opacity=1;
+         
+          } else {
+              let nav = document.querySelector(".navbar");
+            nav.style.opacity = 0;
+           
+          }
+          prevScrollpos = currentScrollPos;
+        }
+    </script>
 </body>
 
 </html>

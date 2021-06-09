@@ -13,6 +13,8 @@ import {
   Submitbutton,
   ErrorText,
   SuccessText,
+  LeftAlign,
+  CenterAlign,
 } from "../styles/styled";
 import {
   CategoryData,
@@ -34,6 +36,10 @@ function ProductForm() {
     supplierId: "",
     images: [],
     discount: "",
+    varients: {
+      size: [],
+      color: [],
+    },
   };
 
   let initialVariant = {
@@ -105,52 +111,73 @@ function ProductForm() {
     setVarient(initialVariant);
   };
 
-  // const removeImage = (e) => {
-  //   console.log(e.target.value);
-  //   let newImages = [];
+  const removeVarient = (e) => {
+    console.log(e.target.value);
+    let newVariant = [];
 
-  //   for (let i in images) {
-  //     if (i == e.target.value) {
-  //       continue;
-  //     }
-  //     newImages.push(images[i]);
-  //   }
-
-  //   console.log(newImages);
-  //   setImages(newImages);
-  // };
+    for (let i in varientDetails) {
+      if (i == e.target.value) {
+        continue;
+      }
+      newVariant.push(varientDetails[i]);
+    }
+    setVarientDetails(newVariant);
+    setVarient(initialVariant);
+  };
 
   const handleSubmit = async () => {
-    // setLoader(true);
-    // let data = detail;
-    // let imageData = [];
-    // for (let i in images) {
-    //   let temp = { image: images[i] };
-    //   imageData.push(temp);
-    // }
-    // data.images = imageData;
-    // const res = await ApiPostService("productAdd", data);
-    // if (res == null) {
-    //   alert("some error occured,try later");
-    //   setLoader(false);
-    //   return;
-    // }
-    // if (res == true) {
-    //   setDetail(initialDetail);
-    //   setSuccessMsg("Product Saved!");
-    //   setImages([]);
-    //   await getAllCategory();
-    // } else if (res != false) {
-    //   let datakey = Object.keys(res);
-    //   let errors;
-    //   console.log(res);
-    //   if (datakey.length > 0) {
-    //     errors = `invalid data on ${datakey.length} fields check!!`;
-    //   }
-    //   setErrorMsg(errors);
-    // }
-    // setLoader(false);
-    // console.log(data);
+    let data = detail;
+    let imageData = [];
+    let sizeData = [];
+    let colorData = [];
+    for (let i in varientDetails) {
+      let tempdata = varientDetails[i];
+      let temp = { image: tempdata.image };
+      imageData.push(temp);
+      temp = {
+        value: tempdata.colorValue,
+        originalPrice: Number(tempdata.colorOriginalPrice),
+        offerPrice: Number(tempdata.sizeOfferPrice),
+      };
+      colorData.push(temp);
+      if (tempdata.sizeValue != "") {
+        temp = {
+          value: tempdata.sizeValue,
+          originalPrice: tempdata.sizeOriginalPrice,
+          offerPrice: tempdata.sizeOfferPrice,
+        };
+        sizeData.push(temp);
+      }
+    }
+    data.varients.size = sizeData;
+    data.varients.color = colorData;
+
+    data.images = imageData;
+    console.log(data);
+
+    const res = await ApiPostService("productAdd", data);
+    if (res == null) {
+      alert("some error occured,try later");
+      setLoader(false);
+      return;
+    }
+    if (res == true) {
+      setDetail(initialDetail);
+      setSuccessMsg("Product Saved!");
+      setVarientDetails([]);
+
+      // await getAllCategory;
+    } else if (res != false) {
+      let datakey = Object.keys(res);
+      let errors;
+      console.log(res);
+      if (datakey.length > 0) {
+        errors = `invalid data on ${datakey.length} fields check!!`;
+      }
+      setErrorMsg(errors);
+    }
+    setLoader(false);
+    console.log(data);
   };
 
   return (
@@ -290,8 +317,10 @@ function ProductForm() {
                 placeholder="Offer price for Color"
               />
             </ContainerColumn>
-            <ContainerColumn className="col-md-4">
-              <div class="input-group mb-2 mr-sm-2">
+
+            <ContainerColumn className='col-md-4'>
+              <div className='input-group mb-2 mr-sm-2'>
+
                 <Input
                   type="text"
                   onChange={handleVariantsChange}
@@ -321,23 +350,42 @@ function ProductForm() {
               />
             </ContainerColumn>
           </ContainerRow>
-          {/* <ContainerRow auto>
-            {images.length > 0 &&
-              images.map((item, index) => (
+          <ContainerRow auto>
+            {varientDetails.length > 0 &&
+              varientDetails.map((item, index) => (
                 <ContainerColumn className="col-md-3">
-                  <Imageview src={item} />
-                  <Formlable>Image Url-{index}</Formlable>
+                  <Imageview src={item.image} />
+
+                  <Formlable>
+                    Image Url-{index}
+                    <br />
+                    color-{item.colorValue}
+                    <br />
+                    colorPrice-{item.colorOriginalPrice}
+                    <br />
+                    colorOffer-{item.colorOfferPrice}
+                    <br />
+                    {item.sizeValue != "" && (
+                      <>
+                        size-{item.sizeValue}
+                        <br />
+                        sizePrice-{item.sizeOriginalPrice}
+                        <br />
+                        sizeOffer-{item.sizeOfferPrice}
+                      </>
+                    )}
+                  </Formlable>
                   <button
                     className="btn btn-danger"
                     name="deleteImage"
                     value={index}
-                    onClick={(e) => removeImage(e)}
+                    onClick={(e) => removeVarient(e)}
                   >
                     Remove
                   </button>
                 </ContainerColumn>
               ))}
-          </ContainerRow> */}
+          </ContainerRow>
           {/* <div class='input-group mb-2 mr-sm-2'>
           <input
             type='text'
