@@ -1,7 +1,4 @@
 import { useState, useEffect } from 'react';
-import { AiOutlineSearch } from 'react-icons/ai';
-import { ColorOne, ColorTwo } from '../styles/color';
-import { ContainerColumn, ContainerRow } from '../styles/styled';
 
 const Search = ({ data, searchKeys, updateFilteredData }) => {
   const [searchVal, setSearchVal] = useState(null);

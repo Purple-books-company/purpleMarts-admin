@@ -317,8 +317,10 @@ function ProductForm() {
                 placeholder="Offer price for Color"
               />
             </ContainerColumn>
-            <ContainerColumn className="col-md-4">
-              <div class="input-group mb-2 mr-sm-2">
+
+            <ContainerColumn className='col-md-4'>
+              <div className='input-group mb-2 mr-sm-2'>
+
                 <Input
                   type="text"
                   onChange={handleVariantsChange}

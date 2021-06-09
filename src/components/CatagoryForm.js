@@ -11,9 +11,10 @@ import {
   Imageview,
   SuccessText,
   ErrorText,
-  Title,
-} from "../styles/styled";
-import Loader from "./Loader";
+
+} from '../styles/styled';
+import Loader from './Loader';
+
 
 function CatagoryForm({ data }) {
   let initialstate = {
@@ -75,7 +76,9 @@ function CatagoryForm({ data }) {
   }
   return (
     <>
-      <ContainerColumn className="col-md-12">
+
+      <ContainerColumn className='col-md-12'>
+
         {loader ? (
           <Loader />
         ) : (

@@ -1,7 +1,5 @@
-import { useState } from 'react';
 import Loading from 'react-loader-spinner';
 import { ColorOne, ColorTwo } from '../styles/color';
-import { Card } from '../styles/styled';
 
 export default function Loader() {
   return (

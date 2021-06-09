@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { ColorOne, ColorTwo } from './color';
-import logo from '../assets/logo/logo.png';
+
 import { Link } from 'react-router-dom';
 
 export const Heading = styled.h2.attrs(() => ({
@@ -153,7 +153,7 @@ export const CenterAlign = styled.div`
   color: ${(props) => props.dark && ColorOne};
   font-weight: 500;
 `;
-export const MarginText = styled.p`
+export const MarginText = styled.div`
   margin-top: 20%;
 `;
 

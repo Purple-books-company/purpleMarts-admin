@@ -1,9 +1,6 @@
 import { Link, NavLink } from 'react-router-dom';
 import '../assets/nav.css';
-import { ColorOne, ColorTwo } from '../styles/color';
-import { ErrorText, Imageview, Title } from '../styles/styled';
-import Logo from '../assets/logo/logo.png';
-import { useState } from 'react';
+import { ColorOne } from '../styles/color';
 
 function Nav({ navItems, navLinks, View, Show }) {
   return (
@@ -55,9 +52,12 @@ function Nav({ navItems, navLinks, View, Show }) {
                   >
                     Show Suppliers
                   </Link>
-                  <a className='dropdown-item' href='#'>
-                    Something else here
-                  </a>
+                  <Link
+                    to={{ pathname: '/View', state: { show: 'product' } }}
+                    className='dropdown-item'
+                  >
+                    Show Products
+                  </Link>
                 </div>
               </li>
             )}
@@ -75,7 +75,7 @@ function Nav({ navItems, navLinks, View, Show }) {
                     color: 'white',
                   }}
                 >
-                  <option style={{ color: ColorOne }} defaultvalue=''>
+                  <option style={{ color: ColorOne }} defaultValue=''>
                     Show Items
                   </option>
                   <option style={{ color: ColorOne }} value='category'>
@@ -92,14 +92,14 @@ function Nav({ navItems, navLinks, View, Show }) {
             )}
 
             {navItems.map((value, index) => (
-              <li className='nav-item  ' id='check'>
+              <li className='nav-item  ' key={index} id='check'>
                 <NavLink
                   to='/'
                   className='nav-link  h6 font-weight-bold'
                   id='check'
                 >
                   {value == 'logout' ? (
-                    <button class='btn btn-danger '>logout</button>
+                    <button className='btn btn-danger '>logout</button>
                   ) : (
                     <p style={{ marginTop: '7px' }}>{value}</p>
                   )}

@@ -1,14 +1,14 @@
-import { useState } from "react";
-import { useEffect } from "react";
-import { useLocation } from "react-router";
-import Loader from "../components/Loader";
-import CatagoryView from "../components/ViewScreenComponents/CatagoryView";
-import ProductView from "../components/ViewScreenComponents/ProductView";
-import SupplierView from "../components/ViewScreenComponents/SupplierView";
-import { SupplierData } from "../services/AdminServices";
-import { ColorOne, ColorTwo } from "../styles/color";
-import { RightAlign } from "../styles/styled";
-import Nav from "../components/Nav";
+
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router';
+import Loader from '../components/Loader';
+import CatagoryView from '../components/ViewScreenComponents/CatagoryView';
+import ProductView from '../components/ViewScreenComponents/ProductView';
+import SupplierView from '../components/ViewScreenComponents/SupplierView';
+
+import Nav from '../components/Nav';
+
 
 function ViewScreens() {
   const initialState = {

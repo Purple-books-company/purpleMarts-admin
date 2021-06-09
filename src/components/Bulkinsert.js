@@ -1,9 +1,7 @@
 import { ExcelSchema } from '../services/AdminServices';
 import readXlsxFile from 'read-excel-file';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Card, Submitbutton, Title } from '../styles/styled';
-import { ColorTwo } from '../styles/color';
-
 
 function Bulkinsert() {
   const [isfile, setFile] = useState(false);
