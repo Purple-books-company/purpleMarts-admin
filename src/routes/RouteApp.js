@@ -3,6 +3,8 @@ import AdminHome from '../screens/AdminHome';
 import Post from '../screens/Post';
 // import SearchTest from '../screens/SearchTest';
 import Nav from '../components/Nav';
+import Nodata from '../components/Nodata';
+import Error from '../components/Error';
 import Crud from '../screens/Crud';
 import Bulkinsert from '../components/Bulkinsert';
 import Loader from '../components/Loader';
@@ -22,7 +24,12 @@ function RouteApp() {
         <Route path='/nav' component={Nav} />
         <Route path='/bulk' component={Loader} />
         <Route path='/View' component={ViewScreens} />
+
+        <Route path='/nodata' component={Nodata} />
+        <Route path='/error' component={Error} />
+
         <Route path="/editproduct" component={ProductEditScreen} />
+
       </Switch>
     </Router>
   );
