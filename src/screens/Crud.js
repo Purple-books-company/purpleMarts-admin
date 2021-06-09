@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-
+import { useEffect, useState } from 'react';
 
 import { ColorTwo } from '../styles/color';
 import { Card, Container, Title } from '../styles/styled';
@@ -8,7 +7,7 @@ import ProductForm from '../components/ProductForm';
 import CatagoryForm from '../components/CatagoryForm';
 import SupplierForm from '../components/SupplierForm';
 import Nav from '../components/Nav';
-
+import { useLocation } from 'react-router';
 
 function Crud() {
   let initialForm = {
@@ -19,7 +18,7 @@ function Crud() {
   const location = useLocation();
 
   const [form, setForm] = useState(initialForm);
-  const [currentForm, setCurrentForm] = useState("");
+  const [currentForm, setCurrentForm] = useState('');
   const [fillForm, setFillForm] = useState(null);
 
   useEffect(() => {
@@ -36,7 +35,7 @@ function Crud() {
   }, []);
 
   const handleChange = (e) => {
-    console.log("change");
+    console.log('change');
     let newState = { ...initialForm };
     newState[e.target.name] = true;
     setForm(newState);
@@ -45,9 +44,8 @@ function Crud() {
 
   return (
     <>
-      <Nav navItems={["Dashboard"]} navLinks={["/"]} />
+      <Nav navItems={['Dashboard']} navLinks={['/']} />
       <Container>
-
         <Card deg='-40' width='100%' height='100%' margin='0%' nohover>
           <div style={{ textAlign: 'right' }}>
             <div className='dropdown'>
@@ -57,9 +55,8 @@ function Crud() {
                 id='dropdownMenuButton'
                 data-toggle='dropdown'
                 aria-haspopup='true'
-
                 style={{ background: ColorTwo }}
-                aria-expanded="false"
+                aria-expanded='false'
               >
                 {currentForm}
               </button>
@@ -68,41 +65,34 @@ function Crud() {
                 className='dropdown-menu'
                 aria-labelledby='dropdownMenuButton'
               >
-
                 <button
-                  class="dropdown-item"
-                  name="newCategory"
-                  value={"catagory section"}
+                  class='dropdown-item'
+                  name='newCategory'
+                  value={'catagory section'}
                   onClick={handleChange}
                 >
                   catagory section
                 </button>
                 <button
-
                   className='dropdown-item'
                   name='newSupplier'
                   value={'supplier section'}
-
                   onClick={handleChange}
                 >
                   supplier section
                 </button>
                 <button
-
                   className='dropdown-item'
                   name='newProduct'
                   value={'product section'}
-
                   onClick={handleChange}
                 >
                   product section
                 </button>
               </div>
             </div>
-
           </div>
           <Title>{currentForm}</Title>
-
 
           {form.newProduct && <ProductForm />}
           {form.newSupplier && <SupplierForm data={fillForm} />}
