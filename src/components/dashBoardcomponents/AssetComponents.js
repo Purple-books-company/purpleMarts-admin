@@ -4,8 +4,6 @@ import {
   ContainerColumn,
   ContainerRow,
   MarginText,
-  Submitbutton,
-  Title,
 } from '../../styles/styled';
 import { FcAddDatabase } from 'react-icons/fc';
 import { FaCubes, FaUsers } from 'react-icons/fa';

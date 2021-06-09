@@ -1,14 +1,8 @@
 import { useEffect, useState } from 'react';
 
-import { ColorOne, ColorTwo } from '../styles/color';
-import {
-  Card,
-  Container,
-  Imageview,
-  RightAlign,
-  Title,
-} from '../styles/styled';
-import logo from '../assets/logo/logo.png';
+import { ColorTwo } from '../styles/color';
+import { Card, Container, Title } from '../styles/styled';
+
 import ProductForm from '../components/ProductForm';
 import CatagoryForm from '../components/CatagoryForm';
 import SupplierForm from '../components/SupplierForm';
@@ -42,10 +36,10 @@ function Crud() {
       <Nav navItems={['Dashboard']} navLinks={['/']} />
       <Container>
         <Card deg='-40' width='100%' height='100%' margin='0%' nohover>
-          <RightAlign>
-            <div class='dropdown'>
+          <div style={{ textAlign: 'right' }}>
+            <div className='dropdown'>
               <button
-                class='btn btn-secondary dropdown-toggle'
+                className='btn btn-secondary dropdown-toggle'
                 type='button'
                 id='dropdownMenuButton'
                 data-toggle='dropdown'
@@ -55,7 +49,10 @@ function Crud() {
               >
                 {currentForm}
               </button>
-              <div class='dropdown-menu' aria-labelledby='dropdownMenuButton'>
+              <div
+                className='dropdown-menu'
+                aria-labelledby='dropdownMenuButton'
+              >
                 <button
                   class='dropdown-item'
                   name='newCatagory'
@@ -65,7 +62,7 @@ function Crud() {
                   catagory section
                 </button>
                 <button
-                  class='dropdown-item'
+                  className='dropdown-item'
                   name='newSupplier'
                   value={'supplier section'}
                   onClick={handleChange}
@@ -73,7 +70,7 @@ function Crud() {
                   supplier section
                 </button>
                 <button
-                  class='dropdown-item'
+                  className='dropdown-item'
                   name='newProduct'
                   value={'product section'}
                   onClick={handleChange}
@@ -82,7 +79,7 @@ function Crud() {
                 </button>
               </div>
             </div>
-          </RightAlign>
+          </div>
           <Title>{currentForm}</Title>
 
           {!form.newSupplier && !form.newCatagory && <ProductForm />}

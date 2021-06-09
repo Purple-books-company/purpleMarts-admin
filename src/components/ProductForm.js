@@ -318,7 +318,7 @@ function ProductForm() {
               />
             </ContainerColumn>
             <ContainerColumn className='col-md-4'>
-              <div class='input-group mb-2 mr-sm-2'>
+              <div className='input-group mb-2 mr-sm-2'>
                 <Input
                   type='text'
                   onChange={handleVariantsChange}

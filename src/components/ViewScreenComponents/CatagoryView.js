@@ -11,10 +11,9 @@ import {
   ContainerRow,
   ErrorText,
   Imageview,
-  LeftAlign,
   Title,
 } from '../../styles/styled';
-import CatagoryForm from '../CatagoryForm';
+
 import { CategoryData, getAllCategory } from '../../services/AdminServices';
 import Loader from '../Loader';
 

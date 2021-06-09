@@ -6,11 +6,8 @@ import { ApiPostService } from '../../services/ApiServices';
 import {
   Card,
   CenterAlign,
-  Container,
   ContainerColumn,
-  ContainerRow,
   Imageview,
-  NavLink,
 } from '../../styles/styled';
 
 function ProductView() {
@@ -30,7 +27,7 @@ function ProductView() {
   return (
     <>
       {productDetail.map((value, index) => (
-        <ContainerColumn height='45%' className='col-md-3'>
+        <ContainerColumn height='45%' key={index} className='col-md-3'>
           <Card deg='65' single>
             <Imageview
               src={value.images[0].image}
