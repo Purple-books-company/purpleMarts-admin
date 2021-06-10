@@ -4,15 +4,16 @@ import { ColorOne, ColorTwo } from '../styles/color';
 export default function Loader() {
   return (
     <>
-      <div>
+      <div
+        style={{
+          width: 'auto',
+          textAlign: 'center',
+          marginTop: '15%',
+        }}
+      >
         {' '}
         <Loading
           type='Circles'
-          style={{
-            maxWidth: '10%',
-            marginLeft: '45%',
-            marginTop: '10%',
-          }}
           secondaryColor={ColorTwo}
           color={ColorOne}
         ></Loading>
@@ -21,3 +22,8 @@ export default function Loader() {
     </>
   );
 }
+//  style={{
+//             maxWidth: '10%',
+//             marginLeft: '45%',
+//             marginTop: '10%',
+//           }}
