@@ -1,41 +1,35 @@
-import { useEffect, useState } from "react";
-import { ColorOne } from "../styles/color";
-import logo from "../assets/logo/logo.png";
+import { useEffect, useState } from 'react';
+import { ColorOne } from '../../styles/color';
+
 import {
-  Card,
-  Container,
   ContainerColumn,
   ContainerRow,
   Input,
-  Title,
   Formlable,
   Imageview,
   Submitbutton,
   ErrorText,
   SuccessText,
-  LeftAlign,
-  CenterAlign,
-} from "../styles/styled";
+} from '../../styles/styled';
 import {
   CategoryData,
   getAllCategory,
   getAllSupplier,
   SupplierData,
-} from "../services/AdminServices";
-import { ApiPostService } from "../services/ApiServices";
-import Loader from "./Loader";
-const imgSrc = require("../assets/logo/logo.png");
+} from '../../services/AdminServices';
+import { ApiPostService } from '../../services/ApiServices';
+import Loader from '../Loader';
 
 function ProductForm() {
   let initialDetail = {
-    name: "",
-    description: "",
-    originalPrice: "",
-    offerPrice: "",
-    categoryId: "",
-    supplierId: "",
+    name: '',
+    description: '',
+    originalPrice: '',
+    offerPrice: '',
+    categoryId: '',
+    supplierId: '',
     images: [],
-    discount: "",
+    discount: '',
     varients: {
       size: [],
       color: [],
@@ -43,13 +37,13 @@ function ProductForm() {
   };
 
   let initialVariant = {
-    sizeValue: "",
-    sizeOriginalPrice: "",
-    sizeOfferPrice: "",
-    colorValue: "",
-    colorOriginalPrice: "",
-    colorOfferPrice: "",
-    image: "",
+    sizeValue: '',
+    sizeOriginalPrice: '',
+    sizeOfferPrice: '',
+    colorValue: '',
+    colorOriginalPrice: '',
+    colorOfferPrice: '',
+    image: '',
   };
 
   const [detail, setDetail] = useState(initialDetail);
@@ -60,8 +54,8 @@ function ProductForm() {
   const [supplierData, setSupplierdata] = useState([]);
 
   const [loader, setLoader] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
-  const [successMsg, setSuccessMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState('');
+  const [successMsg, setSuccessMsg] = useState('');
 
   useEffect(async () => {
     if (CategoryData().length == 0) {
@@ -90,19 +84,19 @@ function ProductForm() {
     for (let i in variantKeys) {
       let key = variantKeys[i];
 
-      if (key === "sizeValue" && variant[key] !== "") {
+      if (key === 'sizeValue' && variant[key] !== '') {
         if (
-          variant["sizeOriginalPrice"] == "" ||
-          variant["sizeOfferPrice"] == ""
+          variant['sizeOriginalPrice'] == '' ||
+          variant['sizeOfferPrice'] == ''
         ) {
-          setErrorMsg("Please enter prices of respective size");
+          setErrorMsg('Please enter prices of respective size');
           return;
         }
       }
 
-      if (variant[key] == "" && i > 2) {
+      if (variant[key] == '' && i > 2) {
         console.log(key);
-        setErrorMsg("Please enter details of " + key);
+        setErrorMsg('Please enter details of ' + key);
         return;
       }
     }
@@ -140,7 +134,7 @@ function ProductForm() {
         offerPrice: Number(tempdata.sizeOfferPrice),
       };
       colorData.push(temp);
-      if (tempdata.sizeValue != "") {
+      if (tempdata.sizeValue != '') {
         temp = {
           value: tempdata.sizeValue,
           originalPrice: tempdata.sizeOriginalPrice,
@@ -155,15 +149,15 @@ function ProductForm() {
     data.images = imageData;
     console.log(data);
 
-    const res = await ApiPostService("productAdd", data);
+    const res = await ApiPostService('productAdd', data);
     if (res == null) {
-      alert("some error occured,try later");
+      alert('some error occured,try later');
       setLoader(false);
       return;
     }
     if (res == true) {
       setDetail(initialDetail);
-      setSuccessMsg("Product Saved!");
+      setSuccessMsg('Product Saved!');
       setVarientDetails([]);
 
       // await getAllCategory;
@@ -186,56 +180,56 @@ function ProductForm() {
       {loader ? (
         <Loader />
       ) : (
-        <ContainerColumn height="auto" className="col-md-12">
+        <ContainerColumn height='auto' className='col-md-12'>
           <ErrorText>{errorMsg}</ErrorText>
           <SuccessText>{successMsg}</SuccessText>
           <ContainerRow>
-            <ContainerColumn height="auto" className="col-md-4" auto>
+            <ContainerColumn height='auto' className='col-md-4' auto>
               <Input
-                type="text"
-                name="name"
+                type='text'
+                name='name'
                 value={detail.name}
-                placeholder="Name of the Product"
+                placeholder='Name of the Product'
                 onChange={handleChange}
               />
             </ContainerColumn>
-            <ContainerColumn className="col-md-4" auto>
+            <ContainerColumn className='col-md-4' auto>
               <Input
-                type="number"
-                name="originalPrice"
+                type='number'
+                name='originalPrice'
                 value={detail.originalPrice}
                 onChange={handleChange}
-                placeholder="Original price"
+                placeholder='Original price'
               />
             </ContainerColumn>
-            <ContainerColumn className="col-md-4" auto>
+            <ContainerColumn className='col-md-4' auto>
               <Input
-                type="number"
-                name="offerPrice"
+                type='number'
+                name='offerPrice'
                 value={detail.offerPrice}
                 onChange={handleChange}
-                placeholder="offer price"
+                placeholder='offer price'
               />
             </ContainerColumn>
-            <ContainerColumn className="col-md-4">
+            <ContainerColumn className='col-md-4'>
               <Input
-                type="number"
+                type='number'
                 onChange={handleChange}
-                name="discount"
+                name='discount'
                 value={detail.discount}
-                placeholder="Discount"
+                placeholder='Discount'
               />
             </ContainerColumn>
-            <ContainerColumn height="auto" className="col-md-4">
+            <ContainerColumn height='auto' className='col-md-4'>
               <select
-                className="form-control"
-                style={{ margin: "2%", borderColor: ColorOne }}
-                name="categoryId"
+                className='form-control'
+                style={{ margin: '2%', borderColor: ColorOne }}
+                name='categoryId'
                 onChange={handleChange}
                 value={detail.categoryId}
-                placeholder="Select Catagory Id"
+                placeholder='Select Catagory Id'
               >
-                <option defaultValue="">Select category Id</option>
+                <option defaultValue=''>Select category Id</option>
                 {catagoryData.map((value, index) => {
                   return (
                     <option value={value.name} key={index}>
@@ -245,15 +239,15 @@ function ProductForm() {
                 })}
               </select>
             </ContainerColumn>
-            <ContainerColumn className="col-md-4">
+            <ContainerColumn className='col-md-4'>
               <select
-                className="form-control"
-                style={{ margin: "2%", borderColor: ColorOne }}
-                name="supplierId"
+                className='form-control'
+                style={{ margin: '2%', borderColor: ColorOne }}
+                name='supplierId'
                 onChange={handleChange}
                 value={detail.supplierId}
               >
-                <option defaultValue="">Select Supplier Id</option>
+                <option defaultValue=''>Select Supplier Id</option>
                 {supplierData.map((value, index) => {
                   return (
                     <option value={value.id} key={value.id}>
@@ -263,97 +257,96 @@ function ProductForm() {
                 })}
               </select>
             </ContainerColumn>
-            <ContainerColumn height="auto" className="col-md-4">
+            <ContainerColumn height='auto' className='col-md-4'>
               <Input
-                type="number"
+                type='number'
                 onChange={handleVariantsChange}
-                name="sizeValue"
+                name='sizeValue'
                 value={variant.sizeValue}
-                placeholder="Size"
+                placeholder='Size'
               />
             </ContainerColumn>
-            <ContainerColumn className="col-md-4">
+            <ContainerColumn className='col-md-4'>
               <Input
-                type="number"
+                type='number'
                 onChange={handleVariantsChange}
-                name="sizeOriginalPrice"
+                name='sizeOriginalPrice'
                 value={variant.sizeOriginalPrice}
-                placeholder="Original price for size"
+                placeholder='Original price for size'
               />
             </ContainerColumn>
-            <ContainerColumn className="col-md-4">
+            <ContainerColumn className='col-md-4'>
               <Input
-                type="number"
+                type='number'
                 onChange={handleVariantsChange}
-                name="sizeOfferPrice"
+                name='sizeOfferPrice'
                 value={variant.sizeOfferPrice}
-                placeholder="Offer price for size"
+                placeholder='Offer price for size'
               />
             </ContainerColumn>
-            <ContainerColumn className="col-md-4">
+            <ContainerColumn className='col-md-4'>
               <Input
-                type="text"
+                type='text'
                 onChange={handleVariantsChange}
-                name="colorValue"
+                name='colorValue'
                 value={variant.colorValue}
-                placeholder="Color"
+                placeholder='Color'
               />
             </ContainerColumn>
-            <ContainerColumn className="col-md-4">
+            <ContainerColumn className='col-md-4'>
               <Input
-                type="number"
+                type='number'
                 onChange={handleVariantsChange}
-                name="colorOriginalPrice"
+                name='colorOriginalPrice'
                 value={variant.colorOriginalPrice}
-                placeholder="Original price for Color"
+                placeholder='Original price for Color'
               />
             </ContainerColumn>
-            <ContainerColumn className="col-md-4">
+            <ContainerColumn className='col-md-4'>
               <Input
-                type="number"
+                type='number'
                 onChange={handleVariantsChange}
-                name="colorOfferPrice"
+                name='colorOfferPrice'
                 value={variant.colorOfferPrice}
-                placeholder="Offer price for Color"
+                placeholder='Offer price for Color'
               />
             </ContainerColumn>
 
             <ContainerColumn className='col-md-4'>
               <div className='input-group mb-2 mr-sm-2'>
-
                 <Input
-                  type="text"
+                  type='text'
                   onChange={handleVariantsChange}
-                  name="image"
+                  name='image'
                   value={variant.image}
-                  placeholder="Image Url "
+                  placeholder='Image Url '
                 />
                 <button
-                  className="btn btn-success"
-                  style={{ margin: "2%" }}
-                  name="addImages"
+                  className='btn btn-success'
+                  style={{ margin: '2%' }}
+                  name='addImages'
                   onClick={handleVariantAdd}
                 >
                   +
                 </button>
               </div>
             </ContainerColumn>
-            <ContainerColumn className="col-md-4" auto>
+            <ContainerColumn className='col-md-4' auto>
               <textarea
-                name="description"
+                name='description'
                 value={detail.description}
                 onChange={handleChange}
-                className="form-control"
-                rows="1"
-                placeholder="Description"
-                style={{ borderColor: ColorOne, margin: "2%" }}
+                className='form-control'
+                rows='1'
+                placeholder='Description'
+                style={{ borderColor: ColorOne, margin: '2%' }}
               />
             </ContainerColumn>
           </ContainerRow>
           <ContainerRow auto>
             {varientDetails.length > 0 &&
               varientDetails.map((item, index) => (
-                <ContainerColumn className="col-md-3">
+                <ContainerColumn className='col-md-3'>
                   <Imageview src={item.image} />
 
                   <Formlable>
@@ -365,7 +358,7 @@ function ProductForm() {
                     <br />
                     colorOffer-{item.colorOfferPrice}
                     <br />
-                    {item.sizeValue != "" && (
+                    {item.sizeValue != '' && (
                       <>
                         size-{item.sizeValue}
                         <br />
@@ -376,8 +369,8 @@ function ProductForm() {
                     )}
                   </Formlable>
                   <button
-                    className="btn btn-danger"
-                    name="deleteImage"
+                    className='btn btn-danger'
+                    name='deleteImage'
                     value={index}
                     onClick={(e) => removeVarient(e)}
                   >

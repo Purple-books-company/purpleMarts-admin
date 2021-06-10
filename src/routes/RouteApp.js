@@ -1,17 +1,16 @@
-import { Link, BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import AdminHome from '../screens/AdminHome';
-import Post from '../screens/Post';
+
 // import SearchTest from '../screens/SearchTest';
 import Nav from '../components/Nav';
 import Nodata from '../components/Nodata';
 import Error from '../components/Error';
 import Crud from '../screens/Crud';
-import Bulkinsert from '../components/Bulkinsert';
+
 import Loader from '../components/Loader';
-import { getAllCategory, getAllSupplier } from '../services/AdminServices';
-import { useEffect } from 'react';
+
 import ViewScreens from '../screens/ViewScreens';
-import { FaWindows } from 'react-icons/fa';
+
 import ProductEditScreen from '../screens/ProductEditScreen';
 
 function RouteApp() {
@@ -28,8 +27,7 @@ function RouteApp() {
         <Route path='/nodata' component={Nodata} />
         <Route path='/error' component={Error} />
 
-        <Route path="/editproduct" component={ProductEditScreen} />
-
+        <Route path='/editproduct' component={ProductEditScreen} />
       </Switch>
     </Router>
   );

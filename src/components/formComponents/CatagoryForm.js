@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { getAllCategory } from '../services/AdminServices';
-import { ApiPostService } from '../services/ApiServices';
-import { ColorOne } from '../styles/color';
+import { getAllCategory } from '../../services/AdminServices';
+import { ApiPostService } from '../../services/ApiServices';
+import { ColorOne } from '../../styles/color';
 import {
   ContainerColumn,
   ContainerRow,
@@ -11,8 +11,8 @@ import {
   Imageview,
   SuccessText,
   ErrorText,
-} from '../styles/styled';
-import Loader from './Loader';
+} from '../../styles/styled';
+import Loader from '../Loader';
 
 function CatagoryForm({ data }) {
   let initialstate = {

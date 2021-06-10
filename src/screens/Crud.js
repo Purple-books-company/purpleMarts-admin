@@ -3,11 +3,10 @@ import { useEffect, useState } from 'react';
 import { ColorTwo } from '../styles/color';
 import { Card, Container, Title } from '../styles/styled';
 import { useLocation } from 'react-router';
-import ProductForm from '../components/ProductForm';
-import CatagoryForm from '../components/CatagoryForm';
-import SupplierForm from '../components/SupplierForm';
+import ProductForm from '../components/formComponents/ProductForm';
+import CatagoryForm from '../components/formComponents/CatagoryForm';
+import SupplierForm from '../components/formComponents/SupplierForm';
 import Nav from '../components/Nav';
-
 
 function Crud() {
   let initialForm = {
@@ -47,7 +46,7 @@ function Crud() {
       <Nav navItems={['Dashboard']} navLinks={['/']} />
       <Container>
         <Card deg='-40' width='100%' height='100%' margin='0%' nohover>
-          <div style={{ textAlign: 'right' }}>
+          <div style={{ textAlign: 'right', margin: '2%' }}>
             <div className='dropdown'>
               <button
                 className='btn btn-secondary dropdown-toggle'
@@ -58,7 +57,7 @@ function Crud() {
                 style={{ background: ColorTwo }}
                 aria-expanded='false'
               >
-                {currentForm}
+                {currentForm || 'select form'}
               </button>
 
               <div
