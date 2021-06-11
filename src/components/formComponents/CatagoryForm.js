@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getAllCategory } from '../../services/AdminServices';
+import { CategoryData, getAllCategory } from '../../services/AdminServices';
 import { ApiPostService } from '../../services/ApiServices';
 import { ColorOne } from '../../styles/color';
 import {
@@ -20,12 +20,15 @@ function CatagoryForm({ data }) {
     description: '',
     name: '',
   };
+
   const [detail, setDetail] = useState(initialstate);
+  const [categoryDetail, setCatagoryDetail] = useState([]);
 
   useEffect(() => {
     if (data != null) {
       setDetail(data);
     }
+    setCatagoryDetail(CategoryData());
   }, [data]);
 
   const [errorMsg, setErrorMsg] = useState('');
@@ -34,6 +37,19 @@ function CatagoryForm({ data }) {
 
   function handleChange(e) {
     setDetail({ ...detail, [e.target.name]: e.target.value });
+    if (e.target.name == 'name') {
+      let flag = false;
+      for (let i in categoryDetail) {
+        if (
+          categoryDetail[i].name.toLowerCase() == e.target.value.toLowerCase()
+        ) {
+          setErrorMsg('Catagory already present');
+          flag = true;
+          return;
+        }
+      }
+      setErrorMsg('');
+    }
   }
   async function handleSubmit() {
     setSuccessMsg('');
