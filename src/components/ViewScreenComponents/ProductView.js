@@ -59,7 +59,7 @@ function ProductView() {
                 </button>
                 <Link
                   to={{ pathname: '/editproduct', state: { product: value } }}
-                  className='btn btn-info form-control'
+                  className='btn purple form-control'
                   name='addImages'
                   value={value}
                 >
