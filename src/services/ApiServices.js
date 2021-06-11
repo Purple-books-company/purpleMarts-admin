@@ -15,7 +15,7 @@ async function ApiGetService(method) {
   } else {
     url += allSupplier;
   }
-  console.log(Token);
+  console.log('getService');
   try {
     const res = await axios.get(url, {
       headers: {
@@ -26,6 +26,7 @@ async function ApiGetService(method) {
       console.log(res);
       return res.data.data;
     } else {
+      console.log('error');
       console.log(res);
       return false;
     }
@@ -46,6 +47,7 @@ async function ApiPostService(method, data) {
   } else {
     url += allProducts;
   }
+  console.log(url);
 
   try {
     const res = await axios.post(url, data, {
@@ -55,12 +57,12 @@ async function ApiPostService(method, data) {
     });
 
     if (res.data.success) {
-      if ((method = 'allProducts')) {
+      if (method == 'allProducts') {
         return res.data.data;
       }
       return true;
     } else {
-      if ((method = 'allProducts')) {
+      if (method == 'allProducts') {
         return false;
       }
       console.log(res.data.err);
