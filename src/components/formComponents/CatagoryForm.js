@@ -43,13 +43,13 @@ function CatagoryForm({ data }) {
 
     if (data != null) {
       console.log('updated');
-    } else {
-      console.log('Added');
+      setLoader(false);
+      return;
     }
+    console.log(detail);
 
-    setLoader(false);
-    return;
     const res = await ApiPostService('categoryAdd', detail);
+    console.log(res);
 
     if (res == null) {
       alert('some error occured,try later');
@@ -57,15 +57,17 @@ function CatagoryForm({ data }) {
       return;
     }
     if (res == true) {
-      setDetail(initialstate);
+      setDetail({ ...initialstate });
       setSuccessMsg('Category saved!');
       await getAllCategory();
     } else if (res != false) {
       let datakey = Object.keys(res);
       let errors;
-      console.log(res);
+
       if (datakey.length > 0) {
-        errors = `invalid data on ${datakey.length} fields check!!`;
+        errors = `invalid data on ${
+          datakey.length
+        } fields check ${datakey.toString()}`;
       }
 
       setErrorMsg(errors);
