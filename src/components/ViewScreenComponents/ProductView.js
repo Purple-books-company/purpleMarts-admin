@@ -18,7 +18,9 @@ function ProductView() {
   async function getDetail() {
     let res = await ApiPostService('allProducts', null);
 
-    if (res && res.length > 0) setProductDetail(res);
+    if (res && res.length > 0) {
+      console.log(res);
+      setProductDetail(res);}
     else {
       alert(res);
     }
@@ -40,7 +42,7 @@ function ProductView() {
               <br />
               sizes:{value.varients.size.length}
               <br />
-              colors:{value.varients.size.length}
+              colors:{value.varients.color.length}
               <div
                 className='input-group mb-2 mr-sm-2'
                 style={{
