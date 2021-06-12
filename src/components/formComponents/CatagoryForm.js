@@ -28,6 +28,8 @@ function CatagoryForm({ data }) {
     if (data != null) {
       setDetail(data);
     }
+  
+   
     setCatagoryDetail(CategoryData());
   }, [data]);
 
