@@ -10,6 +10,7 @@ import {
   Submitbutton,
   ErrorText,
   SuccessText,
+  LeftAlign,
 } from '../../styles/styled';
 import {
   CategoryData,
@@ -26,6 +27,7 @@ function ProductForm() {
     description: '',
     originalPrice: '',
     offerPrice: '',
+    buyingPrice:'',
     categoryId: '',
     supplierId: '',
     images: [],
@@ -40,9 +42,11 @@ function ProductForm() {
     sizeValue: '',
     sizeOriginalPrice: '',
     sizeOfferPrice: '',
+    sizeBuyingPrice:'',
     colorValue: '',
     colorOriginalPrice: '',
     colorOfferPrice: '',
+    colorBuyingPrice:'',
     image: '',
   };
 
@@ -87,19 +91,20 @@ function ProductForm() {
       if (key === 'sizeValue' && variant[key] !== '') {
         if (
           variant['sizeOriginalPrice'] == '' ||
-          variant['sizeOfferPrice'] == ''
+          variant['sizeOfferPrice'] == '' || variant['sizeBuyingPrice']==''
         ) {
           setErrorMsg('Please enter prices of respective size');
           return;
         }
       }
 
-      if (variant[key] == '' && i > 2) {
+      if (variant[key] == '' && i >3) {
         console.log(key);
         setErrorMsg('Please enter details of ' + key);
         return;
       }
     }
+    console.log(variant);
 
     setVarientDetails([...varientDetails, variant]);
     setVarient(initialVariant);
@@ -132,6 +137,7 @@ function ProductForm() {
         value: tempdata.colorValue,
         originalPrice: Number(tempdata.colorOriginalPrice),
         offerPrice: Number(tempdata.sizeOfferPrice),
+        buyingPrice:Number(tempdata.colorBuyingPrice)
       };
       colorData.push(temp);
       if (tempdata.sizeValue != '') {
@@ -139,6 +145,7 @@ function ProductForm() {
           value: tempdata.sizeValue,
           originalPrice: tempdata.sizeOriginalPrice,
           offerPrice: tempdata.sizeOfferPrice,
+          buyingPrice:tempdata.sizeBuyingPrice
         };
         sizeData.push(temp);
       }
@@ -148,6 +155,8 @@ function ProductForm() {
 
     data.images = imageData;
     console.log(data);
+   
+  
 
     const res = await ApiPostService('productAdd', data);
     if (res == null) {
@@ -215,6 +224,15 @@ function ProductForm() {
               <Input
                 type='number'
                 onChange={handleChange}
+                name='buyingPrice'
+                value={detail.buyingPrice}
+                placeholder='buying price'
+              />
+            </ContainerColumn>
+            <ContainerColumn className='col-md-4'>
+              <Input
+                type='number'
+                onChange={handleChange}
                 name='discount'
                 value={detail.discount}
                 placeholder='Discount'
@@ -257,7 +275,19 @@ function ProductForm() {
                 })}
               </select>
             </ContainerColumn>
-            <ContainerColumn height='auto' className='col-md-4'>
+             <ContainerColumn className='col-md-8' auto>
+              <textarea
+                name='description'
+                value={detail.description}
+                onChange={handleChange}
+                className='form-control'
+                rows='1'
+                placeholder='Description'
+                style={{ borderColor: ColorOne,margin:"1%" }}
+              />
+            </ContainerColumn>
+            
+            <ContainerColumn height='auto' className='col-md-3'>
               <Input
                 type='number'
                 onChange={handleVariantsChange}
@@ -266,7 +296,7 @@ function ProductForm() {
                 placeholder='Size'
               />
             </ContainerColumn>
-            <ContainerColumn className='col-md-4'>
+            <ContainerColumn className='col-md-3'>
               <Input
                 type='number'
                 onChange={handleVariantsChange}
@@ -275,7 +305,7 @@ function ProductForm() {
                 placeholder='Original price for size'
               />
             </ContainerColumn>
-            <ContainerColumn className='col-md-4'>
+            <ContainerColumn className='col-md-3'>
               <Input
                 type='number'
                 onChange={handleVariantsChange}
@@ -284,7 +314,16 @@ function ProductForm() {
                 placeholder='Offer price for size'
               />
             </ContainerColumn>
-            <ContainerColumn className='col-md-4'>
+             <ContainerColumn className='col-md-3'>
+              <Input
+                type='number'
+                onChange={handleVariantsChange}
+                name='sizeBuyingPrice'
+                value={variant.sizeBuyingPrice}
+                placeholder='Buying price for size'
+              />
+            </ContainerColumn>
+            <ContainerColumn className='col-md-3'>
               <Input
                 type='text'
                 onChange={handleVariantsChange}
@@ -293,7 +332,7 @@ function ProductForm() {
                 placeholder='Color'
               />
             </ContainerColumn>
-            <ContainerColumn className='col-md-4'>
+            <ContainerColumn className='col-md-3'>
               <Input
                 type='number'
                 onChange={handleVariantsChange}
@@ -302,13 +341,22 @@ function ProductForm() {
                 placeholder='Original price for Color'
               />
             </ContainerColumn>
-            <ContainerColumn className='col-md-4'>
+            <ContainerColumn className='col-md-3'>
               <Input
                 type='number'
                 onChange={handleVariantsChange}
                 name='colorOfferPrice'
                 value={variant.colorOfferPrice}
                 placeholder='Offer price for Color'
+              />
+            </ContainerColumn>
+              <ContainerColumn className='col-md-3'>
+              <Input
+                type='number'
+                onChange={handleVariantsChange}
+                name='colorBuyingPrice'
+                value={variant.colorBuyingPrice}
+                placeholder='Buying price for Color'
               />
             </ContainerColumn>
 
@@ -331,17 +379,7 @@ function ProductForm() {
                 </button>
               </div>
             </ContainerColumn>
-            <ContainerColumn className='col-md-4' auto>
-              <textarea
-                name='description'
-                value={detail.description}
-                onChange={handleChange}
-                className='form-control'
-                rows='1'
-                placeholder='Description'
-                style={{ borderColor: ColorOne, margin: '2%' }}
-              />
-            </ContainerColumn>
+           
           </ContainerRow>
           <ContainerRow auto>
             {varientDetails.length > 0 &&

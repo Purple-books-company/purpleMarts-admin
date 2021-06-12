@@ -167,12 +167,7 @@ export const MarginText = styled.div`
   margin-top: 20%;
 `;
 export const CenterText = styled.h1`
-  text-align:center`
+  text-align:center;`
 ;
-export const NavLink = styled(Link)`
-  color: white;
-  text-decoration: none;
-  &:hover {
-    color: ${ColorOne};
-  }
-`;
+
+
