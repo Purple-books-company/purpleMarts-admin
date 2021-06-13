@@ -27,7 +27,7 @@ function Nav({ navItems, navLinks, View, Show }) {
           <ul className='navbar-nav  mx-auto mt-2 nav-fill w-75'>
             {View && (
               <li className='nav-item dropdown'>
-                <a
+                <span
                   href='#'
                   className='nav-link  mt-2  h6 font-weight-bold'
                   id='navbarDropdown'
@@ -37,7 +37,7 @@ function Nav({ navItems, navLinks, View, Show }) {
                   aria-expanded='false'
                 >
                   View All
-                </a>
+                </span>
                 <div className='dropdown-menu' aria-labelledby='navbarDropdown'>
                   <Link
                     to={{ pathname: '/View', state: { show: 'category' } }}
@@ -98,7 +98,7 @@ function Nav({ navItems, navLinks, View, Show }) {
                   className='nav-link  h6 font-weight-bold'
                   id='check'
                 >
-                  {value == 'logout' ? (
+                  {value === 'logout' ? (
                     <button className='btn btn-danger '>logout</button>
                   ) : (
                     <p style={{ marginTop: '7px' }}>{value}</p>

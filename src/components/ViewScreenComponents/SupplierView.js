@@ -13,17 +13,20 @@ function SupplierView() {
   const [errorMsg, setErrorMsg] = useState('');
   const [loader, setLoader] = useState(false);
 
-  useEffect(async () => {
-    let data = SupplierData();
-    if (data.length === 0) {
-      setLoader(true);
-      await getAllSupplier();
-      data = SupplierData();
-    }
+  useEffect(() => {
+    async function onMount() {
+      let data = SupplierData();
+      if (data.length === 0) {
+        setLoader(true);
+        await getAllSupplier();
+        data = SupplierData();
+      }
 
-    setSupplierData(data);
-    setFilteredData(data);
-    setLoader(false);
+      setSupplierData(data);
+      setFilteredData(data);
+      setLoader(false);
+    }
+    onMount();
   }, []);
 
   const updateFilteredData = (filterData) => {

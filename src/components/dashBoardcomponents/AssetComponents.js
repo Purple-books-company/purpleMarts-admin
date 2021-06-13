@@ -1,60 +1,91 @@
 import {
   Card,
-  Container,
+  
   ContainerColumn,
   ContainerRow,
-  MarginText,
+  MarginAround,
+
 } from '../../styles/styled';
-import { FcAddDatabase } from 'react-icons/fc';
-import { FaCubes, FaUsers } from 'react-icons/fa';
+
 import { Link } from 'react-router-dom';
-import { ColorTwo } from '../../styles/color';
+import { ColorOne, ColorTwo } from '../../styles/color';
 
 function AssetComponents({ catCount, supCount }) {
   return (
-    <Container>
-      <Card deg='45'>
-        <ContainerRow full>
-          <ContainerColumn className='col-3'>
-            <MarginText>
-              <b>NEW</b>
-              <br />
-              <Link to='/post'>
-                <FcAddDatabase
-                  style={{ width: '50%', height: '20%', marginTop: '15%' }}
-                />
+    <>
+    <ContainerRow height="20%">
+          <ContainerColumn className='col-md-3 col-sm-6 col-xs-6'>
+            
+           
+          
+                <Card single>
+                  <MarginAround>
+                     <i class="fa fa-database mr-2" style={{color:ColorOne}} aria-hidden="true"></i>
+              <Link to='/post' style={{textDecoration:"none" ,color:ColorTwo}}>
+              
+           
+                New
               </Link>
-            </MarginText>
+              </MarginAround>
+              
+              </Card>
+          
+           
           </ContainerColumn>
-          <ContainerColumn className='col-3'>
-            <MarginText>
-              <FaCubes style={{ width: '30%', height: '10%' }} />
+          <ContainerColumn className='col-md-3 col-sm-6 col-xs-6'>
+            <Card single>
+              <MarginAround>
 
-              <br />
-              <h1>{catCount}</h1>
+           
+        <i class="fa fa-cubes mr-2" style={{color:ColorOne}} aria-hidden="true"></i>
 
-              <p style={{ textDecoration: 'none', color: ColorTwo }}>
-                Category
-              </p>
-            </MarginText>
-          </ContainerColumn>
-          <ContainerColumn className='col-3'>
-            <MarginText>
-              <FaUsers style={{ width: '30%', height: '10%' }} />
-              <br />
-              <h1>{supCount}</h1>
+            
 
-              <p style={{ textDecoration: 'none', color: ColorTwo }}>
-                Suppliers
-              </p>
-            </MarginText>
+              <span style={{ textDecoration: 'none', color: ColorOne }}>
+                Category-{catCount}
+              </span>
+              </MarginAround>
+                </Card>
+            
+           
           </ContainerColumn>
-          <ContainerColumn className='col-3'>
-            <MarginText>hell</MarginText>
+          <ContainerColumn className='col-md-3 col-sm-6 col-xs-6'>
+            <Card single>
+              <MarginAround>
+
+           
+            <i class="fa fa-users mr-2" style={{color:ColorOne}} aria-hidden="true"></i>
+            
+           
+              
+
+              <span style={{ textDecoration: 'none', color: ColorTwo }}>
+                Suppliers{supCount}
+              </span>
+              </MarginAround>
+               </Card>
+          
           </ContainerColumn>
-        </ContainerRow>
-      </Card>
-    </Container>
+          <ContainerColumn className='col-md-3 col-sm-6 col-xs-6'>
+            <Card single>
+              <MarginAround>
+
+           
+            
+         <i class="fa fa-tags mr-2" style={{color:ColorOne}} aria-hidden="true"></i>
+           
+              
+
+              <span style={{ textDecoration: 'none', color: ColorTwo }}>
+               products-4
+              </span>
+              </MarginAround>
+               </Card>
+          
+          </ContainerColumn>
+          </ContainerRow>
+          </>
+      
   );
 }
 export default AssetComponents;

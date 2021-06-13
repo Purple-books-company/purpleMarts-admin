@@ -10,7 +10,7 @@ const allProducts = `/api/product/all/`;
 
 async function ApiGetService(method) {
   let url = API;
-  if (method == 'allCategory') {
+  if (method === 'allCategory') {
     url = url + allCategory;
   } else {
     url += allSupplier;
@@ -38,11 +38,11 @@ async function ApiGetService(method) {
 
 async function ApiPostService(method, data) {
   let url = API;
-  if (method == 'supplierAdd') {
+  if (method === 'supplierAdd') {
     url += addSupplier;
-  } else if (method == 'categoryAdd') {
+  } else if (method === 'categoryAdd') {
     url += addCatagory;
-  } else if (method == 'productAdd') {
+  } else if (method === 'productAdd') {
     url += addProduct;
   } else {
     url += allProducts;
@@ -57,12 +57,12 @@ async function ApiPostService(method, data) {
     });
 
     if (res.data.success) {
-      if (method == 'allProducts') {
+      if (method === 'allProducts') {
         return res.data.data;
       }
       return true;
     } else {
-      if (method == 'allProducts') {
+      if (method === 'allProducts') {
         return false;
       }
       console.log(res.data.err);

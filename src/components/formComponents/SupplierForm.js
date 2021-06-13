@@ -37,7 +37,7 @@ function SupplierForm({ data }) {
   }
 
   useEffect(() => {
-    if (data != null) {
+    if (data !== null) {
       setDetail(data);
     }
   }, []);
@@ -71,17 +71,17 @@ function SupplierForm({ data }) {
 
     const res = await ApiPostService('supplierAdd', initialDetail);
     console.log(res);
-    if (res == null) {
+    if (res === null) {
       alert('some error occured,try later');
       setLoader(false);
       return;
     }
-    if (res == true) {
+    if (res === true) {
       //success
       setDetail(initialDetail);
       setSuccessMsg('Supplier saved');
       await getAllSupplier();
-    } else if (res != false) {
+    } else if (res !== false) {
       let datakey = Object.keys(res);
       let errors;
       console.log(res);
@@ -212,7 +212,7 @@ function SupplierForm({ data }) {
                   placeholder='deliveryname'
                   value={detail.deliveryName}
                   required={true}
-                  required
+                 
                 />
               </ContainerColumn>
 

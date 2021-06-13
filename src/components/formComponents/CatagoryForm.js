@@ -39,14 +39,14 @@ function CatagoryForm({ data }) {
 
   function handleChange(e) {
     setDetail({ ...detail, [e.target.name]: e.target.value });
-    if (e.target.name == 'name') {
-      let flag = false;
+    if (e.target.name === 'name') {
+     
       for (let i in categoryDetail) {
         if (
-          categoryDetail[i].name.toLowerCase() == e.target.value.toLowerCase()
+          categoryDetail[i].name.toLowerCase() === e.target.value.toLowerCase()
         ) {
           setErrorMsg('Catagory already present');
-          flag = true;
+        
           return;
         }
       }
@@ -59,7 +59,7 @@ function CatagoryForm({ data }) {
     setLoader(true);
     //change initial
 
-    if (data != null) {
+    if (data !== null) {
       console.log('updated');
       setLoader(false);
       return;
@@ -69,16 +69,16 @@ function CatagoryForm({ data }) {
     const res = await ApiPostService('categoryAdd', detail);
     console.log(res);
 
-    if (res == null) {
+    if (res === null) {
       alert('some error occured,try later');
       setLoader(false);
       return;
     }
-    if (res == true) {
+    if (res === true) {
       setDetail({ ...initialstate });
       setSuccessMsg('Category saved!');
       await getAllCategory();
-    } else if (res != false) {
+    } else if (res !== false) {
       let datakey = Object.keys(res);
       let errors;
 
