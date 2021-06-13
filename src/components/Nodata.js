@@ -1,4 +1,4 @@
-import { ColorOne, ColorTwo } from '../styles/color';
+
 import { FcDeleteDatabase } from "react-icons/fc";
 import {Msg} from '../styles/styled';
 function Nodata(){

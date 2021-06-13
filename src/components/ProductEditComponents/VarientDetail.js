@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import {
   Card,
-  Container,
   ContainerColumn,
   ContainerRow,
   Imageview,
@@ -46,7 +45,7 @@ function VarientDetail({ data }) {
     let index = e.target.value;
     let tempData = [];
     for (let i in detail) {
-      if (i == index) {
+      if (i === index) {
         continue;
       }
       tempData.push(detail[i]);
@@ -168,9 +167,7 @@ function VarientDetail({ data }) {
             onChange={handleChange}
           />
         </ContainerColumn>
-        <button onClick='add' onClick={handleVarient}>
-          add
-        </button>
+        <button onClick={handleVarient}>add</button>
       </ContainerRow>
     </>
   );

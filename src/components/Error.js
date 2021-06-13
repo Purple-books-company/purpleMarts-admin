@@ -1,4 +1,4 @@
-import { ColorOne, ColorTwo } from '../styles/color';
+
 import { FcExpired } from "react-icons/fc";
 import {Msg,CenterText} from '../styles/styled';
 function Error(){

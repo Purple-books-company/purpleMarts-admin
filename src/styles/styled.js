@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { ColorOne, ColorTwo } from './color';
 
-import { Link } from 'react-router-dom';
+
 
 // Data not found
 export const Msg = styled.h1`
@@ -42,7 +42,7 @@ export const Card = styled.div`
   height: ${(props) => (props.height ? props.height : '94%')};
   text-align: center;
 
-  margin: ${(props) => (props.margin ? props.margin : '3%')};
+  margin: ${(props) => (props.margin ? props.margin : '1.5%')};
   overflow: scroll;
 
   &::-webkit-scrollbar {
@@ -74,9 +74,9 @@ export const Container = styled.div.attrs(() => ({
   max-height: auto;
 `;
 
-const Testing = ({ className, ...rest }) => (
-  <div className={className} {...rest} />
-);
+// const Testing = ({ className, ...rest }) => (
+//   <div className={className} {...rest} />
+// );
 export const ContainerRow = styled.div.attrs((props) => ({
   className: 'row',
 }))`
@@ -169,5 +169,6 @@ export const MarginText = styled.div`
 export const CenterText = styled.h1`
   text-align:center;`
 ;
-
+export const MarginAround =styled.div`
+margin:2%`;
 

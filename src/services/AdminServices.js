@@ -48,11 +48,11 @@ export const ExcelSchema = {
 let Catagoryarray = [];
 let Supplierarray = [];
 
-async function getAllData() {
-  await getAllCategory();
-  await getAllSupplier();
-  await getAllProduct();
-}
+// async function getAllData() {
+//   await getAllCategory();
+//   await getAllSupplier();
+//   await getAllProduct();
+// }
 
 export async function getAllCategory() {
   let res = await ApiGetService('allCategory');

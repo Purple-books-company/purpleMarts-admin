@@ -36,7 +36,7 @@ function ViewScreens() {
     setLoader(false);
   }, []);
   const handleChange = (e) => {
-    if (e.target.value != "") {
+    if (e.target.value !== "") {
       console.log(e.target.value);
 
       let newState = { ...initialState };

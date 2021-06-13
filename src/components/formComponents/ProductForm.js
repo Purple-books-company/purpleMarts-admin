@@ -10,7 +10,6 @@ import {
   Submitbutton,
   ErrorText,
   SuccessText,
-  LeftAlign,
 } from '../../styles/styled';
 import {
   CategoryData,
@@ -27,7 +26,7 @@ function ProductForm() {
     description: '',
     originalPrice: '',
     offerPrice: '',
-    buyingPrice:'',
+    buyingPrice: '',
     categoryId: '',
     supplierId: '',
     images: [],
@@ -42,11 +41,11 @@ function ProductForm() {
     sizeValue: '',
     sizeOriginalPrice: '',
     sizeOfferPrice: '',
-    sizeBuyingPrice:'',
+    sizeBuyingPrice: '',
     colorValue: '',
     colorOriginalPrice: '',
     colorOfferPrice: '',
-    colorBuyingPrice:'',
+    colorBuyingPrice: '',
     image: '',
   };
 
@@ -61,17 +60,20 @@ function ProductForm() {
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
 
-  useEffect(async () => {
-    if (CategoryData().length == 0) {
-      await getAllCategory();
-    }
-    if (SupplierData().length == 0) {
-      await getAllSupplier();
-    }
-    setCategorydata(CategoryData());
-    console.log(CategoryData());
+  useEffect(() => {
+    async function OnMount() {
+      if (CategoryData().length === 0) {
+        await getAllCategory();
+      }
+      if (SupplierData().length === 0) {
+        await getAllSupplier();
+      }
+      setCategorydata(CategoryData());
+      console.log(CategoryData());
 
-    setSupplierdata(SupplierData());
+      setSupplierdata(SupplierData());
+    }
+    OnMount();
   }, []);
 
   const handleChange = (e) => {
@@ -90,15 +92,16 @@ function ProductForm() {
 
       if (key === 'sizeValue' && variant[key] !== '') {
         if (
-          variant['sizeOriginalPrice'] == '' ||
-          variant['sizeOfferPrice'] == '' || variant['sizeBuyingPrice']==''
+          variant['sizeOriginalPrice'] === '' ||
+          variant['sizeOfferPrice'] === '' ||
+          variant['sizeBuyingPrice'] === ''
         ) {
           setErrorMsg('Please enter prices of respective size');
           return;
         }
       }
 
-      if (variant[key] == '' && i >3) {
+      if (variant[key] === '' && i > 3) {
         console.log(key);
         setErrorMsg('Please enter details of ' + key);
         return;
@@ -115,7 +118,7 @@ function ProductForm() {
     let newVariant = [];
 
     for (let i in varientDetails) {
-      if (i == e.target.value) {
+      if (i === e.target.value) {
         continue;
       }
       newVariant.push(varientDetails[i]);
@@ -137,15 +140,15 @@ function ProductForm() {
         value: tempdata.colorValue,
         originalPrice: Number(tempdata.colorOriginalPrice),
         offerPrice: Number(tempdata.sizeOfferPrice),
-        buyingPrice:Number(tempdata.colorBuyingPrice)
+        buyingPrice: Number(tempdata.colorBuyingPrice),
       };
       colorData.push(temp);
-      if (tempdata.sizeValue != '') {
+      if (tempdata.sizeValue !== '') {
         temp = {
           value: tempdata.sizeValue,
           originalPrice: tempdata.sizeOriginalPrice,
           offerPrice: tempdata.sizeOfferPrice,
-          buyingPrice:tempdata.sizeBuyingPrice
+          buyingPrice: tempdata.sizeBuyingPrice,
         };
         sizeData.push(temp);
       }
@@ -155,22 +158,20 @@ function ProductForm() {
 
     data.images = imageData;
     console.log(data);
-   
-  
 
     const res = await ApiPostService('productAdd', data);
-    if (res == null) {
+    if (res === null) {
       alert('some error occured,try later');
       setLoader(false);
       return;
     }
-    if (res == true) {
+    if (res === true) {
       setDetail(initialDetail);
       setSuccessMsg('Product Saved!');
       setVarientDetails([]);
 
       // await getAllCategory;
-    } else if (res != false) {
+    } else if (res !== false) {
       let datakey = Object.keys(res);
       let errors;
       console.log(res);
@@ -275,7 +276,7 @@ function ProductForm() {
                 })}
               </select>
             </ContainerColumn>
-             <ContainerColumn className='col-md-8' auto>
+            <ContainerColumn className='col-md-8' auto>
               <textarea
                 name='description'
                 value={detail.description}
@@ -283,10 +284,10 @@ function ProductForm() {
                 className='form-control'
                 rows='1'
                 placeholder='Description'
-                style={{ borderColor: ColorOne,margin:"1%" }}
+                style={{ borderColor: ColorOne, margin: '1%' }}
               />
             </ContainerColumn>
-            
+
             <ContainerColumn height='auto' className='col-md-3'>
               <Input
                 type='number'
@@ -314,7 +315,7 @@ function ProductForm() {
                 placeholder='Offer price for size'
               />
             </ContainerColumn>
-             <ContainerColumn className='col-md-3'>
+            <ContainerColumn className='col-md-3'>
               <Input
                 type='number'
                 onChange={handleVariantsChange}
@@ -350,7 +351,7 @@ function ProductForm() {
                 placeholder='Offer price for Color'
               />
             </ContainerColumn>
-              <ContainerColumn className='col-md-3'>
+            <ContainerColumn className='col-md-3'>
               <Input
                 type='number'
                 onChange={handleVariantsChange}
@@ -379,7 +380,6 @@ function ProductForm() {
                 </button>
               </div>
             </ContainerColumn>
-           
           </ContainerRow>
           <ContainerRow auto>
             {varientDetails.length > 0 &&
@@ -396,7 +396,7 @@ function ProductForm() {
                     <br />
                     colorOffer-{item.colorOfferPrice}
                     <br />
-                    {item.sizeValue != '' && (
+                    {item.sizeValue !== '' && (
                       <>
                         size-{item.sizeValue}
                         <br />

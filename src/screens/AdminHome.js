@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import { Link } from 'react-router-dom';
 import AssetComponents from '../components/dashBoardcomponents/AssetComponents';
 
 import Loader from '../components/Loader';
@@ -18,7 +17,10 @@ import {
   ContainerColumn,
 } from '../styles/styled';
 import Nav from '../components/Nav';
-import { FaCommentsDollar } from 'react-icons/fa';
+
+import OrderDashBoard from '../components/dashBoardcomponents/OrderDashBoard';
+import TopCartDashBoard from '../components/dashBoardcomponents/TopCartDashboard';
+import { ColorOne } from '../styles/color';
 
 function AdminHome() {
   const [categoryData, setCategoryData] = useState();
@@ -38,7 +40,7 @@ function AdminHome() {
   }, []);
   const fetchData = async () => {
     setLoader(true);
-    if (CategoryData().length == 0) {
+    if (CategoryData().length === 0) {
       await getAllCategory();
       await getAllSupplier();
     }
@@ -54,59 +56,35 @@ function AdminHome() {
         {loader ? (
           <Loader />
         ) : (
-          <ContainerRow dynamic>
-            <ContainerColumn style={{ height: '25%' }} className='col-md-6'>
-              <Link to='/post'>
-                <Card
-                  deg='45'
-                  onClick={() => {
-                    console.log('clicking');
-                  }}
-                >
-                  post
-                </Card>
-              </Link>
-            </ContainerColumn>
-            <ContainerColumn style={{ height: '25%' }} className='col-md-6'>
-              <AssetComponents
-                catCount={categoryData}
-                supCount={supplierData}
-              />
-            </ContainerColumn>
+          <>
+            <ContainerRow dynamic>
+              <ContainerColumn height='50%' className='col-md-7'>
+                <OrderDashBoard />
+              </ContainerColumn>
+              <ContainerColumn height='50%' className='col-md-5'>
+                <TopCartDashBoard />
+              </ContainerColumn>
 
-            <ContainerColumn
-              height='50%'
-              style={{ marginBottom: '1%' }}
-              className='col-md-12'
-            >
-              <AssetComponents
-                catCount={categoryData}
-                supCount={supplierData}
-              />
-            </ContainerColumn>
-
-            <ContainerColumn style={{ height: '25%' }} className='col-md-4'>
-              <AssetComponents
-                catCount={categoryData}
-                supCount={supplierData}
-              />
-            </ContainerColumn>
-            <ContainerColumn style={{ height: '25%' }} className='col-md-4'>
-              <AssetComponents
-                catCount={categoryData}
-                supCount={supplierData}
-              />
-            </ContainerColumn>
-            <ContainerColumn
-              style={{ height: '25%', marginBottom: '4%' }}
-              className='col-md-4'
-            >
-              <AssetComponents
-                catCount={categoryData}
-                supCount={supplierData}
-              />
-            </ContainerColumn>
-          </ContainerRow>
+              <ContainerColumn height='10%' className='col-md-12 col-sm-12'>
+                <AssetComponents
+                  catCount={categoryData}
+                  supCount={supplierData}
+                />
+              </ContainerColumn>
+            </ContainerRow>
+            <ContainerRow>
+              <ContainerColumn height='100%' className='col-md-4'>
+                <Card></Card>
+              </ContainerColumn>
+              <ContainerColumn height='100%' className='col-md-4'>
+                <Card></Card>
+              </ContainerColumn>
+              <ContainerColumn
+                height='100%'
+                className='col-md-4'
+              ></ContainerColumn>
+            </ContainerRow>
+          </>
         )}
       </Container>
     </>

@@ -4,16 +4,16 @@ import { CategoryData, SupplierData } from '../../services/AdminServices';
 import {
   Card,
   CenterAlign,
-  Container,
+ 
   ContainerColumn,
   ContainerRow,
   Input,
-  LeftAlign,
+ 
   Submitbutton,
 } from '../../styles/styled';
 
 function ProductDetail({ data }) {
-  const [detail, setDetail] = useState({});
+  const [detail, setDetail] = useState(null);
   const [supplierData, setSupplierData] = useState([]);
   const [catagoryData, setCatagoryData] = useState([]);
   useEffect(() => {
@@ -61,7 +61,7 @@ function ProductDetail({ data }) {
             <CenterAlign dark>Supplier</CenterAlign>
             <select name='supplierId' className='form-control'>
               {supplierData.map((value, index) => {
-                if (value.id == detail.supplierId)
+                if (value.id === detail.supplierId)
                   return (
                     <option key={index} defaultValue={value.id}>
                       {value.name}
@@ -80,7 +80,7 @@ function ProductDetail({ data }) {
             <CenterAlign dark>Catagory</CenterAlign>
             <select className='form-control' style={{ margin: '2%' }}>
               {catagoryData.map((value, index) => {
-                if (value.id == detail.categoryId)
+                if (value.id === detail.categoryId)
                   return (
                     <option key={index} defaultValue={value.name}>
                       {value.name}
