@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 
-
 import AssetComponents from '../components/dashBoardcomponents/AssetComponents';
 
 import Loader from '../components/Loader';
@@ -21,6 +20,7 @@ import Nav from '../components/Nav';
 
 import OrderDashBoard from '../components/dashBoardcomponents/OrderDashBoard';
 import TopCartDashBoard from '../components/dashBoardcomponents/TopCartDashboard';
+import { ColorOne } from '../styles/color';
 
 function AdminHome() {
   const [categoryData, setCategoryData] = useState();
@@ -56,48 +56,35 @@ function AdminHome() {
         {loader ? (
           <Loader />
         ) : (
-          <ContainerRow dynamic>
-            <ContainerColumn height="50%" className='col-md-7'>
-            
-               
-              <OrderDashBoard />
-                
-              
-            </ContainerColumn>
-            <ContainerColumn height="50%" className='col-md-5'>
-              <ContainerColumn className="col-md-12">
-               <TopCartDashBoard />
+          <>
+            <ContainerRow dynamic>
+              <ContainerColumn height='50%' className='col-md-7'>
+                <OrderDashBoard />
               </ContainerColumn>
-            
-              
-            </ContainerColumn>
+              <ContainerColumn height='50%' className='col-md-5'>
+                <TopCartDashBoard />
+              </ContainerColumn>
 
-            <ContainerColumn
-              height='10%'
-              style={{ marginBottom: '1%' }}
-              className='col-md-12'
-            >
-            <AssetComponents
-                catCount={categoryData}
-                supCount={supplierData}
-              />
-            </ContainerColumn>
-
-            <ContainerColumn style={{ height: '25%' }} className='col-md-4'>
-             hello
-            </ContainerColumn>
-            <ContainerColumn style={{ height: '25%' }} className='col-md-4'>
-             <Card>
-
-             </Card>
-            </ContainerColumn>
-            <ContainerColumn
-              style={{ height: '25%', marginBottom: '4%' }}
-              className='col-md-4'
-            >
-            
-            </ContainerColumn>
-          </ContainerRow>
+              <ContainerColumn height='10%' className='col-md-12 col-sm-12'>
+                <AssetComponents
+                  catCount={categoryData}
+                  supCount={supplierData}
+                />
+              </ContainerColumn>
+            </ContainerRow>
+            <ContainerRow>
+              <ContainerColumn height='100%' className='col-md-4'>
+                <Card></Card>
+              </ContainerColumn>
+              <ContainerColumn height='100%' className='col-md-4'>
+                <Card></Card>
+              </ContainerColumn>
+              <ContainerColumn
+                height='100%'
+                className='col-md-4'
+              ></ContainerColumn>
+            </ContainerRow>
+          </>
         )}
       </Container>
     </>
