@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Token } from '../env';
+// import { Token } from '../env';
 const API = `http://purplemart.pythonanywhere.com`;
 const allCategory = `/api/category/all/`;
 const addSupplier = `/api/supplier/add/`;
@@ -7,6 +7,10 @@ const addCatagory = `/api/category/add/`;
 const addProduct = `/api/product/add/`;
 const allSupplier = `/api/supplier/all/`;
 const allProducts = `/api/product/all/`;
+
+const Token = process.env.REACT_APP_TOKEN;
+
+console.log(Token);
 
 async function ApiGetService(method) {
   let url = API;

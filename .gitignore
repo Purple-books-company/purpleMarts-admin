@@ -8,7 +8,7 @@ env.js
 
 # testing
 /coverage
-
+.env
 # production
 /build
 
