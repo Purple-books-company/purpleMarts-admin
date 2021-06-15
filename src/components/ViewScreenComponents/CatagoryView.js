@@ -17,6 +17,7 @@ import {
 
 import { CategoryData, getAllCategory } from '../../services/AdminServices';
 import Loader from '../Loader';
+import Nodata from '../Nodata';
 
 function CatagoryView() {
   const [catagoryData, setCatagoryData] = useState([]);
@@ -72,6 +73,7 @@ function CatagoryView() {
           <ErrorText>{errorMsg}</ErrorText>
 
           <ContainerRow dynamic>
+            {filteredData.length==0 && <Nodata />}
             {filteredData.map((value, index) => (
               <ContainerColumn key={index} className='col-md-3 col-sm-6 col-xs-8' height='50%'>
                 <Card deg='40' nohover single>

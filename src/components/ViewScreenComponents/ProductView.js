@@ -10,6 +10,7 @@ import {
   Imageview,
   ContainerRow,
 } from '../../styles/styled';
+import Nodata from '../Nodata';
 
 function ProductView() {
   const [productDetail, setProductDetail] = useState([]);
@@ -23,13 +24,14 @@ function ProductView() {
       console.log(res);
       setProductDetail(res);
     } else {
-      alert(res);
+      alert("no products found");
     }
   }
 
   return (
     <>
       <ContainerRow full>
+        {productDetail.length==0 && <Nodata />}
         {productDetail.map((value, index) => (
           <ContainerColumn height='45%' key={index} className='col-md-3'>
             <Card deg='65' single>

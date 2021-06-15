@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 
 import Search from '../Search';
 import Loader from '../Loader';
+import Nodata from '../Nodata';
 
 function SupplierView() {
   const [supplierData, setSupplierData] = useState([]);
@@ -68,6 +69,7 @@ function SupplierView() {
               </tr>
             </thead>
             <tbody>
+              {filteredData.length==0 && <Nodata />}
               {filteredData.map((value, index) => (
                 <tr key={index}>
                   <th scope='row'>{value.name}</th>
