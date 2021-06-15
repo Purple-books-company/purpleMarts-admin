@@ -52,6 +52,14 @@ function CatagoryForm({ data }) {
       }
       setErrorMsg('');
     }
+    if(e.target.name==="image"){
+      if(e.target.value.length>199){
+            setErrorMsg('Image link is more then 200 character');
+      }
+      else{
+        setErrorMsg("");
+      }
+    }
   }
   async function handleSubmit() {
     setSuccessMsg('');

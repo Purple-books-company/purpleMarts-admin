@@ -44,8 +44,8 @@ function SupplierForm({ data }) {
 
   async function handleSubmit() {
     console.log('submitted');
-    setErrorMsg([]);
-    let data = {
+    setErrorMsg('');
+    let tempdata = {
       name: detail.name,
       contactDescription: detail.contactDescription,
       companyName: detail.companyName,
@@ -62,14 +62,13 @@ function SupplierForm({ data }) {
 
     if (data != null) {
       console.log('updated');
+      setLoader(false);
+      return;
     } else {
       console.log('Added');
     }
 
-    setLoader(false);
-    return;
-
-    const res = await ApiPostService('supplierAdd', initialDetail);
+    const res = await ApiPostService('supplierAdd', tempdata);
     console.log(res);
     if (res === null) {
       alert('some error occured,try later');
@@ -212,7 +211,6 @@ function SupplierForm({ data }) {
                   placeholder='deliveryname'
                   value={detail.deliveryName}
                   required={true}
-                 
                 />
               </ContainerColumn>
 

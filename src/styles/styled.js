@@ -119,7 +119,7 @@ export const Imageview = styled.img.attrs((props) => ({
   src: props.src,
   alt: props.alternate,
 }))`
-  height: 50%;
+  height: ${(props) => (props.height ? props.height : '50%')};
   width: ${(props) => (props.width ? props.width : '50%')};
 `;
 

@@ -71,13 +71,14 @@ function CatagoryView() {
           />
           <ErrorText>{errorMsg}</ErrorText>
 
-          <ContainerRow full>
+          <ContainerRow dynamic>
             {filteredData.map((value, index) => (
-              <ContainerColumn key={index} className='col-md-3' height='50%'>
+              <ContainerColumn key={index} className='col-md-3 col-sm-6 col-xs-8' height='50%'>
                 <Card deg='40' nohover single>
                   <Imageview
                     src={value.image}
-                    width='50%'
+                    width='150px'
+                    height="150px"
                     style={{ marginTop: '2%' }}
                     // alternate="no image"
                   />
@@ -85,36 +86,38 @@ function CatagoryView() {
                     {value.name}
                     <br />
                     <div
-                      className='input-group mb-2 mr-sm-2'
+                      className='input-group   mb-2 mr-sm-2'
                       style={{
                         maxWidth: '80%',
-                        marginLeft: '10%',
-                        textAlign: 'center',
+                        marginLeft:"15%",
+                        marginTop:"10%",
+                      
                       }}
                     >
                       <button
-                        className='btn btn-danger mr-2 form-control '
+                        className='btn form-control  btn-danger mb-2 mr-2  '
                         value={value.name}
+                        
                       >
                         <AiFillDelete
                           size='18'
                           style={{ marginBottom: '5px' }}
                         />
-                        {'  '}
-                        Delete
+                       delete
                       </button>
                       <Link
+                      
                         to={{
                           pathname: '/post',
                           state: { show: 'newCategory', value: value },
                         }}
                       >
                         <button
-                          className='btn purple form-control'
+                          className='btn  purple form-control'
                           value={value.name}
                         >
                           <AiFillInfoCircle size='18' />
-                          {'  '}View
+                        View
                         </button>
                       </Link>
                     </div>
