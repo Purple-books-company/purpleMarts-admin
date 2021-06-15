@@ -12,6 +12,7 @@ import Loader from '../components/Loader';
 import ViewScreens from '../screens/ViewScreens';
 
 import ProductEditScreen from '../screens/ProductEditScreen';
+import TestView from "../components/TestView"
 
 
 function RouteApp() {
@@ -22,13 +23,14 @@ function RouteApp() {
         <Route exact path='/Post' component={Crud} />
         {/* <Route path='/search' component={SearchTest} /> */}
         <Route path='/nav' component={Nav} />
-        <Route path='/bulk' component={Loader} />
+        <Route path='/bulk' component={TestView} />
         <Route path='/View' component={ViewScreens} />
 
         <Route path='/nodata' component={Nodata} />
-        <Route path='/error' component={Error} />
+        
 
         <Route path='/editproduct' component={ProductEditScreen} />
+        <Route  component={Error} />
       </Switch>
     </Router>
   );
