@@ -22,7 +22,7 @@ import OrderDashBoard from '../components/dashBoardcomponents/OrderDashBoard';
 import TopCartDashBoard from '../components/dashBoardcomponents/TopCartDashboard';
 import { ColorOne } from '../styles/color';
 
-function AdminHome() {
+function AdminHome({logout}) {
   const [categoryData, setCategoryData] = useState();
   const [supplierData, setSupplierData] = useState();
   const [loader, setLoader] = useState(false);
@@ -51,7 +51,7 @@ function AdminHome() {
   };
   return (
     <>
-      <Nav navItems={['logout']} navLinks={['/logout']} View={true} />
+      <Nav navItems={['logout']} navLinks={['/logout']} View={true} logout={logout}  />
       <Container style={{ textAlign: 'center' }}>
         {loader ? (
           <Loader />

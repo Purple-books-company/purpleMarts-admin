@@ -10,8 +10,6 @@ const allProducts = `/api/product/all/`;
 
 const Token = process.env.REACT_APP_TOKEN;
 
-console.log(Token);
-
 async function ApiGetService(method) {
   let url = API;
   if (method === 'allCategory') {

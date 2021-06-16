@@ -18,7 +18,7 @@ function Crud() {
 
   const [form, setForm] = useState(initialForm);
   const [currentForm, setCurrentForm] = useState('');
-  
+
   const [fillForm, setFillForm] = useState(null);
 
   useEffect(() => {
