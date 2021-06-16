@@ -28,8 +28,7 @@ function CatagoryForm({ data }) {
     if (data != null) {
       setDetail(data);
     }
-  
-   
+
     setCatagoryDetail(CategoryData());
   }, [data]);
 
@@ -40,24 +39,22 @@ function CatagoryForm({ data }) {
   function handleChange(e) {
     setDetail({ ...detail, [e.target.name]: e.target.value });
     if (e.target.name === 'name') {
-     
       for (let i in categoryDetail) {
         if (
           categoryDetail[i].name.toLowerCase() === e.target.value.toLowerCase()
         ) {
           setErrorMsg('Catagory already present');
-        
+
           return;
         }
       }
       setErrorMsg('');
     }
-    if(e.target.name==="image"){
-      if(e.target.value.length>199){
-            setErrorMsg('Image link is more then 200 character');
-      }
-      else{
-        setErrorMsg("");
+    if (e.target.name === 'image') {
+      if (e.target.value.length > 199) {
+        setErrorMsg('Image link is more then 200 character');
+      } else {
+        setErrorMsg('');
       }
     }
   }

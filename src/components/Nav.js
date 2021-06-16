@@ -2,7 +2,11 @@ import { Link, NavLink } from 'react-router-dom';
 import '../assets/nav.css';
 import { ColorOne } from '../styles/color';
 
-function Nav({ navItems, navLinks, View, Show }) {
+function Nav({ navItems, navLinks, View, Show, logout }) {
+  function handleLogout() {
+    let isconfirm = window.confirm('Are you sure for logout');
+    if (isconfirm) logout();
+  }
   return (
     <nav
       className='navbar sticky-top navbar-light navbar-expand-lg  colour'
@@ -61,7 +65,7 @@ function Nav({ navItems, navLinks, View, Show }) {
                 </div>
               </li>
             )}
-            {Show && (
+            {Show != null && (
               <li className='text-center'>
                 <select
                   onChange={Show}
@@ -91,21 +95,24 @@ function Nav({ navItems, navLinks, View, Show }) {
               </li>
             )}
 
-            {navItems.map((value, index) => (
-              <li className='nav-item  ' key={index} id='check'>
-                <NavLink
-                  to='/'
-                  className='nav-link  h6 font-weight-bold'
-                  id='check'
-                >
-                  {value === 'logout' ? (
-                    <button className='btn btn-danger '>logout</button>
-                  ) : (
-                    <p style={{ marginTop: '7px' }}>{value}</p>
-                  )}
-                </NavLink>
-              </li>
-            ))}
+            {navItems &&
+              navItems.map((value, index) => (
+                <li className='nav-item  ' key={index} id='check'>
+                  <NavLink
+                    to='/'
+                    className='nav-link  h6 font-weight-bold'
+                    id='check'
+                  >
+                    {value === 'logout' ? (
+                      <button className='btn btn-danger' onClick={handleLogout}>
+                        logout
+                      </button>
+                    ) : (
+                      <p style={{ marginTop: '7px' }}>{value}</p>
+                    )}
+                  </NavLink>
+                </li>
+              ))}
           </ul>
         </div>
       </div>

@@ -77,7 +77,7 @@ function ViewScreens() {
           </RightAlign> */}
 
           {!mountView.supplier && !mountView.product && (
-            <CatagoryView data={editData} />
+            <CatagoryView data={editData}  />
           )}
           {mountView.supplier && <SupplierView />}
           {mountView.product && <ProductView />}
