@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 // import { Token } from '../env';
 const API = `http://purplemart.pythonanywhere.com`;
 const allCategory = `/api/category/all/`;
@@ -7,17 +7,18 @@ const addCatagory = `/api/category/add/`;
 const addProduct = `/api/product/add/`;
 const allSupplier = `/api/supplier/all/`;
 const allProducts = `/api/product/all/`;
+const addSubCategory = `/api/category/sub/add/`;
 
 const Token = process.env.REACT_APP_TOKEN;
 
 async function ApiGetService(method) {
   let url = API;
-  if (method === 'allCategory') {
+  if (method === "allCategory") {
     url = url + allCategory;
   } else {
     url += allSupplier;
   }
-  console.log('getService');
+  console.log("getService");
   try {
     const res = await axios.get(url, {
       headers: {
@@ -28,7 +29,7 @@ async function ApiGetService(method) {
       console.log(res);
       return res.data.data;
     } else {
-      console.log('error');
+      console.log("error");
       console.log(res);
       return false;
     }
@@ -40,14 +41,14 @@ async function ApiGetService(method) {
 
 async function ApiPostService(method, data) {
   let url = API;
-  if (method === 'supplierAdd') {
+  if (method === "supplierAdd") {
     url += addSupplier;
-  } else if (method === 'categoryAdd') {
+  } else if (method === "categoryAdd") {
     url += addCatagory;
-  } else if (method === 'productAdd') {
+  } else if (method === "productAdd") {
     url += addProduct;
-  } else {
-    url += allProducts;
+  } else if (method === "subCategoryAdd") {
+    url += addSubCategory;
   }
   console.log(url);
 
@@ -57,14 +58,14 @@ async function ApiPostService(method, data) {
         Authorization: Token,
       },
     });
-
+    // console.log(res);
     if (res.data.success) {
-      if (method === 'allProducts') {
+      if (method === "allProducts") {
         return res.data.data;
       }
       return true;
     } else {
-      if (method === 'allProducts') {
+      if (method === "allProducts") {
         return false;
       }
       console.log(res.data.err);

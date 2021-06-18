@@ -1,4 +1,4 @@
-import crypt from 'crypto-js';
+import crypt from "crypto-js";
 
 function encrypt(email) {
   console.log(email);
