@@ -7,12 +7,14 @@ import ProductForm from '../components/formComponents/ProductForm';
 import CatagoryForm from '../components/formComponents/CatagoryForm';
 import SupplierForm from '../components/formComponents/SupplierForm';
 import Nav from '../components/Nav';
+import SubCategoryForm from '../components/formComponents/SubCategoryForm';
 
 function Crud() {
   let initialForm = {
     newProduct: false,
     newSupplier: false,
     newCategory: false,
+    newSubCategory:false
   };
   const location = useLocation();
 
@@ -47,7 +49,7 @@ function Crud() {
       <Nav navItems={['Dashboard']} navLinks={['/']} />
       <Container>
         <Card deg='-40' width='100%' height='100%' margin='0%' nohover>
-          <div style={{ textAlign: 'right', margin: '2%' }}>
+        {fillForm===null &&  <div style={{ textAlign: 'right', margin: '2%' }}>
             <div className='dropdown'>
               <button
                 className='btn btn-secondary dropdown-toggle'
@@ -89,14 +91,23 @@ function Crud() {
                 >
                   product section
                 </button>
+                <button
+                  className='dropdown-item'
+                  name='newSubCategory'
+                  value={'subCategory section'}
+                  onClick={handleChange}
+                >
+                  SubCategory section
+                </button>
               </div>
             </div>
-          </div>
+          </div>}
           <Title>{currentForm}</Title>
 
           {form.newProduct && <ProductForm />}
           {form.newSupplier && <SupplierForm data={fillForm} />}
           {form.newCategory && <CatagoryForm data={fillForm} />}
+          {form.newSubCategory && <SubCategoryForm />}
         </Card>
       </Container>
     </>
