@@ -83,7 +83,7 @@ function ViewScreens() {
           {mountView.category && (
             <CatagoryView showSubCategory={showSubCategory} />
           )}
-          {mountView.subCategory && <SubCategoryView data={data} />}
+          {mountView.subCategory && <SubCategoryView categoryName={data} />}
           {mountView.supplier && <SupplierView />}
           {mountView.product && <ProductView />}
         </>
