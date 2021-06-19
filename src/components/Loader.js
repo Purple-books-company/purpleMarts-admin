@@ -7,8 +7,12 @@ export default function Loader() {
       <div
         style={{
           width: 'auto',
-          textAlign: 'center',
-          marginTop: '15%',
+          height: '80%',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          alignContent: 'center',
         }}
       >
         {' '}
@@ -17,7 +21,7 @@ export default function Loader() {
           secondaryColor={ColorTwo}
           color={ColorOne}
         ></Loading>
-        <p style={{ color: ColorTwo }}> Requsting server...</p>
+        <p style={{ color: ColorOne }}>Requesting server...</p>
       </div>
     </>
   );

@@ -130,7 +130,9 @@ function ProductView() {
             </ContainerRow>
           </ContainerColumn>
           {loader.product ? (
-            <Loader />
+            <ContainerColumn height='100%' className='col-md-10 col-sm-12'>
+              <Loader />
+            </ContainerColumn>
           ) : (
             <ContainerColumn className='col-md-10 col-sm-12'>
               {productDetail.length == 0 && <Nodata />}

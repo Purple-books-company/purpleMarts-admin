@@ -84,7 +84,7 @@ function RouteApp() {
               <Route exact path="/Post" component={Crud} />
               {/* <Route path='/search' component={SearchTest} /> */}
               <Route exact path="/nav" component={Nav} />
-              <Route exact path="/bulk" component={TestView} />
+              <Route exact path="/bulk" component={Loader} />
               <Route exact path="/View" component={ViewScreens} />
 
               <Route exact path="/nodata" component={Nodata} />
