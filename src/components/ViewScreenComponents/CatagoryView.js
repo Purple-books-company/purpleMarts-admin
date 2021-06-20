@@ -49,7 +49,6 @@ function CatagoryView({ showSubCategory }) {
     if (filterData.length === 0) {
       setFilteredData(catagoryData);
       setErrorMsg("No item Found!,Try different values!");
-
       return;
     }
     setFilteredData(filterData);

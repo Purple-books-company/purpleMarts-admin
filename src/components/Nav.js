@@ -65,7 +65,7 @@ function Nav({ navItems, navLinks, View, Show, logout }) {
                 </div>
               </li>
             )}
-            {Show != null && (
+            {Show && Show !== null && (
               <li className='text-center'>
                 <select
                   onChange={Show}
@@ -79,11 +79,11 @@ function Nav({ navItems, navLinks, View, Show, logout }) {
                     color: 'white',
                   }}
                 >
-                  <option style={{ color: ColorOne }} defaultValue=''>
+                  <option style={{ color: ColorOne }} value='' defaultValue=''>
                     Show Items
                   </option>
                   <option style={{ color: ColorOne }} value='category'>
-                    Show Catagory
+                    Category
                   </option>
                   <option style={{ color: ColorOne }} value='supplier'>
                     Show Supplier
