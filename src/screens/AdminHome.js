@@ -20,7 +20,7 @@ import Nav from '../components/Nav';
 
 import OrderDashBoard from '../components/dashBoardcomponents/OrderDashBoard';
 import TopCartDashBoard from '../components/dashBoardcomponents/TopCartDashboard';
-import { ColorOne } from '../styles/color';
+// import { ColorOne } from '../styles/color';
 
 function AdminHome({logout}) {
   const [categoryData, setCategoryData] = useState();

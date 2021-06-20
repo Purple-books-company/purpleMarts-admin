@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react";
-import { getAllSupplier, SupplierData } from "../../services/AdminServices";
-import { Container, ErrorText, Title } from "../../styles/styled";
-import { AiFillCaretDown, AiFillDelete, AiFillEdit } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { getAllSupplier, SupplierData } from '../../services/AdminServices';
+import { Container, ErrorText, Title } from '../../styles/styled';
+import { AiFillCaretDown, AiFillDelete, AiFillEdit } from 'react-icons/ai';
+import { Link } from 'react-router-dom';
 
-import Search from "../Search";
-import Loader from "../Loader";
-import Nodata from "../Nodata";
+import Search from '../Search';
+import Loader from '../Loader';
+import Nodata from '../Nodata';
 
 function SupplierView() {
   const [supplierData, setSupplierData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-  const [errorMsg, setErrorMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState('');
   const [loader, setLoader] = useState(false);
 
   useEffect(() => {
@@ -32,21 +32,21 @@ function SupplierView() {
 
   const updateFilteredData = (filterData) => {
     if (filterData.length === 0) {
-      console.log("calling");
+      console.log('calling');
       setFilteredData(supplierData);
-      setErrorMsg("No item Found!,Try different values!");
+      setErrorMsg('No item Found!,Try different values!');
       return;
     }
-    setErrorMsg("");
+    setErrorMsg('');
 
     setFilteredData(filterData);
   };
 
   return (
     <>
-      {" "}
+      {' '}
       {loader ? (
-        <div style={{ textAlign: "center" }}>
+        <div style={{ textAlign: 'center' }}>
           <Loader />
         </div>
       ) : (
@@ -54,26 +54,26 @@ function SupplierView() {
           <Title>Supplier Page</Title>
           <Search
             data={supplierData}
-            searchKeys={["name", "companyName"]}
+            searchKeys={['name', 'companyName']}
             updateFilteredData={updateFilteredData}
           />
           <ErrorText>{errorMsg}</ErrorText>
-          <table className="table">
-            <thead className="thead-dark">
+          <table className='table'>
+            <thead className='thead-dark'>
               <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Contact Description</th>
-                <th scope="col">Company Name</th>
-                <th scope="col">Personal Info</th>
-                <th scope="col">Delete/Edit</th>
+                <th scope='col'>Name</th>
+                <th scope='col'>Contact Description</th>
+                <th scope='col'>Company Name</th>
+                <th scope='col'>Personal Info</th>
+                <th scope='col'>Delete/Edit</th>
               </tr>
             </thead>
             <tbody>
-              {filteredData.length == 0 && <Nodata />}{" "}
+              {filteredData.length === 0 && <Nodata />}{' '}
               {/*rectify warning for nodata*/}
               {filteredData.map((value, index) => (
                 <tr key={index}>
-                  <th scope="row">{value.name}</th>
+                  <th scope='row'>{value.name}</th>
                   <td>{value.contactDescription}</td>
                   <td>{value.companyName}</td>
                   <td>
@@ -82,9 +82,9 @@ function SupplierView() {
                     <br />
                     <b>Phone number:</b>
                     {value.personalInfo.phoneNumber}
-                    {"  "}
+                    {'  '}
 
-                    <p className="collapse" id={"showdata" + index}>
+                    <p className='collapse' id={'showdata' + index}>
                       <b>Address:</b>
                       {value.personalInfo.address},
                       <br />
@@ -95,24 +95,24 @@ function SupplierView() {
                       {value.personalInfo.nation}.
                     </p>
                     <a
-                      href={"#showdata" + index}
+                      href={'#showdata' + index}
                       // className="ml-2"
-                      data-toggle="collapse"
+                      data-toggle='collapse'
                     >
                       <AiFillCaretDown />
                     </a>
                   </td>
                   <td>
-                    <button className="btn btn-danger mr-2">
+                    <button className='btn btn-danger mr-2'>
                       <AiFillDelete />
                     </button>
                     <Link
                       to={{
-                        pathname: "/post",
-                        state: { show: "newSupplier", value: value },
+                        pathname: '/post',
+                        state: { show: 'newSupplier', value: value },
                       }}
                     >
-                      <button className="btn purple">
+                      <button className='btn purple'>
                         <AiFillEdit />
                       </button>
                     </Link>

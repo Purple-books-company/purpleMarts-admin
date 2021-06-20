@@ -38,12 +38,13 @@ function OrderDashBoard() {
     <Card nohover>
       {orderDetail != null && (
         <Chart
-          options={orderDetail.options}
+          // options={orderDetail.options}
           series={orderDetail.series}
           type='bar'
           width={'100%'}
           height={window.innerHeight > 450 ? window.innerHeight / 2 : '100%'}
           options={{
+            ...orderDetail.options,
             fill: {
               colors: ColorTwo,
             },

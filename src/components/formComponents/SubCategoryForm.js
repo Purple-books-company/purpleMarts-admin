@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import { CategoryData, getAllCategory } from "../../services/AdminServices";
-import { ApiPostService } from "../../services/ApiServices";
-import { ColorOne, ColorTwo } from "../../styles/color";
+import { useState, useEffect } from 'react';
+import { CategoryData } from '../../services/AdminServices';
+import { ApiPostService } from '../../services/ApiServices';
+import { ColorOne, ColorTwo } from '../../styles/color';
 import {
   ContainerColumn,
   ContainerRow,
@@ -11,15 +11,15 @@ import {
   Imageview,
   SuccessText,
   ErrorText,
-} from "../../styles/styled";
-import Loader from "../Loader";
+} from '../../styles/styled';
+import Loader from '../Loader';
 
 function SubCategoryForm({ data }) {
   let initialstate = {
-    image: "",
-    description: "",
-    name: "",
-    category: "",
+    image: '',
+    description: '',
+    name: '',
+    category: '',
   };
 
   const [detail, setDetail] = useState(initialstate);
@@ -29,27 +29,28 @@ function SubCategoryForm({ data }) {
     if (data != null) {
       setDetail(data);
     }
+    //need to get all category
 
     setCatagoryDetail(CategoryData());
   }, [data]);
 
-  const [errorMsg, setErrorMsg] = useState("");
-  const [successMsg, setSuccessMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState('');
+  const [successMsg, setSuccessMsg] = useState('');
   const [loader, setLoader] = useState(false);
 
   function handleChange(e) {
     setDetail({ ...detail, [e.target.name]: e.target.value });
-    if (e.target.name === "image") {
+    if (e.target.name === 'image') {
       if (e.target.value.length > 199) {
-        setErrorMsg("Image link is more then 200 character");
+        setErrorMsg('Image link is more then 200 character');
       } else {
-        setErrorMsg("");
+        setErrorMsg('');
       }
     }
   }
   async function handleSubmit() {
-    setSuccessMsg("");
-    setErrorMsg("");
+    setSuccessMsg('');
+    setErrorMsg('');
     setLoader(true);
     //change initial
 
@@ -59,23 +60,23 @@ function SubCategoryForm({ data }) {
     //   return;
     // }
 
-    if (detail.category === "" || detail.category.length < 1) {
-      setErrorMsg("Select category");
+    if (detail.category === '' || detail.category.length < 1) {
+      setErrorMsg('Select category');
       setLoader(false);
       return;
     }
 
-    const res = await ApiPostService("subCategoryAdd", detail);
+    const res = await ApiPostService('subCategoryAdd', detail);
     // console.log(res);
 
     if (res === null) {
-      alert("some error occured,try later");
+      alert('some error occured,try later');
       setLoader(false);
       return;
     }
     if (res === true) {
       setDetail({ ...initialstate }); // form reset
-      setSuccessMsg("Sub-Category saved!");
+      setSuccessMsg('Sub-Category saved!');
       // await getAllCategory();
     } else if (res !== false) {
       let datakey = Object.keys(res);
@@ -93,12 +94,12 @@ function SubCategoryForm({ data }) {
   }
   return (
     <>
-      <ContainerColumn className="col-md-12">
+      <ContainerColumn className='col-md-12'>
         {loader ? (
           <Loader />
         ) : (
           <form
-            style={{ margin: "6%" }}
+            style={{ margin: '6%' }}
             onSubmit={(e) => {
               e.preventDefault();
               handleSubmit();
@@ -107,17 +108,17 @@ function SubCategoryForm({ data }) {
             <SuccessText>{successMsg}</SuccessText>
             <ErrorText>{errorMsg}</ErrorText>
             <ContainerRow>
-              <ContainerColumn className="col-md-5">
+              <ContainerColumn className='col-md-5'>
                 <RightAlign>Catagory Code</RightAlign>
               </ContainerColumn>
-              <ContainerColumn className="col-md-5">
+              <ContainerColumn className='col-md-5'>
                 <select
-                  name="category"
-                  className="form-control m-2"
-                  style={{ borderColor: ColorTwo, border: "1px solid" }}
+                  name='category'
+                  className='form-control m-2'
+                  style={{ borderColor: ColorTwo, border: '1px solid' }}
                   onChange={handleChange}
                 >
-                  <option defaultValue={""}>Select Category</option>
+                  <option defaultValue={''}>Select Category</option>
                   {categoryDetail.map((value, index) => (
                     <option value={value.name} key={value.name}>
                       {value.name}
@@ -125,54 +126,54 @@ function SubCategoryForm({ data }) {
                   ))}
                 </select>
               </ContainerColumn>
-              <ContainerColumn className="col-md-5">
+              <ContainerColumn className='col-md-5'>
                 <RightAlign>Sub-category name</RightAlign>
               </ContainerColumn>
-              <ContainerColumn className="col-md-5">
+              <ContainerColumn className='col-md-5'>
                 <Input
-                  type="text"
-                  placeholder="name"
-                  name="name"
+                  type='text'
+                  placeholder='name'
+                  name='name'
                   onChange={handleChange}
                   value={detail.name}
                   required
                 />
               </ContainerColumn>
-              <ContainerColumn className="col-md-5">
+              <ContainerColumn className='col-md-5'>
                 <RightAlign>Catagory Description</RightAlign>
               </ContainerColumn>
-              <ContainerColumn className="col-md-5">
+              <ContainerColumn className='col-md-5'>
                 <textarea
-                  name="description"
-                  className="form-control"
-                  rows="3"
-                  placeholder="description"
+                  name='description'
+                  className='form-control'
+                  rows='3'
+                  placeholder='description'
                   value={detail.description}
                   onChange={handleChange}
-                  style={{ borderColor: ColorOne, margin: "2%" }}
+                  style={{ borderColor: ColorOne, margin: '2%' }}
                   required
                 />
               </ContainerColumn>
-              <ContainerColumn height="20%" className="col-md-5">
+              <ContainerColumn height='20%' className='col-md-5'>
                 <RightAlign>Image</RightAlign>
                 <br></br>
                 {detail.image.length > 10 && (
                   <Imageview src={detail.image}></Imageview>
                 )}
               </ContainerColumn>
-              <ContainerColumn className="col-md-5">
+              <ContainerColumn className='col-md-5'>
                 <Input
-                  type="text"
-                  name="image"
-                  placeholder="imageUrl"
+                  type='text'
+                  name='image'
+                  placeholder='imageUrl'
                   value={detail.image}
                   onChange={handleChange}
                   required
                 />
               </ContainerColumn>
             </ContainerRow>
-            <Submitbutton type="submit" style={{ marginBottom: "2%" }}>
-              {data ? "Update" : "POST"}
+            <Submitbutton type='submit' style={{ marginBottom: '2%' }}>
+              {data ? 'Update' : 'POST'}
             </Submitbutton>
             <br />
           </form>

@@ -47,7 +47,7 @@ export const ExcelSchema = {
 
 let Catagoryarray = [];
 let Supplierarray = [];
-let SubcategoryObject = new Object();
+let SubcategoryObject = {};
 
 // async function getAllData() {
 //   await getAllCategory();

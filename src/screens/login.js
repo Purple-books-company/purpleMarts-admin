@@ -1,7 +1,7 @@
 import '../assets/login.css';
 
 import { useState } from 'react';
-import { ColorTwo } from '../styles/color';
+
 import Nav from '../components/Nav';
 
 // import '././abc.css';

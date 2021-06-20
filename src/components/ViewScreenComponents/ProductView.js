@@ -1,26 +1,26 @@
-import { useState } from "react";
-import { useEffect } from "react";
-import { AiFillDelete, AiFillInfoCircle } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { AiFillDelete, AiFillInfoCircle } from 'react-icons/ai';
+import { Link } from 'react-router-dom';
 import {
   CategoryData,
   getAllCategory,
   getAllSubCategory,
   getSubCategoryDetail,
-} from "../../services/AdminServices";
-import { ApiPostService } from "../../services/ApiServices";
-import { ColorOne, ColorTwo } from "../../styles/color";
+} from '../../services/AdminServices';
+// import { ApiPostService } from "../../services/ApiServices";
+import { ColorOne, ColorTwo } from '../../styles/color';
 import {
   Card,
   CenterAlign,
   ContainerColumn,
   Imageview,
   ContainerRow,
-  Input,
-  Submitbutton,
-} from "../../styles/styled";
-import Nodata from "../Nodata";
-import Loader from "../Loader";
+  // Input,
+  // Submitbutton,
+} from '../../styles/styled';
+import Nodata from '../Nodata';
+import Loader from '../Loader';
 
 function ProductView() {
   let initialLoader = { product: false, page: false };
@@ -34,11 +34,11 @@ function ProductView() {
     console.log(window.innerWidth);
 
     let categoryDetail = CategoryData();
-    if (categoryDetail.length == 0) {
+    if (categoryDetail.length === 0) {
       getData();
     } else {
       setCategoryList(categoryDetail);
-      console.log("categroy updated");
+      console.log('categroy updated');
     }
   }, []);
 
@@ -87,16 +87,16 @@ function ProductView() {
       ) : (
         <ContainerRow full>
           <ContainerColumn
-            className="col-md-2 col-sm-12 bg-light"
-            height={window.innerWidth > 500 ? "100%" : "auto"}
+            className='col-md-2 col-sm-12 bg-light'
+            height={window.innerWidth > 500 ? '100%' : 'auto'}
           >
             <select
-              name="category"
-              className="form-control m-2 ml-4 mt-4"
+              name='category'
+              className='form-control m-2 ml-4 mt-4'
               style={{
-                border: "1px solid " + ColorTwo,
+                border: '1px solid ' + ColorTwo,
 
-                width: "85%",
+                width: '85%',
               }}
               onChange={handleChange}
             >
@@ -106,23 +106,23 @@ function ProductView() {
                 </option>
               ))}
             </select>
-            <ContainerRow dynamic style={{ margin: "3%" }}>
+            <ContainerRow dynamic style={{ margin: '3%' }}>
               {subCategoryDetail.map((value, index) => (
                 <div
-                  className="form-check form-switch col-md-12 col-4  mb-3 rounded"
+                  className='form-check form-switch col-md-12 col-4  mb-3 rounded'
                   style={{ color: ColorOne }}
-                  key={index + "check"}
+                  key={index + 'check'}
                 >
                   <input
-                    type="radio"
-                    className="form-check-input"
-                    name="subcat"
+                    type='radio'
+                    className='form-check-input'
+                    name='subcat'
                     value={value.name}
-                    id={"radioInput" + index}
+                    id={'radioInput' + index}
                   />
                   <label
-                    className="form-check-label "
-                    htmlFor={"radioInput" + index}
+                    className='form-check-label '
+                    htmlFor={'radioInput' + index}
                   >
                     {value.name}
                   </label>
@@ -131,20 +131,20 @@ function ProductView() {
             </ContainerRow>
           </ContainerColumn>
           {loader.product ? (
-            <ContainerColumn height="100%" className="col-md-10 col-sm-12">
+            <ContainerColumn height='100%' className='col-md-10 col-sm-12'>
               <Loader />
             </ContainerColumn>
           ) : (
-            <ContainerColumn className="col-md-10 col-sm-12">
-              {productDetail.length == 0 && <Nodata />}
+            <ContainerColumn className='col-md-10 col-sm-12'>
+              {productDetail.length === 0 && <Nodata />}
 
               {productDetail.map((value, index) => (
-                <ContainerColumn height="45%" key={index} className="col-md-3">
-                  <Card deg="65" single>
+                <ContainerColumn height='45%' key={index} className='col-md-3'>
+                  <Card deg='65' single>
                     <Imageview
                       src={value.images[0].image}
-                      width="50%"
-                      style={{ marginTop: "2%" }}
+                      width='50%'
+                      style={{ marginTop: '2%' }}
                       // alternate="no image"
                     />
                     <CenterAlign dark>
@@ -154,32 +154,32 @@ function ProductView() {
                       <br />
                       colors:{value.varients.color.length}
                       <div
-                        className="input-group mb-2 mr-sm-2"
+                        className='input-group mb-2 mr-sm-2'
                         style={{
-                          maxWidth: "80%",
-                          marginLeft: "10%",
-                          textAlign: "center",
+                          maxWidth: '80%',
+                          marginLeft: '10%',
+                          textAlign: 'center',
                         }}
                       >
                         <button
-                          className="btn btn-danger mr-2 form-control"
+                          className='btn btn-danger mr-2 form-control'
                           value={value.name}
                         >
-                          <AiFillDelete size="18" />
-                          {"  "}
+                          <AiFillDelete size='18' />
+                          {'  '}
                           Delete
                         </button>
                         <Link
                           to={{
-                            pathname: "/editproduct",
+                            pathname: '/editproduct',
                             state: { product: value },
                           }}
-                          className="btn purple form-control"
-                          name="addImages"
+                          className='btn purple form-control'
+                          name='addImages'
                           value={value}
                         >
-                          <AiFillInfoCircle size="18" />
-                          {"  "}View
+                          <AiFillInfoCircle size='18' />
+                          {'  '}View
                         </Link>
                       </div>
                     </CenterAlign>
