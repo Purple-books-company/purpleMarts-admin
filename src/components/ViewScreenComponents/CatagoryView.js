@@ -15,7 +15,7 @@ import {
   Title,
 } from '../../styles/styled';
 
-import { CategoryData, getAllCategory } from '../../services/AdminServices';
+import { CategoryData } from '../../services/AdminServices';
 import Loader from '../Loader';
 import Nodata from '../Nodata';
 
@@ -26,23 +26,17 @@ function CatagoryView({ showSubCategory }) {
   const [loader, setLoader] = useState(false);
 
   useEffect(() => {
-    setLoader(true);
-    let data = CategoryData();
-    if (data.length === 0) {
-      getAllCategory().then(() => {
-        data = CategoryData();
-        console.log(data);
-        console.log('cat');
-        setCatagoryData(data);
+    async function getData() {
+      setLoader(true);
+      let data = await CategoryData();
 
-        setFilteredData(data);
-      });
-    } else {
       setCatagoryData(data);
 
       setFilteredData(data);
+
+      setLoader(false);
     }
-    setLoader(false);
+    getData();
   }, []);
 
   const updateFilteredData = (filterData) => {

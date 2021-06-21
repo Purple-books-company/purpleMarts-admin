@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getAllSupplier, SupplierData } from '../../services/AdminServices';
+import {  SupplierData } from '../../services/AdminServices';
 import { Container, ErrorText, Title } from '../../styles/styled';
 import { AiFillCaretDown, AiFillDelete, AiFillEdit } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
@@ -16,12 +16,8 @@ function SupplierView() {
 
   useEffect(() => {
     async function onMount() {
-      let data = SupplierData();
-      if (data.length === 0) {
-        setLoader(true);
-        await getAllSupplier();
-        data = SupplierData();
-      }
+      setLoader(true);
+      let data = await SupplierData();
 
       setSupplierData(data);
       setFilteredData(data);

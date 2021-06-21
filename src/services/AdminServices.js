@@ -70,11 +70,19 @@ export async function getAllSupplier() {
     console.log(res);
   } else console.log('error');
 }
-function CategoryData() {
+async function CategoryData() {
   // console.log(Catagoryarray);
+  if (Catagoryarray.length === 0) {
+    await getAllCategory();
+    alert('fetching');
+  }
   return Catagoryarray;
 }
-function SupplierData() {
+async function SupplierData() {
+  if (Supplierarray.length === 0) {
+    await getAllSupplier();
+    alert('fetchingss');
+  }
   return Supplierarray;
 }
 export async function getAllSubCategory(category) {

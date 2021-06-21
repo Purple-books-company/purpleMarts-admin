@@ -28,9 +28,12 @@ function CatagoryForm({ data }) {
     if (data != null) {
       setDetail(data);
     }
-
-    setCatagoryDetail(CategoryData());
-  }, [data]);
+    async function onMount() {
+      let catData = await CategoryData();
+      setCatagoryDetail(catData);
+    }
+    onMount();
+  }, []);
 
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');

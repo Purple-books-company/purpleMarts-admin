@@ -4,7 +4,6 @@ import { AiFillDelete, AiFillInfoCircle } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import {
   CategoryData,
-  getAllCategory,
   getAllSubCategory,
   getSubCategoryDetail,
 } from '../../services/AdminServices';
@@ -33,13 +32,7 @@ function ProductView() {
     // getDetail();
     console.log(window.innerWidth);
 
-    let categoryDetail = CategoryData();
-    if (categoryDetail.length === 0) {
-      getData();
-    } else {
-      setCategoryList(categoryDetail);
-      console.log('categroy updated');
-    }
+    getData();
   }, []);
 
   async function getData() {
@@ -47,8 +40,8 @@ function ProductView() {
     Loader.page = true;
 
     setLoader(Loader);
-    await getAllCategory();
-    let categoryDetail = CategoryData();
+
+    let categoryDetail = await CategoryData();
     console.log(categoryDetail.length);
     setCategoryList(categoryDetail);
     setLoader({ ...initialLoader });
