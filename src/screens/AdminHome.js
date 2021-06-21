@@ -3,12 +3,7 @@ import { useEffect, useState } from 'react';
 import AssetComponents from '../components/dashBoardcomponents/AssetComponents';
 
 import Loader from '../components/Loader';
-import {
-  CategoryData,
-  getAllCategory,
-  getAllSupplier,
-  SupplierData,
-} from '../services/AdminServices';
+import { CategoryData, SupplierData } from '../services/AdminServices';
 
 import {
   Card,
@@ -20,9 +15,9 @@ import Nav from '../components/Nav';
 
 import OrderDashBoard from '../components/dashBoardcomponents/OrderDashBoard';
 import TopCartDashBoard from '../components/dashBoardcomponents/TopCartDashboard';
-import { ColorOne } from '../styles/color';
+// import { ColorOne } from '../styles/color';
 
-function AdminHome({logout}) {
+function AdminHome({ logout }) {
   const [categoryData, setCategoryData] = useState();
   const [supplierData, setSupplierData] = useState();
   const [loader, setLoader] = useState(false);
@@ -40,18 +35,22 @@ function AdminHome({logout}) {
   }, []);
   const fetchData = async () => {
     setLoader(true);
-    if (CategoryData().length === 0) {
-      await getAllCategory();
-      await getAllSupplier();
-    }
 
-    setCategoryData(CategoryData().length);
-    setSupplierData(SupplierData().length);
+    let catagoryLength = await CategoryData();
+    let supplierLength = await SupplierData();
+
+    setCategoryData(catagoryLength.length);
+    setSupplierData(supplierLength.length);
     setLoader(false);
   };
   return (
     <>
-      <Nav navItems={['logout']} navLinks={['/logout']} View={true} logout={logout}  />
+      <Nav
+        navItems={['logout']}
+        navLinks={['/logout']}
+        View={true}
+        logout={logout}
+      />
       <Container style={{ textAlign: 'center' }}>
         {loader ? (
           <Loader />

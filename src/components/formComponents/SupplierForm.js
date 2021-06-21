@@ -37,10 +37,14 @@ function SupplierForm({ data }) {
   }
 
   useEffect(() => {
-    if (data !== null) {
+    setData();
+    // eslint-disable-next-line
+  }, []);
+  const setData = () => {
+    if (data !== null && data !== detail) {
       setDetail(data);
     }
-  }, []);
+  };
 
   async function handleSubmit() {
     console.log('submitted');

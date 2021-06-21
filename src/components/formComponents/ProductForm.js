@@ -11,12 +11,7 @@ import {
   ErrorText,
   SuccessText,
 } from '../../styles/styled';
-import {
-  CategoryData,
-  getAllCategory,
-  getAllSupplier,
-  SupplierData,
-} from '../../services/AdminServices';
+import { CategoryData, SupplierData } from '../../services/AdminServices';
 import { ApiPostService } from '../../services/ApiServices';
 import Loader from '../Loader';
 
@@ -62,16 +57,11 @@ function ProductForm() {
 
   useEffect(() => {
     async function OnMount() {
-      if (CategoryData().length === 0) {
-        await getAllCategory();
-      }
-      if (SupplierData().length === 0) {
-        await getAllSupplier();
-      }
-      setCategorydata(CategoryData());
-      console.log(CategoryData());
+      let catData = await CategoryData();
+      setCategorydata(catData);
+      let supData = await SupplierData();
 
-      setSupplierdata(SupplierData());
+      setSupplierdata(supData);
     }
     OnMount();
   }, []);

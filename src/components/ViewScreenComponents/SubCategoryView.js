@@ -10,7 +10,7 @@ import {
 } from '../../services/AdminServices';
 
 import Search from '../Search';
-import { ColorOne, ColorTwo } from '../../styles/color';
+import { ColorOne } from '../../styles/color';
 import {
   Card,
   CenterAlign,
@@ -20,7 +20,6 @@ import {
   ErrorText,
   Imageview,
   Title,
-  Submitbutton,
 } from '../../styles/styled';
 
 import Loader from '../Loader';

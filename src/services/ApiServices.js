@@ -6,7 +6,7 @@ const addSupplier = `/api/supplier/add/`;
 const addCatagory = `/api/category/add/`;
 const addProduct = `/api/product/add/`;
 const allSupplier = `/api/supplier/all/`;
-const allProducts = `/api/product/all/`;
+// const allProducts = `/api/product/all/`;
 const addSubCategory = `/api/category/sub/add/`;
 const allSubCategory = `/api/category/sub/all/`;
 
