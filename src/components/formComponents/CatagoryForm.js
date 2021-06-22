@@ -46,7 +46,7 @@ function CatagoryForm({ data }) {
         if (
           categoryDetail[i].name.toLowerCase() === e.target.value.toLowerCase()
         ) {
-          setErrorMsg('Catagory already present');
+          setErrorMsg('Category already present');
 
           return;
         }
@@ -117,7 +117,7 @@ function CatagoryForm({ data }) {
             <ErrorText>{errorMsg}</ErrorText>
             <ContainerRow>
               <ContainerColumn className='col-md-5'>
-                <RightAlign>Catagoryname</RightAlign>
+                <RightAlign>Categoryname</RightAlign>
               </ContainerColumn>
               <ContainerColumn className='col-md-5'>
                 <Input
@@ -130,7 +130,7 @@ function CatagoryForm({ data }) {
                 />
               </ContainerColumn>
               <ContainerColumn className='col-md-5'>
-                <RightAlign>CatagoryDescription</RightAlign>
+                <RightAlign>CategoryDescription</RightAlign>
               </ContainerColumn>
               <ContainerColumn className='col-md-5'>
                 <textarea
