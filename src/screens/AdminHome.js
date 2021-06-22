@@ -57,18 +57,18 @@ function AdminHome({ logout }) {
         ) : (
           <>
             <ContainerRow dynamic>
-              <ContainerColumn height='50%' className='col-md-7'>
-                <OrderDashBoard />
-              </ContainerColumn>
-              <ContainerColumn height='50%' className='col-md-5'>
-                <TopCartDashBoard />
-              </ContainerColumn>
-
               <ContainerColumn height='10%' className='col-md-12 col-sm-12'>
                 <AssetComponents
                   catCount={categoryData}
                   supCount={supplierData}
                 />
+              </ContainerColumn>
+              <ContainerColumn height='50%' className='col-md-5'>
+                {' '}
+                <TopCartDashBoard />
+              </ContainerColumn>
+              <ContainerColumn height='50%' className='col-md-7'>
+                <OrderDashBoard />
               </ContainerColumn>
             </ContainerRow>
             <ContainerRow>

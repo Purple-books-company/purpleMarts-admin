@@ -80,11 +80,11 @@
           var currentScrollPos = window.pageYOffset;
           if (prevScrollpos > currentScrollPos) {
            let nav = document.querySelector(".navbar");
-            nav.style.opacity=1;
+            nav.style.top="0";
          
           } else {
               let nav = document.querySelector(".navbar");
-            nav.style.opacity = 0;
+            nav.style.top = "-200px";
            
           }
           prevScrollpos = currentScrollPos;
