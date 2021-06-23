@@ -169,3 +169,18 @@ export const CenterText = styled.h1`
 export const MarginAround = styled.div`
   margin: 2%;
 `;
+export const ToggleButton = styled.button.attrs((props) => ({
+  type: props.type ? props.type : "button",
+  className: "btn mt-3",
+  value: props.value,
+}))`
+  background-color: ${(props) => (props.active ? ColorOne : "white")};
+  color: ${(props) => (!props.active ? ColorOne : "white")};
+  border: 1px solid ${ColorOne};
+  width: 80%;
+  &:hover {
+    color: white;
+    background-color: ${ColorOne};
+    width: 85%;
+  }
+`;
