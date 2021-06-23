@@ -21,12 +21,12 @@ function TopCartDashBoard() {
   }, []);
 
   return (
-    <Card nohover>
+    <Card nohover style={{ padding: '5%' }}>
       {series != null && (
         <Chart
           series={series.options.series}
           type='donut'
-          width={'105%'}
+          width={'100%'}
           height={window.innerHeight > 450 ? window.innerHeight / 2 : '100%'}
           options={{
             ...series.options,
