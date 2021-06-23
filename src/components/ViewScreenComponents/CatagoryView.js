@@ -95,11 +95,12 @@ function CatagoryView({ showSubCategory }) {
                       }}
                     >
                       <button
-                        className='btn form-control  btn-danger mb-2 mr-2  '
+                        className='btn btn-outline-danger   mb-2 mr-2  '
                         value={value.name}
                       >
                         <AiFillDelete
                           size='18'
+                          color='red'
                           style={{ marginBottom: '5px' }}
                         />
                         delete
