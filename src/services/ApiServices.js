@@ -6,7 +6,7 @@ const addSupplier = `/api/supplier/add/`;
 const addCatagory = `/api/category/add/`;
 const addProduct = `/api/product/add/`;
 const allSupplier = `/api/supplier/all/`;
-// const allProducts = `/api/product/all/`;
+const Products = `/api/product/admin/subcategory/`;
 const addSubCategory = `/api/category/sub/add/`;
 const allSubCategory = `/api/category/sub/all/`;
 
@@ -53,6 +53,9 @@ async function ApiPostService(method, data) {
   } else if (method === 'subCategoryAll') {
     url += allSubCategory;
   }
+  else if(method==="Products"){
+    url+=Products;
+  }
   console.log(url);
   console.log(data);
 
@@ -64,12 +67,12 @@ async function ApiPostService(method, data) {
     });
     console.log(res);
     if (res.data.success) {
-      if (method === 'allProducts' || method === 'subCategoryAll') {
+      if (method === 'Products' || method === 'subCategoryAll') {
         return res.data.data;
       }
       return true;
     } else {
-      if (method === 'allProducts' || method === 'subCategoryAll') {
+      if (method === 'Products' || method === 'subCategoryAll') {
         return false;
       }
       console.log(res.data.err);

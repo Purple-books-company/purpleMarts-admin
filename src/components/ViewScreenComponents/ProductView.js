@@ -7,7 +7,7 @@ import {
   getAllSubCategory,
   getSubCategoryDetail,
 } from '../../services/AdminServices';
-// import { ApiPostService } from "../../services/ApiServices";
+import { ApiPostService } from "../../services/ApiServices";
 import { ColorOne, ColorTwo } from '../../styles/color';
 import {
   Card,
@@ -29,8 +29,7 @@ function ProductView() {
   const [loader, setLoader] = useState(initialLoader);
 
   useEffect(() => {
-    // getDetail();
-    console.log(window.innerWidth);
+   
 
     getData();
   }, []);
@@ -60,18 +59,25 @@ function ProductView() {
 
     setSubCategoryDetail(subCat);
     setLoader({ ...initialLoader });
+    getDetail(subCat[0].name);
   }
-  // async function getDetail() {
-  //   let res = await ApiPostService('allProducts', null);
+  async function getDetail(cat) {
+    let data={
+      subCategory:cat,
+      page:1
 
-  //   if (res && res.length > 0) {
-  //     console.log(res);
-  //     // setProductDetail(res);
-  //   } else {
-  //     alert('no products found');
+    }
+    let res = await ApiPostService('Products', data);
+    console.log(res);
 
-  //   }
-  // }
+    if (res && res.length > 0) {
+      console.log(res);
+      // setProductDetail(res);
+    } else {
+      alert('no products found');
+
+    }
+  }
 
   return (
     <>

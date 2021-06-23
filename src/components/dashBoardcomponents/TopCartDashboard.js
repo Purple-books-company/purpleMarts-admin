@@ -31,7 +31,7 @@ function TopCartDashBoard() {
           options={{
             ...series.options,
             dataLabels: { enabled: true },
-            legend: { show: true, position: 'right', fontSize: '8px' },
+            legend: { show: true, position: 'bottom', fontSize: '8px' },
             plotOptions: { pie: { size: 100, donut: { size: '60%' } } },
           }}
         />
