@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 import {
   Container,
@@ -6,11 +6,11 @@ import {
   ContainerRow,
   ContainerColumn,
   ToggleButton,
-} from "../styles/styled";
+} from '../styles/styled';
 
-import Offers from "../components/offersComponents/Offers";
-import Advertisement from "../components/offersComponents/Advertisement";
-import SocialMedia from "../components/offersComponents/SocialMedia";
+import Offers from '../components/offersComponents/Offers';
+import Advertisement from '../components/offersComponents/Advertisement';
+import SocialMedia from '../components/offersComponents/SocialMedia';
 
 const OffersMain = () => {
   let initialState = { offer: true, advertisement: false, social: false };
@@ -26,42 +26,44 @@ const OffersMain = () => {
 
   return (
     <Container>
-      <Card nohover>
-        <ContainerRow full>
-          <ContainerColumn height="10%" className="col-4">
+      <Card deg='45' nohover>
+        <ContainerRow dynamic>
+          <ContainerColumn height='10%' className='col'>
             <ToggleButton
               active={active.offer}
-              value="offer"
+              value='offer'
               onClick={handleToggle}
             >
               Offer
             </ToggleButton>
           </ContainerColumn>
 
-          <ContainerColumn height="10%" className="col-4">
+          <ContainerColumn height='10%' className='col'>
             <ToggleButton
               active={active.advertisement}
-              value="advertisement"
+              value='advertisement'
               onClick={handleToggle}
             >
               Advertisement
             </ToggleButton>
           </ContainerColumn>
 
-          <ContainerColumn height="10%" className="col-4">
+          <ContainerColumn height='10%' className='col'>
             <ToggleButton
               active={active.social}
-              value="social"
+              value='social'
               onClick={handleToggle}
             >
               Social Media
             </ToggleButton>
           </ContainerColumn>
-
+        </ContainerRow>
+        <ContainerColumn className='col-md-12 mt-5' height='100%'>
           {active.offer && <Offers />}
+
           {active.advertisement && <Advertisement />}
           {active.social && <SocialMedia />}
-        </ContainerRow>
+        </ContainerColumn>
       </Card>
     </Container>
   );

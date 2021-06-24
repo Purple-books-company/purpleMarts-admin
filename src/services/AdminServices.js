@@ -74,14 +74,12 @@ async function CategoryData() {
   // console.log(Catagoryarray);
   if (Catagoryarray.length === 0) {
     await getAllCategory();
-    alert('fetching');
   }
   return Catagoryarray;
 }
 async function SupplierData() {
   if (Supplierarray.length === 0) {
     await getAllSupplier();
-    alert('fetchingss');
   }
   return Supplierarray;
 }

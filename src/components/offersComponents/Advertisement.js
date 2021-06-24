@@ -1,8 +1,24 @@
+import {
+  ContainerColumn,
+  Input,
+  Formlable,
+  Title,
+  Imageview,
+  ContainerRow,
+  Submitbutton,
+  LeftAlign,
+} from '../../styles/styled';
 const Advertisement = () => {
   return (
-    <div>
-      <h1>Advertisement</h1>
-    </div>
+    <ContainerRow style={{ backgroundColor: 'yellow' }} full>
+      <ContainerColumn height='40%' className='col-md-4'>
+        <Imageview
+          src='https://d8it4huxumps7.cloudfront.net/images/robot1.png'
+          height='60%'
+        />
+      </ContainerColumn>
+      <ContainerColumn className='col-md-4'></ContainerColumn>
+    </ContainerRow>
   );
 };
 

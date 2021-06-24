@@ -1,24 +1,22 @@
 import axios from 'axios';
 // import { Token } from '../env';
 const API = `http://purplemart.pythonanywhere.com`;
-const allCategory = `/api/category/all/`;
-const addSupplier = `/api/supplier/add/`;
-const addCatagory = `/api/category/add/`;
-const addProduct = `/api/product/add/`;
-const allSupplier = `/api/supplier/all/`;
-const Products = `/api/product/admin/subcategory/`;
-const addSubCategory = `/api/category/sub/add/`;
-const allSubCategory = `/api/category/sub/all/`;
+const Request = {
+  allCategory: `/api/category/all/`,
+  allSupplier: `/api/supplier/all/`,
+  supplierAdd: `/api/supplier/add/`,
+  categoryAdd: `/api/category/add`,
+  productAdd: `/api/product/add/`,
+  subCategoryAdd: `/api/category/sub/add/`,
+  subCategoryAll: `/api/category/sub/all/`,
+  Products: `/api/product/admin/subcategory/`,
+};
 
 const Token = process.env.REACT_APP_TOKEN;
 
 async function ApiGetService(method) {
   let url = API;
-  if (method === 'allCategory') {
-    url = url + allCategory;
-  } else {
-    url += allSupplier;
-  }
+  url += Request[method];
   console.log('getService');
   try {
     const res = await axios.get(url, {
@@ -42,20 +40,7 @@ async function ApiGetService(method) {
 
 async function ApiPostService(method, data) {
   let url = API;
-  if (method === 'supplierAdd') {
-    url += addSupplier;
-  } else if (method === 'categoryAdd') {
-    url += addCatagory;
-  } else if (method === 'productAdd') {
-    url += addProduct;
-  } else if (method === 'subCategoryAdd') {
-    url += addSubCategory;
-  } else if (method === 'subCategoryAll') {
-    url += allSubCategory;
-  }
-  else if(method==="Products"){
-    url+=Products;
-  }
+  url += Request[method];
   console.log(url);
   console.log(data);
 
@@ -85,3 +70,13 @@ async function ApiPostService(method, data) {
 }
 
 export { ApiGetService, ApiPostService };
+
+//
+// const allCategory = `/api/category/all/`;
+// const addSupplier = `/api/supplier/add/`;
+// const addCatagory = `/api/category/add/`;
+// const addProduct = `/api/product/add/`;
+// const allSupplier = `/api/supplier/all/`;
+// const Products = `/api/product/admin/subcategory/`;
+// const addSubCategory = `/api/category/sub/add/`;
+// const allSubCategory = `/api/category/sub/all/`;
