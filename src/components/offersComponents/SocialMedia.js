@@ -19,6 +19,8 @@ import {
   RightAlign,
 } from "../../styles/styled";
 
+const API_URL = "socialMedia";
+
 const SocialMedia = () => {
   let initialState = {
     provider: "",
@@ -38,7 +40,7 @@ const SocialMedia = () => {
   const getAllSocialMedia = async () => {
     setLoader(true);
 
-    let res = await ApiGetService("allSocialMedia");
+    let res = await ApiGetService(API_URL);
 
     if (res === null || res === false) alert("Error occured");
     else {
@@ -63,9 +65,9 @@ const SocialMedia = () => {
     let res;
 
     if (isUpdate !== null) {
-      res = await ApiPutService("updateSocialMedia", isUpdate, detail);
+      res = await ApiPutService(API_URL, isUpdate, detail);
     } else {
-      res = await ApiPostService("socialMediaAdd", detail);
+      res = await ApiPostService(API_URL, detail);
     }
 
     if (res === null) {
@@ -99,7 +101,7 @@ const SocialMedia = () => {
 
     setLoader(true);
 
-    let res = await ApiDeleteService("deleteSocialMedia", e.target.value);
+    let res = await ApiDeleteService(API_URL, e.target.value);
 
     if (res === null) {
       alert("Error occured");
