@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { ApiPostService,ApiGetService, ApiDeleteService } from "../../services/ApiServices";
+import {
+  ApiPostService,
+  ApiGetService,
+  ApiDeleteService,
+} from "../../services/ApiServices";
 import Loader from "../Loader";
 import {
   ContainerColumn,
@@ -11,20 +15,21 @@ import {
   Submitbutton,
   LeftAlign,
 } from "../../styles/styled";
-function Offers(){
 
-const[offerName,setOffer] =useState("");
-const [deleteOffer ,setDelete] =useState("");
-const[offerData,setOfferData]=useState([]);
-const [loader,setLoader]=useState(false);
-useEffect(()=>{
-  getOffers();
+const API_URL = "offerList";
 
-},[])
-async function getOffers(){
-   setLoader(true);
-   let res = await ApiGetService("offerList");
-  if (res === null || res === false) alert("Error occured");
+function Offers() {
+  const [offerName, setOffer] = useState("");
+  const [deleteOffer, setDelete] = useState("");
+  const [offerData, setOfferData] = useState([]);
+  const [loader, setLoader] = useState(false);
+  useEffect(() => {
+    getOffers();
+  }, []);
+  async function getOffers() {
+    setLoader(true);
+    let res = await ApiGetService(API_URL);
+    if (res === null || res === false) alert("Error occured");
     else {
       if (res.length > 0) {
         setOfferData(res);
@@ -34,35 +39,31 @@ async function getOffers(){
       }
     }
 
-
     setLoader(false);
-   
-}
-async function handleSubmit(e){
-e.preventDefault();
-setLoader(true);
-let res = await ApiPostService("offerList",{offerName});
-  if (res === null) {
+  }
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setLoader(true);
+    let res = await ApiPostService(API_URL, { offerName });
+    if (res === null) {
       alert("Error occured");
     } else if (res === true) {
       alert("success");
-     setOffer("");
-     getOffers();
+      setOffer("");
+      getOffers();
     } else {
       alert("Improper details");
     }
 
     setLoader(false);
-
-  
-}
-async function handleDelete(){
-  if(!window.confirm("are you sure to delete")){
-    return;
   }
-  setLoader(true);
-  let res = await ApiDeleteService("offerList",deleteOffer);
-   if (res === null) {
+  async function handleDelete() {
+    if (!window.confirm("are you sure to delete")) {
+      return;
+    }
+    setLoader(true);
+    let res = await ApiDeleteService(API_URL, deleteOffer);
+    if (res === null) {
       alert("Error occured");
     } else if (res === true) {
       alert("success");
@@ -72,30 +73,46 @@ async function handleDelete(){
     }
 
     setLoader(false);
-  
-}
+  }
 
   return (
     <>
-    {loader?<Loader />:<>
-      <Title>OFFER PAGE</Title>
+      {loader ? (
+        <Loader />
+      ) : (
+        <>
+          <Title>OFFER PAGE</Title>
 
-      <ContainerRow dynamic>
-        <ContainerColumn className="col-md-6" height="10%">
-          <Formlable>Offer Name</Formlable>
-          <Input type="text" name="offer" value={offerName} onChange={(e)=>setOffer(e.target.value)} />
-          <Submitbutton  onClick={handleSubmit}>POST</Submitbutton>
-        </ContainerColumn>
+          <ContainerRow dynamic>
+            <ContainerColumn className="col-md-6" height="10%">
+              <Formlable>Offer Name</Formlable>
+              <Input
+                type="text"
+                name="offer"
+                value={offerName}
+                onChange={(e) => setOffer(e.target.value)}
+              />
+              <Submitbutton onClick={handleSubmit}>POST</Submitbutton>
+            </ContainerColumn>
 
-        <ContainerColumn className="col-md-6" height="10%">
-          <LeftAlign>Choose Offer to delete</LeftAlign>
-          <select className="form-control mb-2" onChange={(e)=>setDelete(e.target.value)}>
-          {offerData.map((value,index)=><option value={value.id} key={index}>{value.offerName}</option>)}
-          </select>
+            <ContainerColumn className="col-md-6" height="10%">
+              <LeftAlign>Choose Offer to delete</LeftAlign>
+              <select
+                className="form-control mb-2"
+                onChange={(e) => setDelete(e.target.value)}
+              >
+                {offerData.map((value, index) => (
+                  <option value={value.id} key={index}>
+                    {value.offerName}
+                  </option>
+                ))}
+              </select>
 
-          <button className="btn btn-danger mb-2" onClick={handleDelete}>delete</button>
-        </ContainerColumn>
-        {/* <table class="table">
+              <button className="btn btn-danger mb-2" onClick={handleDelete}>
+                delete
+              </button>
+            </ContainerColumn>
+            {/* <table class="table">
           <tr>
  <th scope="col">offername</th>
            <th scope="col">Delete?</th>
@@ -107,11 +124,11 @@ async function handleDelete(){
           </tr>)}
          
         </table> */}
-      </ContainerRow>
-      </>
-    }
+          </ContainerRow>
+        </>
+      )}
     </>
   );
-};
+}
 
 export default Offers;
