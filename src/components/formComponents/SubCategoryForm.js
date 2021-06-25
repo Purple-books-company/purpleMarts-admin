@@ -32,7 +32,7 @@ function SubCategoryForm({ data }) {
     //need to get all category
      let catData = CategoryData().then(res=>{return res});
      setCatagoryDetail(catData);
-     alert("dd")
+   
    
   }, [data]);
 
