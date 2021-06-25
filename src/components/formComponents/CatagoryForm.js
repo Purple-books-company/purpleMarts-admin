@@ -23,11 +23,13 @@ function CatagoryForm({ data }) {
 
   const [detail, setDetail] = useState(initialstate);
   const [categoryDetail, setCatagoryDetail] = useState([]);
-
-  useEffect(() => {
-    if (data != null) {
+useEffect(()=>{
+if (data != null) {
       setDetail(data);
     }
+},[data])
+  useEffect(() => {
+    
     async function onMount() {
       let catData = await CategoryData();
       setCatagoryDetail(catData);

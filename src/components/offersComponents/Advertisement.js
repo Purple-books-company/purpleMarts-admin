@@ -7,13 +7,9 @@ import {
 } from "../../services/AdminServices";
 import {
   ContainerColumn,
-  Input,
-  Formlable,
-  Title,
-  Imageview,
+
   ContainerRow,
-  Submitbutton,
-  LeftAlign,
+
   RightAlign,
 } from "../../styles/styled";
 import Loader from "../Loader";

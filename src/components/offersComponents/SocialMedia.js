@@ -5,17 +5,17 @@ import {
   ApiPostService,
   ApiPutService,
 } from "../../services/ApiServices";
-import { ColorOne } from "../../styles/color";
+
 import Loader from "../Loader";
 import {
   ContainerColumn,
   Input,
-  Formlable,
+
   Title,
   Imageview,
   ContainerRow,
   Submitbutton,
-  LeftAlign,
+
   RightAlign,
 } from "../../styles/styled";
 
