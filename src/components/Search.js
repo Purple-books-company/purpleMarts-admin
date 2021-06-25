@@ -26,7 +26,7 @@ const Search = ({ data, searchKeys, updateFilteredData }) => {
     <>
       <input
         type='text'
-        className='form-control'
+        className='form-control sticky-top fixed-top'
         placeholder={'Search by ' + searchKeys[0] + ' or ' + searchKeys[1]}
         onChange={(e) => setSearchVal(e.target.value.trim().toLowerCase())}
       />

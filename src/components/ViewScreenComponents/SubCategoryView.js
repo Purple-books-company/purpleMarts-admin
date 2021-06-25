@@ -51,7 +51,7 @@ function SubCatagoryView({ categoryName, handleSubPage }) {
     } else {
       setCatagoryData(data);
     }
-  }, []);
+  }, [categoryName]);
 
   const updateFilteredData = (filterData) => {
     if (filterData.length === 0) {

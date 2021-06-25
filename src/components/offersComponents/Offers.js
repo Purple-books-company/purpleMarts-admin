@@ -10,7 +10,7 @@ import {
   Input,
   Formlable,
   Title,
-  Imageview,
+
   ContainerRow,
   Submitbutton,
   LeftAlign,
@@ -80,39 +80,39 @@ function Offers() {
       {loader ? (
         <Loader />
       ) : (
-        <>
-          <Title>OFFER PAGE</Title>
+          <>
+            <Title>OFFER PAGE</Title>
 
-          <ContainerRow dynamic>
-            <ContainerColumn className="col-md-6" height="10%">
-              <Formlable>Offer Name</Formlable>
-              <Input
-                type="text"
-                name="offer"
-                value={offerName}
-                onChange={(e) => setOffer(e.target.value)}
-              />
-              <Submitbutton onClick={handleSubmit}>POST</Submitbutton>
-            </ContainerColumn>
+            <ContainerRow dynamic>
+              <ContainerColumn className="col-md-6" height="10%">
+                <Formlable>Offer Name</Formlable>
+                <Input
+                  type="text"
+                  name="offer"
+                  value={offerName}
+                  onChange={(e) => setOffer(e.target.value)}
+                />
+                <Submitbutton onClick={handleSubmit}>POST</Submitbutton>
+              </ContainerColumn>
 
-            <ContainerColumn className="col-md-6" height="10%">
-              <LeftAlign>Choose Offer to delete</LeftAlign>
-              <select
-                className="form-control mb-2"
-                onChange={(e) => setDelete(e.target.value)}
-              >
-                {offerData.map((value, index) => (
-                  <option value={value.id} key={index}>
-                    {value.offerName}
-                  </option>
-                ))}
-              </select>
+              <ContainerColumn className="col-md-6" height="10%">
+                <LeftAlign>Choose Offer to delete</LeftAlign>
+                <select
+                  className="form-control mb-2"
+                  onChange={(e) => setDelete(e.target.value)}
+                >
+                  {offerData.map((value, index) => (
+                    <option value={value.id} key={index}>
+                      {value.offerName}
+                    </option>
+                  ))}
+                </select>
 
-              <button className="btn btn-danger mb-2" onClick={handleDelete}>
-                delete
+                <button className="btn btn-danger mb-2" onClick={handleDelete}>
+                  delete
               </button>
-            </ContainerColumn>
-            {/* <table class="table">
+              </ContainerColumn>
+              {/* <table class="table">
           <tr>
  <th scope="col">offername</th>
            <th scope="col">Delete?</th>
@@ -124,9 +124,9 @@ function Offers() {
           </tr>)}
          
         </table> */}
-          </ContainerRow>
-        </>
-      )}
+            </ContainerRow>
+          </>
+        )}
     </>
   );
 }

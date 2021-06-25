@@ -39,7 +39,8 @@ function SupplierForm({ data }) {
   useEffect(() => {
     setData();
     // eslint-disable-next-line
-  }, []);
+      alert("dd")
+  }, [data]);
   const setData = () => {
     if (data !== null && data !== detail) {
       setDetail(data);

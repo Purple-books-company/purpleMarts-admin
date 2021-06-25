@@ -33,7 +33,8 @@ function SubCategoryForm({ data }) {
      let catData = CategoryData().then(res=>{return res});
      setCatagoryDetail(catData);
    
-  }, []);
+   
+  }, [data]);
 
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
