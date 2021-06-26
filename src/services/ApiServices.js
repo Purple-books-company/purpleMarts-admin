@@ -2,17 +2,22 @@ import axios from "axios";
 // import { Token } from '../env';
 const API = `http://purplemart.pythonanywhere.com`;
 const Request = {
-  allCategory: `/api/category/all/`,
   allSupplier: `/api/supplier/all/`,
   supplierAdd: `/api/supplier/add/`,
+
+  allCategory: `/api/category/all/`,
   categoryAdd: `/api/category/add`,
+
   productAdd: `/api/product/add/`,
+  Products: `/api/product/admin/subcategory/`,
+
   subCategoryAdd: `/api/category/sub/add/`,
   subCategoryAll: `/api/category/sub/all/`,
-  Products: `/api/product/admin/subcategory/`,
 
   socialMedia: `/api/admin/meta/social/`,
   offerList: `/api/admin/meta/offerlist/`,
+
+  advertisement: `/api/admin/meta/advertisement/`,
 };
 
 const Token = process.env.REACT_APP_TOKEN;
