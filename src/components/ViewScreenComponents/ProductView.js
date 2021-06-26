@@ -7,6 +7,7 @@ import {
   CategoryData,
   getAllSubCategory,
   getSubCategoryDetail,
+  OfferData,
 } from '../../services/AdminServices';
 import { ApiPostService } from '../../services/ApiServices';
 import { ColorOne, ColorTwo } from '../../styles/color';
@@ -16,6 +17,7 @@ import {
   ContainerColumn,
   Imageview,
   ContainerRow,
+  Title,
   // Input,
   // Submitbutton,
 } from '../../styles/styled';
@@ -28,6 +30,7 @@ function ProductView() {
   const [categoryList, setCategoryList] = useState([]);
   const [subCategoryDetail, setSubCategoryDetail] = useState([]);
   const [loader, setLoader] = useState(initialLoader);
+  const [offerList, setOfferList] = useState([]);
 
   useEffect(() => {
     getData();
@@ -38,7 +41,8 @@ function ProductView() {
     Loader.page = true;
 
     setLoader(Loader);
-
+    let offers = await OfferData();
+    setOfferList(offers);
     let categoryDetail = await CategoryData();
     console.log(categoryDetail.length);
     setCategoryList(categoryDetail);
@@ -142,13 +146,23 @@ function ProductView() {
           ) : (
             <ContainerColumn height='100%' className='col-md-10 col-sm-12'>
               {productDetail.length === 0 && <Nodata />}
+              <ContainerRow dynamic className='row bg-light mb-2 sticky-top'>
+                <Title className='col-12'>Current Offers</Title>
+                <br />
+                {offerList.map((value, index) => (
+                  <ContainerColumn className='col-md-3 col-6 mb-2 '>
+                    <input
+                      type='radio'
+                      name='chooseOffer'
+                      value={value.offerName}
+                    />
+                    {value.offerName}
+                  </ContainerColumn>
+                ))}
+              </ContainerRow>
               <ContainerRow dynamic>
                 {productDetail.map((value, index) => (
-                  <ContainerColumn
-                    key={index}
-                    style={{ minHeight: '30%', maxHeight: 'auto !important' }}
-                    className='col-md-6'
-                  >
+                  <ContainerColumn key={index} className='col-md-6'>
                     <Card nohover>
                       <ContainerRow dynamic>
                         <ContainerColumn className='col-3 ml-2'>
@@ -160,10 +174,10 @@ function ProductView() {
                             // alternate="no image"
                           />
                         </ContainerColumn>
-                        <ContainerColumn className='col'>
+                        <ContainerColumn className='col p-2'>
                           <CenterAlign dark>
                             <div
-                              style={{ maxHeight: '30px', minHeight: '30px' }}
+                              style={{ maxHeight: '60px', minHeight: '50px' }}
                             >
                               {value.name}
                             </div>
@@ -171,6 +185,7 @@ function ProductView() {
                             OurPrice:{value.offerPrice}
                             <br />
                             OriginalPrice:{value.originalPrice}
+                            <br />
                             <a
                               href={'#showdata' + index}
                               // className="ml-2"
@@ -188,35 +203,27 @@ function ProductView() {
                               hello
                               <br />
                             </p>
-                            <div
-                              className='input-group mb-2 mr-sm-2'
-                              style={{
-                                maxWidth: '80%',
-                                marginLeft: '10%',
-                                textAlign: 'center',
-                              }}
+                            <br />
+                            <button
+                              className='btn btn-danger mr-2 '
+                              value={value.name}
                             >
-                              <button
-                                className='btn btn-danger mr-2 form-control'
-                                value={value.name}
-                              >
-                                <AiFillDelete size='18' />
-                                {'  '}
-                                Delete
-                              </button>
-                              <Link
-                                to={{
-                                  pathname: '/editproduct',
-                                  state: { product: value },
-                                }}
-                                className='btn purple form-control'
-                                name='addImages'
-                                value={value}
-                              >
-                                <AiFillInfoCircle size='18' />
-                                {'  '}View
-                              </Link>
-                            </div>
+                              <AiFillDelete size='18' />
+                              {'  '}
+                              Delete
+                            </button>
+                            <Link
+                              to={{
+                                pathname: '/editproduct',
+                                state: { product: value },
+                              }}
+                              className='btn purple '
+                              name='addImages'
+                              value={value}
+                            >
+                              <AiFillInfoCircle size='18' />
+                              {'  '}View
+                            </Link>
                           </CenterAlign>
                         </ContainerColumn>
                       </ContainerRow>
