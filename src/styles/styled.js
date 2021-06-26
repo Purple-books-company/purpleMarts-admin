@@ -82,6 +82,7 @@ export const ContainerRow = styled.div.attrs((props) => ({
     else if (props.dynamic) return 'auto';
     else return '30%';
   }};
+  /* min-height: ${(props) => (props.min ? '30%' : '0%')}; */
 `;
 export const ContainerColumn = styled.div.attrs((props) => ({
   className: props.className,

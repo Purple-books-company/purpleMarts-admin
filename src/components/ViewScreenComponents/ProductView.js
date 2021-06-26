@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { AiFillDelete, AiFillInfoCircle } from 'react-icons/ai';
+import { AiFillCaretDown } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import {
   CategoryData,
   getAllSubCategory,
   getSubCategoryDetail,
+  OfferData,
 } from '../../services/AdminServices';
-import { ApiPostService } from "../../services/ApiServices";
+import { ApiPostService } from '../../services/ApiServices';
 import { ColorOne, ColorTwo } from '../../styles/color';
 import {
   Card,
@@ -15,6 +17,7 @@ import {
   ContainerColumn,
   Imageview,
   ContainerRow,
+  Title,
   // Input,
   // Submitbutton,
 } from '../../styles/styled';
@@ -27,10 +30,9 @@ function ProductView() {
   const [categoryList, setCategoryList] = useState([]);
   const [subCategoryDetail, setSubCategoryDetail] = useState([]);
   const [loader, setLoader] = useState(initialLoader);
+  const [offerList, setOfferList] = useState([]);
 
   useEffect(() => {
-   
-
     getData();
   }, []);
 
@@ -39,11 +41,21 @@ function ProductView() {
     Loader.page = true;
 
     setLoader(Loader);
-
+    let offers = await OfferData();
+    setOfferList(offers);
     let categoryDetail = await CategoryData();
     console.log(categoryDetail.length);
     setCategoryList(categoryDetail);
+    let subCat = getSubCategoryDetail(categoryDetail[0].name);
+    //need to optimize this!!
+    if (subCat === undefined || subCat === null) {
+      await getAllSubCategory(categoryDetail[0].name);
+      subCat = getSubCategoryDetail(categoryDetail[0].name);
+    }
+
+    setSubCategoryDetail(subCat);
     setLoader({ ...initialLoader });
+    getDetail(subCat[0].name);
   }
   async function handleChange(e) {
     let Loader = { ...initialLoader };
@@ -62,20 +74,18 @@ function ProductView() {
     getDetail(subCat[0].name);
   }
   async function getDetail(cat) {
-    let data={
-      subCategory:cat,
-      page:1
-
-    }
+    let data = {
+      subCategory: cat,
+      page: 1,
+    };
     let res = await ApiPostService('Products', data);
     console.log(res);
 
     if (res && res.length > 0) {
       console.log(res);
-      // setProductDetail(res);
+      setProductDetail(res);
     } else {
       alert('no products found');
-
     }
   }
 
@@ -134,57 +144,93 @@ function ProductView() {
               <Loader />
             </ContainerColumn>
           ) : (
-            <ContainerColumn className='col-md-10 col-sm-12'>
+            <ContainerColumn height='100%' className='col-md-10 col-sm-12'>
               {productDetail.length === 0 && <Nodata />}
-
-              {productDetail.map((value, index) => (
-                <ContainerColumn height='45%' key={index} className='col-md-3'>
-                  <Card deg='65' single>
-                    <Imageview
-                      src={value.images[0].image}
-                      width='50%'
-                      style={{ marginTop: '2%' }}
-                      // alternate="no image"
+              <ContainerRow dynamic className='row bg-light mb-2 sticky-top'>
+                <Title className='col-12'>Current Offers</Title>
+                <br />
+                {offerList.map((value, index) => (
+                  <ContainerColumn className='col-md-3 col-6 mb-2 '>
+                    <input
+                      type='radio'
+                      name='chooseOffer'
+                      value={value.offerName}
                     />
-                    <CenterAlign dark>
-                      <b>{value.name}</b>
-                      <br />
-                      sizes:{value.varients.size.length}
-                      <br />
-                      colors:{value.varients.color.length}
-                      <div
-                        className='input-group mb-2 mr-sm-2'
-                        style={{
-                          maxWidth: '80%',
-                          marginLeft: '10%',
-                          textAlign: 'center',
-                        }}
-                      >
-                        <button
-                          className='btn btn-danger mr-2 form-control'
-                          value={value.name}
-                        >
-                          <AiFillDelete size='18' />
-                          {'  '}
-                          Delete
-                        </button>
-                        <Link
-                          to={{
-                            pathname: '/editproduct',
-                            state: { product: value },
-                          }}
-                          className='btn purple form-control'
-                          name='addImages'
-                          value={value}
-                        >
-                          <AiFillInfoCircle size='18' />
-                          {'  '}View
-                        </Link>
-                      </div>
-                    </CenterAlign>
-                  </Card>
-                </ContainerColumn>
-              ))}
+                    {value.offerName}
+                  </ContainerColumn>
+                ))}
+              </ContainerRow>
+              <ContainerRow dynamic>
+                {productDetail.map((value, index) => (
+                  <ContainerColumn key={index} className='col-md-6'>
+                    <Card nohover>
+                      <ContainerRow dynamic>
+                        <ContainerColumn className='col-3 ml-2'>
+                          <Imageview
+                            src={value.image}
+                            width='90%'
+                            height='100px'
+                            style={{ marginTop: '2%' }}
+                            // alternate="no image"
+                          />
+                        </ContainerColumn>
+                        <ContainerColumn className='col p-2'>
+                          <CenterAlign dark>
+                            <div
+                              style={{ maxHeight: '60px', minHeight: '50px' }}
+                            >
+                              {value.name}
+                            </div>
+                            <br />
+                            OurPrice:{value.offerPrice}
+                            <br />
+                            OriginalPrice:{value.originalPrice}
+                            <br />
+                            <a
+                              href={'#showdata' + index}
+                              // className="ml-2"
+                              data-toggle='collapse'
+                            >
+                              show more
+                              <AiFillCaretDown />
+                            </a>
+                            <p className='collapse' id={'showdata' + index}>
+                              hello
+                              <br /> hello
+                              <br /> hello
+                              <br /> hello
+                              <br />
+                              hello
+                              <br />
+                            </p>
+                            <br />
+                            <button
+                              className='btn btn-danger mr-2 '
+                              value={value.name}
+                            >
+                              <AiFillDelete size='18' />
+                              {'  '}
+                              Delete
+                            </button>
+                            <Link
+                              to={{
+                                pathname: '/editproduct',
+                                state: { product: value },
+                              }}
+                              className='btn purple '
+                              name='addImages'
+                              value={value}
+                            >
+                              <AiFillInfoCircle size='18' />
+                              {'  '}View
+                            </Link>
+                          </CenterAlign>
+                        </ContainerColumn>
+                      </ContainerRow>
+                    </Card>
+                  </ContainerColumn>
+                ))}
+              </ContainerRow>
             </ContainerColumn>
           )}
         </ContainerRow>

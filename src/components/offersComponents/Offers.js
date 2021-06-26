@@ -15,6 +15,7 @@ import {
   Submitbutton,
   LeftAlign,
 } from "../../styles/styled";
+import { getAllOffers, OfferData } from "../../services/AdminServices";
 
 const API_URL = "offerList";
 
@@ -28,7 +29,7 @@ function Offers() {
   }, []);
   async function getOffers() {
     setLoader(true);
-    let res = await ApiGetService(API_URL);
+    let res = await OfferData();//api service function
     if (res === null || res === false) alert("Error occured");
     else {
       if (res.length > 0) {
@@ -50,6 +51,7 @@ function Offers() {
     } else if (res === true) {
       alert("success");
       setOffer("");
+      await getAllOffers();
       getOffers();
     } else {
       alert("Improper details");
@@ -67,6 +69,7 @@ function Offers() {
       alert("Error occured");
     } else if (res === true) {
       alert("success");
+      await getAllOffers();
       getOffers();
     } else {
       alert("Improper details");

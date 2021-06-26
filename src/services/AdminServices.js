@@ -48,6 +48,7 @@ export const ExcelSchema = {
 let Catagoryarray = [];
 let Supplierarray = [];
 let SubcategoryObject = {};
+let Offerarray = [];
 
 // async function getAllData() {
 //   await getAllCategory();
@@ -82,6 +83,21 @@ async function SupplierData() {
     await getAllSupplier();
   }
   return Supplierarray;
+}
+export async function getAllOffers() {
+  let res = await ApiGetService('offerList');
+  if (res === null || res === false) {
+    alert('error occured');
+  } else {
+    Offerarray = res;
+  }
+}
+export async function OfferData() {
+  if (Offerarray.length == 0) {
+    await getAllOffers();
+  }
+
+  return Offerarray;
 }
 export async function getAllSubCategory(category) {
   let data = { category };
