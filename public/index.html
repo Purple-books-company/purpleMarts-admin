@@ -74,16 +74,28 @@
     crossorigin="anonymous"></script>
     <script>
        
+       
       var prevScrollpos = window.pageYOffset;
         window.onscroll = function () {
+          let productSideNav = document.getElementById("productSide-Nav");
+          let nav = document.querySelector(".navbar");
+   
           
           var currentScrollPos = window.pageYOffset;
           if (prevScrollpos > currentScrollPos) {
-           let nav = document.querySelector(".navbar");
+       
+           if(productSideNav && window.innerWidth<550){
+             productSideNav.style.top="0";
+           }
+           if(nav)
             nav.style.top="0";
          
           } else {
-              let nav = document.querySelector(".navbar");
+            if (productSideNav  && window.innerWidth < 550) {
+              productSideNav.style.top = "-500px";
+             
+            }
+              if(nav)
             nav.style.top = "-200px";
            
           }
