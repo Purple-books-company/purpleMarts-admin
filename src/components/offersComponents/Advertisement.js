@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import {
   CategoryData,
   getAllSubCategory,
   getSubCategoryDetail,
-} from "../../services/AdminServices";
+} from '../../services/AdminServices';
 import {
   ApiDeleteService,
   ApiGetService,
   ApiPostService,
-} from "../../services/ApiServices";
+} from '../../services/ApiServices';
 import {
   ContainerColumn,
   ContainerRow,
@@ -16,19 +16,19 @@ import {
   Input,
   Submitbutton,
   Imageview,
-} from "../../styles/styled";
-import Loader from "../Loader";
+} from '../../styles/styled';
+import Loader from '../Loader';
 
 const Advertisement = () => {
   let initialState = {
-    image: "",
-    type: "Single",
-    advType: "Category",
-    description: "",
-    advId: "",
+    image: '',
+    type: 'Single',
+    advType: 'Category',
+    description: '',
+    advId: '',
   };
 
-  const [form, setForm] = useState("category");
+  const [form, setForm] = useState('category');
   const [categoryDetail, setCategoryDetail] = useState([]);
   const [subCategoryDetail, setSubCategoryDetail] = useState([]);
   const [loader, setLoader] = useState(false);
@@ -51,7 +51,7 @@ const Advertisement = () => {
 
   async function getAdvertisementData() {
     setLoader(true);
-    let data = await ApiGetService("advertisement");
+    let data = await ApiGetService('advertisement');
     setAdvertisementData(data);
     setLoader(false);
   }
@@ -59,17 +59,17 @@ const Advertisement = () => {
   async function handleCategoryChange(e) {
     getSubData(e.target.value);
     if (isCategory) {
-      setDetail({ ...detail, advType: "Category", advId: e.target.value });
+      setDetail({ ...detail, advType: 'Category', advId: e.target.value });
     }
   }
 
   function handleProductChange(e) {}
 
   function handleChange(e) {
-    if (e.target.name === "Subcategory" && !isCategory) {
+    if (e.target.name === 'Subcategory' && !isCategory) {
       setDetail({ ...detail, [e.target.name]: e.target.value });
-    } else if (e.target.name !== "Subcategory") {
-      if (e.target.name == "advId" && isCategory) return;
+    } else if (e.target.name !== 'Subcategory') {
+      if (e.target.name == 'advId' && isCategory) return;
       setDetail({ ...detail, [e.target.name]: e.target.value });
     }
   }
@@ -79,35 +79,37 @@ const Advertisement = () => {
 
     let data = { ...detail };
 
-    if (data.advType === "Category" && data.advId === "") {
+    if (data.advType === 'Category' && data.advId === '') {
       data.advId = categoryDetail[0].name;
     }
 
-    if (data.advType === "SubCategory" && data.advId === "") {
+    if (data.advType === 'SubCategory' && data.advId === '') {
       data.advId = subCategoryDetail[0].name;
     }
 
-    let res = await ApiPostService("advertisement", data);
+    let res = await ApiPostService('advertisement', data);
     if (res === null) {
-      alert("Error occured");
+      alert('Error occured');
       return;
     }
 
     if (res === true) {
-      alert("Operation successful");
+      alert('Operation successful');
+      getAdvertisementData();
+      setDetail({ ...initialState });
     } else {
-      alert("Invalid input");
+      alert('Invalid input');
     }
   }
 
   function handleRadio(e) {
-    if (e.target.value === "category" && !isCategory) {
-      setDetail({ ...initialState, advType: "Category" });
+    if (e.target.value === 'category' && !isCategory) {
+      setDetail({ ...initialState, advType: 'Category' });
       setIsCategory(true);
     }
 
-    if (e.target.value === "subCategory" && isCategory) {
-      setDetail({ ...initialState, advType: "SubCategory" });
+    if (e.target.value === 'subCategory' && isCategory) {
+      setDetail({ ...initialState, advType: 'SubCategory' });
       setIsCategory(false);
     }
   }
@@ -130,42 +132,42 @@ const Advertisement = () => {
   }
 
   async function handleDelete(e) {
-    if (!window.confirm("Are you sure you want to delete?")) return;
-    let res = await ApiDeleteService("advertisement", e.target.value);
+    if (!window.confirm('Are you sure you want to delete?')) return;
+    let res = await ApiDeleteService('advertisement', e.target.value);
     alert(res);
     getAdvertisementData();
   }
 
   return (
     <>
-      <hr style={{ width: "100%", color: "black", border: "0.5px dotted" }} />
+      <hr style={{ width: '100%', color: 'black', border: '0.5px dotted' }} />
       <ContainerRow dynamic>
         {loader && (
-          <ContainerColumn className="col-md-12 mb-2">
+          <ContainerColumn className='col-md-12 mb-2'>
             <Loader />
           </ContainerColumn>
         )}
-        <ContainerColumn height="10%" className="col-md-6 col">
+        <ContainerColumn height='10%' className='col-md-6 col'>
           <button
-            type="radio"
+            type='radio'
             onClick={handleClick}
-            name="chooseOffer"
-            value="category"
+            name='chooseOffer'
+            value='category'
             className={`btn btn-outline-primary ${
-              form === "category" ? "btn-primary text-light" : ""
+              form === 'category' ? 'btn-primary text-light' : ''
             }`}
           >
             Category
           </button>
         </ContainerColumn>
-        <ContainerColumn height="10%" className="col-md-6 col ">
+        <ContainerColumn height='10%' className='col-md-6 col '>
           <button
-            type="radio"
+            type='radio'
             onClick={handleClick}
-            name="chooseOffer"
-            value="product"
+            name='chooseOffer'
+            value='product'
             className={`btn btn-outline-secondary ${
-              form === "product" ? "btn-secondary text-light" : ""
+              form === 'product' ? 'btn-secondary text-light' : ''
             }`}
           >
             Product
@@ -175,14 +177,14 @@ const Advertisement = () => {
 
       <ContainerRow half>
         {/* <div style={{ display: `${form === "category" ? "" : "none"}` }}> */}
-        {form === "category" && (
+        {form === 'category' && (
           <>
-            <ContainerColumn className="col-md-6">
+            <ContainerColumn className='col-md-6'>
               <RightAlign>select Category</RightAlign>
               <select
                 onChange={handleCategoryChange}
-                name="category"
-                className="form-control "
+                name='category'
+                className='form-control '
               >
                 {categoryDetail.map((value, index) => (
                   <option value={value.name} key={`AdvertisementCat+${index}`}>
@@ -191,33 +193,33 @@ const Advertisement = () => {
                 ))}
               </select>
             </ContainerColumn>
-            <ContainerColumn className="col col-md-6">
+            <ContainerColumn className='col col-md-6'>
               <br />
               <br />
               <input
-                type="radio"
-                name="category"
-                value="category"
+                type='radio'
+                name='category'
+                value='category'
                 onClick={handleRadio}
               />
-              <label className="mr-2" for="category">
+              <label className='mr-2' for='category'>
                 Category
               </label>
               {/* <br /> */}
               <input
-                type="radio"
-                name="category"
-                value="subCategory"
+                type='radio'
+                name='category'
+                value='subCategory'
                 onClick={handleRadio}
               />
-              <label for="subCategory">Sub-Category</label>
+              <label for='subCategory'>Sub-Category</label>
             </ContainerColumn>
-            <ContainerColumn className="col-md-6 mt-2">
+            <ContainerColumn className='col-md-6 mt-2'>
               <RightAlign>Select Sub-Category</RightAlign>
               <select
-                name="advId"
-                className="form-control"
-                style={{ width: "100%" }}
+                name='advId'
+                className='form-control'
+                style={{ width: '100%' }}
                 onChange={handleChange}
                 disabled={isCategory}
               >
@@ -232,14 +234,14 @@ const Advertisement = () => {
           </>
         )}
         {/* <div style={{ display: `${form === "category" ? "none" : ""}` }}> */}
-        {form === "product" && (
-          <ContainerColumn className="col-md-6">
+        {form === 'product' && (
+          <ContainerColumn className='col-md-6'>
             <RightAlign>Select Product Id</RightAlign>
             <Input
-              type="text"
+              type='text'
               onChange={handleChange}
-              placeholder="Product Id"
-              name="advId"
+              placeholder='Product Id'
+              name='advId'
               value={detail.advId}
               required
             />
@@ -256,48 +258,48 @@ const Advertisement = () => {
               )} */}
         {/* </div> */}
 
-        <ContainerColumn className="col-md-6">
+        <ContainerColumn className='col-md-6'>
           <RightAlign>Description</RightAlign>
           <Input
-            type="text"
+            type='text'
             onChange={handleChange}
-            placeholder="Description"
-            name="description"
+            placeholder='Description'
+            name='description'
             value={detail.description}
             required
           />
         </ContainerColumn>
 
-        <ContainerColumn className="col-md-6">
+        <ContainerColumn className='col-md-6'>
           <RightAlign>Select type</RightAlign>
-          <select name="type" onChange={handleChange} className="form-control">
-            <option value="Single">Single</option>
-            <option value="Multiple">Multiple</option>
+          <select name='type' onChange={handleChange} className='form-control'>
+            <option value='Single'>Single</option>
+            <option value='Multiple'>Multiple</option>
           </select>
         </ContainerColumn>
 
-        <ContainerColumn className="col-md-6">
+        <ContainerColumn className='col-md-6'>
           <RightAlign>Image Url</RightAlign>
           <Input
-            type="text"
+            type='text'
             onChange={handleChange}
-            name="image"
+            name='image'
             value={detail.image}
-            placeholder="image Url"
+            placeholder='image Url'
             required
           />
         </ContainerColumn>
 
-        <Submitbutton type="submit" onClick={handleSubmit}>
+        <Submitbutton type='submit' onClick={handleSubmit}>
           Post
         </Submitbutton>
 
-        <table class="table">
+        <table class='table'>
           <thead>
             <tr>
-              <th scope="col">Advertisement</th>
-              <th scope="col">Image</th>
-              <th scope="col">Action</th>
+              <th scope='col'>Advertisement</th>
+              <th scope='col'>Image</th>
+              <th scope='col'>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -312,17 +314,18 @@ const Advertisement = () => {
                   <br />
                 </td>
                 <td>
-                  <Imageview src={value.image} height="100px" width="10%" />
+                  <Imageview src={value.image} height='100px' width='10%' />
                 </td>
                 <td>
                   <button
                     value={value.id}
-                    className="btn btn-outline-danger"
+                    className='btn btn-outline-danger'
                     onClick={handleDelete}
                   >
                     Delete
                   </button>
-                  <button className="btn btn-outline-info mt-2">Edit</button>
+                  <br />
+                  <button className='btn btn-outline-info mt-2'>Edit</button>
                 </td>
               </tr>
             ))}

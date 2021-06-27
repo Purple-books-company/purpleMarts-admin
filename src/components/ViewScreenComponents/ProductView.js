@@ -96,7 +96,7 @@ function ProductView() {
       ) : (
         <ContainerRow full>
           <ContainerColumn
-            className='col-md-2 col-sm-12 bg-light'
+            className='col-md-2 col-sm-12 bg-light fixed-top sticky-top'
             height={window.innerWidth > 500 ? '100%' : 'auto'}
           >
             <select
@@ -138,6 +138,20 @@ function ProductView() {
                 </div>
               ))}
             </ContainerRow>
+            <ContainerRow dynamic className='row bg-light mb-2 sticky'>
+              <Title className='col-12'>Current Offers</Title>
+              <br />
+              {offerList.map((value, index) => (
+                <ContainerColumn className='col-md-3 col-6 mb-2 '>
+                  <input
+                    type='radio'
+                    name='chooseOffer'
+                    value={value.offerName}
+                  />
+                  {value.offerName}
+                </ContainerColumn>
+              ))}
+            </ContainerRow>
           </ContainerColumn>
           {loader.product ? (
             <ContainerColumn height='100%' className='col-md-10 col-sm-12'>
@@ -146,20 +160,7 @@ function ProductView() {
           ) : (
             <ContainerColumn height='100%' className='col-md-10 col-sm-12'>
               {productDetail.length === 0 && <Nodata />}
-              <ContainerRow dynamic className='row bg-light mb-2 sticky-top'>
-                <Title className='col-12'>Current Offers</Title>
-                <br />
-                {offerList.map((value, index) => (
-                  <ContainerColumn className='col-md-3 col-6 mb-2 '>
-                    <input
-                      type='radio'
-                      name='chooseOffer'
-                      value={value.offerName}
-                    />
-                    {value.offerName}
-                  </ContainerColumn>
-                ))}
-              </ContainerRow>
+
               <ContainerRow dynamic>
                 {productDetail.map((value, index) => (
                   <ContainerColumn key={index} className='col-md-6'>

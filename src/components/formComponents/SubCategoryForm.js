@@ -30,10 +30,7 @@ function SubCategoryForm({ data }) {
       setDetail(data);
     }
     //need to get all category
-     let catData = CategoryData().then(res=>{return res});
-     setCatagoryDetail(catData);
-   
-   
+    CategoryData().then((res) => setCatagoryDetail(res));
   }, [data]);
 
   const [errorMsg, setErrorMsg] = useState('');
