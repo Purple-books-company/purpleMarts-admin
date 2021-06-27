@@ -45,9 +45,9 @@ function ViewScreens() {
       setMountView(newState);
     }
   };
- const handleSubPage=()=>{
-   setMountView({...initialState,"category":true});
- }
+  const handleSubPage = () => {
+    setMountView({ ...initialState, category: true });
+  };
   const showSubCategory = (subCategoryName) => {
     let newState = { ...initialState };
     setData(subCategoryName);
@@ -56,13 +56,12 @@ function ViewScreens() {
   };
   return (
     <>
-
       <Nav
         navItems={['Dashboard']}
         navLinks={['/']}
         Show={!mountView.subCategory ? handleChange : null}
       />
-   
+
       {loader ? (
         <Loader />
       ) : (
@@ -91,7 +90,12 @@ function ViewScreens() {
           {mountView.category && (
             <CatagoryView showSubCategory={showSubCategory} />
           )}
-          {mountView.subCategory && <SubCategoryView categoryName={data} handleSubPage={handleSubPage} />}
+          {mountView.subCategory && (
+            <SubCategoryView
+              categoryName={data}
+              handleSubPage={handleSubPage}
+            />
+          )}
           {mountView.supplier && <SupplierView />}
           {mountView.product && <ProductView />}
         </>

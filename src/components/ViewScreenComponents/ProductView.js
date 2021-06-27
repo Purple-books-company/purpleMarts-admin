@@ -31,6 +31,7 @@ function ProductView() {
   const [subCategoryDetail, setSubCategoryDetail] = useState([]);
   const [loader, setLoader] = useState(initialLoader);
   const [offerList, setOfferList] = useState([]);
+  const [offerId, Addtooffer] = useState('');
 
   useEffect(() => {
     getData();
@@ -88,6 +89,12 @@ function ProductView() {
       alert('no products found');
     }
   }
+  async function handleAddOffer(e) {
+    Addtooffer(e.target.value);
+    setTimeout(() => {
+      Addtooffer('');
+    }, 3000);
+  }
 
   return (
     <>
@@ -96,7 +103,7 @@ function ProductView() {
       ) : (
         <ContainerRow full>
           <ContainerColumn
-            className='col-md-2 col-sm-12 bg-light'
+            className='col-md-2 col-sm-12 bg-light fixed-top sticky-top'
             height={window.innerWidth > 500 ? '100%' : 'auto'}
           >
             <select
@@ -138,6 +145,20 @@ function ProductView() {
                 </div>
               ))}
             </ContainerRow>
+            <ContainerRow dynamic className='row bg-light mb-2 sticky'>
+              <Title className='col-12'>Current Offers</Title>
+              <br />
+              {offerList.map((value, index) => (
+                <ContainerColumn className='col-md-3 col-6 mb-2 '>
+                  <input
+                    type='radio'
+                    name='chooseOffer'
+                    value={value.offerName}
+                  />
+                  {value.offerName}
+                </ContainerColumn>
+              ))}
+            </ContainerRow>
           </ContainerColumn>
           {loader.product ? (
             <ContainerColumn height='100%' className='col-md-10 col-sm-12'>
@@ -146,26 +167,13 @@ function ProductView() {
           ) : (
             <ContainerColumn height='100%' className='col-md-10 col-sm-12'>
               {productDetail.length === 0 && <Nodata />}
-              <ContainerRow dynamic className='row bg-light mb-2 sticky-top'>
-                <Title className='col-12'>Current Offers</Title>
-                <br />
-                {offerList.map((value, index) => (
-                  <ContainerColumn className='col-md-3 col-6 mb-2 '>
-                    <input
-                      type='radio'
-                      name='chooseOffer'
-                      value={value.offerName}
-                    />
-                    {value.offerName}
-                  </ContainerColumn>
-                ))}
-              </ContainerRow>
+
               <ContainerRow dynamic>
                 {productDetail.map((value, index) => (
                   <ContainerColumn key={index} className='col-md-6'>
                     <Card nohover>
                       <ContainerRow dynamic>
-                        <ContainerColumn className='col-3 ml-2'>
+                        <ContainerColumn className='col-md-3 col-4 ml-2'>
                           <Imageview
                             src={value.image}
                             width='90%'
@@ -173,11 +181,27 @@ function ProductView() {
                             style={{ marginTop: '2%' }}
                             // alternate="no image"
                           />
+                          <button
+                            class='btn btn-outline-primary mt-4'
+                            type='button'
+                            value={value.id}
+                            onClick={handleAddOffer}
+                          >
+                            <span
+                              class={
+                                offerId === value.id &&
+                                'spinner-border spinner-border-sm'
+                              }
+                              role='status'
+                              aria-hidden='true'
+                            ></span>
+                            {offerId !== value.id && 'Addoffer'}
+                          </button>
                         </ContainerColumn>
                         <ContainerColumn className='col p-2'>
                           <CenterAlign dark>
                             <div
-                              style={{ maxHeight: '60px', minHeight: '50px' }}
+                              style={{ maxHeight: 'auto', minHeight: '50px' }}
                             >
                               {value.name}
                             </div>
@@ -205,7 +229,7 @@ function ProductView() {
                             </p>
                             <br />
                             <button
-                              className='btn btn-danger mr-2 '
+                              className='btn btn-outline-danger mr-2 '
                               value={value.name}
                             >
                               <AiFillDelete size='18' />
@@ -222,7 +246,7 @@ function ProductView() {
                               value={value}
                             >
                               <AiFillInfoCircle size='18' />
-                              {'  '}View
+                              Edit
                             </Link>
                           </CenterAlign>
                         </ContainerColumn>
