@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { AiFillDelete, AiFillInfoCircle } from 'react-icons/ai';
+import { AiFillDelete, AiFillInfoCircle, AiFillUpSquare } from 'react-icons/ai';
 import { AiFillCaretDown } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import {
@@ -74,6 +74,9 @@ function ProductView() {
     setLoader({ ...initialLoader });
     getDetail(subCat[0].name);
   }
+  async function handleRadio(e) {
+    getDetail(e.target.value);
+  }
   async function getDetail(cat) {
     let data = {
       subCategory: cat,
@@ -103,11 +106,14 @@ function ProductView() {
       ) : (
         <ContainerRow full>
           <ContainerColumn
-            className='col-md-2 col-sm-12    fixed-top sticky-top'
+            className='col-md-2 col-sm-12 fixed-top sticky-top p-2'
             id='productSide-Nav'
             height={window.innerWidth > 500 ? '100%' : 'auto'}
             style={{ backgroundColor: ColorTwo }}
           >
+            <Link to='/' className='col-md-12 col-3  text-light '>
+              BACK TO HOME
+            </Link>
             <select
               name='category'
               className='form-control m-2 ml-4 mt-4 '
@@ -136,6 +142,7 @@ function ProductView() {
                     className='form-check-input'
                     name='subcat'
                     value={value.name}
+                    onClick={handleRadio}
                     id={'radioInput' + index}
                   />
                   <label
@@ -180,7 +187,7 @@ function ProductView() {
                             src={value.image}
                             width='90%'
                             height='100px'
-                            style={{ marginTop: '2%' }}
+                            style={{ marginTop: '2%', maxHeight: '100px' }}
                             // alternate="no image"
                           />
                           <button
@@ -203,32 +210,51 @@ function ProductView() {
                         <ContainerColumn className='col p-2'>
                           <CenterAlign dark>
                             <div
-                              style={{ maxHeight: 'auto', minHeight: '50px' }}
+                              style={{
+                                minHeight: '150px',
+                                backgroundColor: 'white',
+                                maxHeight: 'auto',
+                              }}
                             >
                               {value.name}
+                              <br />
+                              OurPrice:{value.offerPrice}
+                              <br />
+                              OriginalPrice:{value.originalPrice}
+                              <br />
+                              <p className='collapse' id={'showdata' + index}>
+                                <a
+                                  href={'#showdata' + index}
+                                  // className="ml-2"
+                                  className='text-secondary'
+                                  style={{
+                                    textAlign: 'right',
+                                    marginLeft: '60%',
+                                  }}
+                                  data-toggle='collapse'
+                                >
+                                  X
+                                </a>
+                                <br />
+                                hello
+                                <br /> hello
+                                <br /> hello
+                                <br /> hello
+                                <br />
+                                hello
+                                <br />
+                              </p>
                             </div>
-                            <br />
-                            OurPrice:{value.offerPrice}
-                            <br />
-                            OriginalPrice:{value.originalPrice}
-                            <br />
                             <a
                               href={'#showdata' + index}
                               // className="ml-2"
+
                               data-toggle='collapse'
                             >
-                              show more
+                              show More
                               <AiFillCaretDown />
                             </a>
-                            <p className='collapse' id={'showdata' + index}>
-                              hello
-                              <br /> hello
-                              <br /> hello
-                              <br /> hello
-                              <br />
-                              hello
-                              <br />
-                            </p>
+
                             <br />
                             <button
                               className='btn btn-outline-danger mr-2 '
