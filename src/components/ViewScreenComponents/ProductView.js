@@ -264,16 +264,16 @@ function ProductView() {
                                 hello
                                 <br />
                               </p>
-                            </div>
-                            <a
-                              href={'#showdata' + index}
-                              // className="ml-2"
+                              <a
+                                href={'#showdata' + index}
+                                // className="ml-2"
 
-                              data-toggle='collapse'
-                            >
-                              show More
-                              <AiFillCaretDown />
-                            </a>
+                                data-toggle='collapse'
+                              >
+                                show More
+                                <AiFillCaretDown />
+                              </a>
+                            </div>
 
                             <br />
                             <button
