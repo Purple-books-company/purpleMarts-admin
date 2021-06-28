@@ -173,11 +173,11 @@ function ProductView() {
                 </div>
               ))}
             </ContainerRow>
-            <ContainerRow dynamic className='row  mb-2 sticky'>
+            <ContainerRow dynamic className='row   mb-2 sticky'>
               <Title className='col-12'>Add to offer</Title>
               <br />
               {offerList.map((value, index) => (
-                <ContainerColumn className='col-md-12 col mt-2 text-light'>
+                <ContainerColumn className='col-md-12 col mt-2 ml-1  text-light'>
                   <input
                     type='radio'
                     name='chooseOffer'
@@ -206,8 +206,8 @@ function ProductView() {
                           <Imageview
                             src={value.image}
                             width='90%'
-                            height='100px'
-                            style={{ marginTop: '2%', maxHeight: '100px' }}
+                            height='130px'
+                            style={{ marginTop: '2%', maxHeight: '130px' }}
                             // alternate="no image"
                           />
                           <button

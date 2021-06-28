@@ -93,7 +93,7 @@ export async function getAllOffers() {
   }
 }
 export async function OfferData() {
-  if (Offerarray.length == 0) {
+  if (Offerarray.length === 0) {
     await getAllOffers();
   }
 
