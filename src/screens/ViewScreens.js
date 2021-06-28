@@ -56,11 +56,13 @@ function ViewScreens() {
   };
   return (
     <>
-      <Nav
-        navItems={['Dashboard']}
-        navLinks={['/']}
-        Show={!mountView.subCategory ? handleChange : null}
-      />
+      {!mountView.product && (
+        <Nav
+          navItems={['Dashboard']}
+          navLinks={['/']}
+          Show={!mountView.subCategory ? handleChange : null}
+        />
+      )}
 
       {loader ? (
         <Loader />

@@ -103,12 +103,14 @@ function ProductView() {
       ) : (
         <ContainerRow full>
           <ContainerColumn
-            className='col-md-2 col-sm-12 bg-light fixed-top sticky-top'
+            className='col-md-2 col-sm-12    fixed-top sticky-top'
+            id='productSide-Nav'
             height={window.innerWidth > 500 ? '100%' : 'auto'}
+            style={{ backgroundColor: ColorTwo }}
           >
             <select
               name='category'
-              className='form-control m-2 ml-4 mt-4'
+              className='form-control m-2 ml-4 mt-4 '
               style={{
                 border: '1px solid ' + ColorTwo,
 
@@ -137,7 +139,7 @@ function ProductView() {
                     id={'radioInput' + index}
                   />
                   <label
-                    className='form-check-label '
+                    className='form-check-label text-light '
                     htmlFor={'radioInput' + index}
                   >
                     {value.name}
@@ -145,7 +147,7 @@ function ProductView() {
                 </div>
               ))}
             </ContainerRow>
-            <ContainerRow dynamic className='row bg-light mb-2 sticky'>
+            <ContainerRow dynamic className='row  mb-2 sticky'>
               <Title className='col-12'>Current Offers</Title>
               <br />
               {offerList.map((value, index) => (
