@@ -79,6 +79,7 @@
         window.onscroll = function () {
           let productSideNav = document.getElementById("productSide-Nav");
           let nav = document.querySelector(".navbar");
+          
    
           
           var currentScrollPos = window.pageYOffset;
@@ -91,6 +92,7 @@
             nav.style.top="0";
          
           } else {
+          
             if (productSideNav  && window.innerWidth < 550) {
               productSideNav.style.top = "-500px";
              

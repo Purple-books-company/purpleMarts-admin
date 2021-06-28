@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { AiFillDelete, AiFillInfoCircle } from 'react-icons/ai';
+import { AiFillDelete, AiFillInfoCircle, AiFillUpSquare } from 'react-icons/ai';
 import { AiFillCaretDown } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import {
@@ -32,6 +32,7 @@ function ProductView() {
   const [loader, setLoader] = useState(initialLoader);
   const [offerList, setOfferList] = useState([]);
   const [offerId, Addtooffer] = useState('');
+  const [chooseOffer, setChooseOffer] = useState('');
 
   useEffect(() => {
     getData();
@@ -74,6 +75,13 @@ function ProductView() {
     setLoader({ ...initialLoader });
     getDetail(subCat[0].name);
   }
+  async function handleRadio(e) {
+    if (e.target.name === 'chooseOffer') {
+      setChooseOffer(e.target.value);
+      return;
+    }
+    getDetail(e.target.value);
+  }
   async function getDetail(cat) {
     let data = {
       subCategory: cat,
@@ -91,9 +99,23 @@ function ProductView() {
   }
   async function handleAddOffer(e) {
     Addtooffer(e.target.value);
-    setTimeout(() => {
+    if (chooseOffer === '') {
+      alert('no offer chosen');
       Addtooffer('');
-    }, 3000);
+      return;
+    }
+    let data = {
+      product: e.target.value,
+      offerName: chooseOffer,
+    };
+    let res = await ApiPostService('offerProduct', data);
+    if (res !== true) {
+      alert('some error');
+    }
+    if (res === true) {
+      alert('success');
+    }
+    Addtooffer('');
   }
 
   return (
@@ -103,11 +125,14 @@ function ProductView() {
       ) : (
         <ContainerRow full>
           <ContainerColumn
-            className='col-md-2 col-sm-12    fixed-top sticky-top'
+            className='col-md-2 col-sm-12 fixed-top sticky-top p-2'
             id='productSide-Nav'
             height={window.innerWidth > 500 ? '100%' : 'auto'}
             style={{ backgroundColor: ColorTwo }}
           >
+            <Link to='/' className='col-md-12 col-3  text-light '>
+              BACK TO HOME
+            </Link>
             <select
               name='category'
               className='form-control m-2 ml-4 mt-4 '
@@ -136,6 +161,7 @@ function ProductView() {
                     className='form-check-input'
                     name='subcat'
                     value={value.name}
+                    onClick={handleRadio}
                     id={'radioInput' + index}
                   />
                   <label
@@ -147,15 +173,16 @@ function ProductView() {
                 </div>
               ))}
             </ContainerRow>
-            <ContainerRow dynamic className='row  mb-2 sticky'>
-              <Title className='col-12'>Current Offers</Title>
+            <ContainerRow dynamic className='row   mb-2 sticky'>
+              <Title className='col-12'>Add to offer</Title>
               <br />
               {offerList.map((value, index) => (
-                <ContainerColumn className='col-md-3 col-6 mb-2 '>
+                <ContainerColumn className='col-md-12 col mt-2 ml-1  text-light'>
                   <input
                     type='radio'
                     name='chooseOffer'
-                    value={value.offerName}
+                    onClick={handleRadio}
+                    value={value.id}
                   />
                   {value.offerName}
                 </ContainerColumn>
@@ -179,8 +206,8 @@ function ProductView() {
                           <Imageview
                             src={value.image}
                             width='90%'
-                            height='100px'
-                            style={{ marginTop: '2%' }}
+                            height='130px'
+                            style={{ marginTop: '2%', maxHeight: '130px' }}
                             // alternate="no image"
                           />
                           <button
@@ -203,32 +230,51 @@ function ProductView() {
                         <ContainerColumn className='col p-2'>
                           <CenterAlign dark>
                             <div
-                              style={{ maxHeight: 'auto', minHeight: '50px' }}
+                              style={{
+                                minHeight: '150px',
+                                backgroundColor: 'white',
+                                maxHeight: 'auto',
+                              }}
                             >
                               {value.name}
+                              <br />
+                              OurPrice:{value.offerPrice}
+                              <br />
+                              OriginalPrice:{value.originalPrice}
+                              <br />
+                              <p className='collapse' id={'showdata' + index}>
+                                <a
+                                  href={'#showdata' + index}
+                                  // className="ml-2"
+                                  className='text-secondary'
+                                  style={{
+                                    textAlign: 'right',
+                                    marginLeft: '60%',
+                                  }}
+                                  data-toggle='collapse'
+                                >
+                                  X
+                                </a>
+                                <br />
+                                hello
+                                <br /> hello
+                                <br /> hello
+                                <br /> hello
+                                <br />
+                                hello
+                                <br />
+                              </p>
+                              <a
+                                href={'#showdata' + index}
+                                // className="ml-2"
+
+                                data-toggle='collapse'
+                              >
+                                show More
+                                <AiFillCaretDown />
+                              </a>
                             </div>
-                            <br />
-                            OurPrice:{value.offerPrice}
-                            <br />
-                            OriginalPrice:{value.originalPrice}
-                            <br />
-                            <a
-                              href={'#showdata' + index}
-                              // className="ml-2"
-                              data-toggle='collapse'
-                            >
-                              show more
-                              <AiFillCaretDown />
-                            </a>
-                            <p className='collapse' id={'showdata' + index}>
-                              hello
-                              <br /> hello
-                              <br /> hello
-                              <br /> hello
-                              <br />
-                              hello
-                              <br />
-                            </p>
+
                             <br />
                             <button
                               className='btn btn-outline-danger mr-2 '
