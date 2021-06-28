@@ -32,6 +32,7 @@ function ProductView() {
   const [loader, setLoader] = useState(initialLoader);
   const [offerList, setOfferList] = useState([]);
   const [offerId, Addtooffer] = useState('');
+  const [chooseOffer, setChooseOffer] = useState('');
 
   useEffect(() => {
     getData();
@@ -75,6 +76,10 @@ function ProductView() {
     getDetail(subCat[0].name);
   }
   async function handleRadio(e) {
+    if (e.target.name === 'chooseOffer') {
+      setChooseOffer(e.target.value);
+      return;
+    }
     getDetail(e.target.value);
   }
   async function getDetail(cat) {
@@ -94,9 +99,23 @@ function ProductView() {
   }
   async function handleAddOffer(e) {
     Addtooffer(e.target.value);
-    setTimeout(() => {
+    if (chooseOffer === '') {
+      alert('no offer chosen');
       Addtooffer('');
-    }, 3000);
+      return;
+    }
+    let data = {
+      product: e.target.value,
+      offerName: chooseOffer,
+    };
+    let res = await ApiPostService('offerProduct', data);
+    if (res !== true) {
+      alert('some error');
+    }
+    if (res === true) {
+      alert('success');
+    }
+    Addtooffer('');
   }
 
   return (
@@ -155,14 +174,15 @@ function ProductView() {
               ))}
             </ContainerRow>
             <ContainerRow dynamic className='row  mb-2 sticky'>
-              <Title className='col-12'>Current Offers</Title>
+              <Title className='col-12'>Add to offer</Title>
               <br />
               {offerList.map((value, index) => (
-                <ContainerColumn className='col-md-3 col-6 mb-2 '>
+                <ContainerColumn className='col-md-12 col mt-2 text-light'>
                   <input
                     type='radio'
                     name='chooseOffer'
-                    value={value.offerName}
+                    onClick={handleRadio}
+                    value={value.id}
                   />
                   {value.offerName}
                 </ContainerColumn>

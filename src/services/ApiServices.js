@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 // import { Token } from '../env';
 const API = `http://purplemart.pythonanywhere.com`;
 const Request = {
@@ -16,6 +16,7 @@ const Request = {
 
   socialMedia: `/api/admin/meta/social/`,
   offerList: `/api/admin/meta/offerlist/`,
+  offerProduct: `/api/admin/meta/offerproduct/`,
 
   advertisement: `/api/admin/meta/advertisement/`,
 };
@@ -25,7 +26,7 @@ const Token = process.env.REACT_APP_TOKEN;
 async function ApiGetService(method) {
   let url = API;
   url += Request[method];
-  console.log("getService");
+  console.log('getService');
   try {
     const res = await axios.get(url, {
       headers: {
@@ -36,7 +37,7 @@ async function ApiGetService(method) {
       console.log(res);
       return res.data.data;
     } else {
-      console.log("error");
+      console.log('error');
       console.log(res);
       return false;
     }
@@ -60,12 +61,12 @@ async function ApiPostService(method, data) {
     });
     console.log(res);
     if (res.data.success) {
-      if (method === "Products" || method === "subCategoryAll") {
+      if (method === 'Products' || method === 'subCategoryAll') {
         return res.data.data;
       }
       return true;
     } else {
-      if (method === "Products" || method === "subCategoryAll") {
+      if (method === 'Products' || method === 'subCategoryAll') {
         return false;
       }
       console.log(res.data.err);
@@ -79,7 +80,7 @@ async function ApiPostService(method, data) {
 
 async function ApiPutService(method, key, data) {
   let url = API;
-  url += Request[method] + key + "/";
+  url += Request[method] + key + '/';
   console.log(url);
 
   try {
@@ -101,7 +102,7 @@ async function ApiPutService(method, key, data) {
 
 async function ApiDeleteService(method, key) {
   let url = API;
-  url += Request[method] + key + "/";
+  url += Request[method] + key + '/';
   console.log(url);
 
   try {
