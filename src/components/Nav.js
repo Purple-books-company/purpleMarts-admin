@@ -99,7 +99,7 @@ function Nav({ navItems, navLinks, View, Show, logout }) {
               navItems.map((value, index) => (
                 <li className='nav-item  ' key={index} id='check'>
                   <NavLink
-                    to='/'
+                    to={navLinks[index]}
                     className='nav-link  h6 font-weight-bold'
                     id='check'
                   >

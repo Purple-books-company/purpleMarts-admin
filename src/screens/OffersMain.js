@@ -11,6 +11,7 @@ import {
 import Offers from '../components/offersComponents/Offers';
 import Advertisement from '../components/offersComponents/Advertisement';
 import SocialMedia from '../components/offersComponents/SocialMedia';
+import Nav from '../components/Nav';
 
 const OffersMain = () => {
   let initialState = { offer: true, advertisement: false, social: false };
@@ -25,47 +26,50 @@ const OffersMain = () => {
   };
 
   return (
-    <Container>
-      <Card deg='45' nohover>
-        <ContainerRow dynamic>
-          <ContainerColumn height='10%' className='col'>
-            <ToggleButton
-              active={active.offer}
-              value='offer'
-              onClick={handleToggle}
-            >
-              Offer
-            </ToggleButton>
-          </ContainerColumn>
+    <>
+      <Nav navItems={['dashboard']} navLinks={['/']} Show={true} />
+      <Container>
+        <Card deg='45' nohover>
+          <ContainerRow dynamic>
+            <ContainerColumn height='10%' className='col'>
+              <ToggleButton
+                active={active.offer}
+                value='offer'
+                onClick={handleToggle}
+              >
+                Offer
+              </ToggleButton>
+            </ContainerColumn>
 
-          <ContainerColumn height='10%' className='col'>
-            <ToggleButton
-              active={active.advertisement}
-              value='advertisement'
-              onClick={handleToggle}
-            >
-              Advertisement
-            </ToggleButton>
-          </ContainerColumn>
+            <ContainerColumn height='10%' className='col'>
+              <ToggleButton
+                active={active.advertisement}
+                value='advertisement'
+                onClick={handleToggle}
+              >
+                Advertisement
+              </ToggleButton>
+            </ContainerColumn>
 
-          <ContainerColumn height='10%' className='col'>
-            <ToggleButton
-              active={active.social}
-              value='social'
-              onClick={handleToggle}
-            >
-              Social Media
-            </ToggleButton>
-          </ContainerColumn>
-        </ContainerRow>
-        <ContainerColumn className='col-md-12 mt-5' height='100%'>
-          {active.offer && <Offers />}
+            <ContainerColumn height='10%' className='col'>
+              <ToggleButton
+                active={active.social}
+                value='social'
+                onClick={handleToggle}
+              >
+                Social Media
+              </ToggleButton>
+            </ContainerColumn>
+          </ContainerRow>
+          <ContainerColumn className='col-md-12 mt-5' height='100%'>
+            {active.offer && <Offers />}
 
-          {active.advertisement && <Advertisement />}
-          {active.social && <SocialMedia />}
-        </ContainerColumn>
-      </Card>
-    </Container>
+            {active.advertisement && <Advertisement />}
+            {active.social && <SocialMedia />}
+          </ContainerColumn>
+        </Card>
+      </Container>
+    </>
   );
 };
 
