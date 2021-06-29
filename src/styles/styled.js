@@ -24,6 +24,9 @@ export const Title = styled.h5`
   margin: 0.5%;
 `;
 let linear1 = (deg) => {
+  if (deg == null) {
+    deg = '125';
+  }
   let temp = `${deg}deg,${ColorTwo} 10%,white 10%`;
 
   return temp;
@@ -51,7 +54,7 @@ export const Card = styled.div`
   color: ${ColorTwo};
   border-radius: 10px;
   background: linear-gradient(
-    ${(props) => (props.single ? linear1(140) : linear2(props.deg))}
+    ${(props) => (props.single ? linear1(props.deg) : linear2(props.deg))}
   );
   &:hover {
     background: ${(props) => (props.nohover ? '' : ColorOne)};
