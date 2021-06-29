@@ -77,7 +77,7 @@ const Advertisement = () => {
     if (e.target.name === 'Subcategory' && !isCategory) {
       setDetail({ ...detail, [e.target.name]: e.target.value });
     } else if (e.target.name !== 'Subcategory') {
-      if (e.target.name == 'advId' && isCategory) return;
+      if (e.target.name === 'advId' && isCategory) return;
       setDetail({ ...detail, [e.target.name]: e.target.value });
     }
   }
@@ -234,9 +234,10 @@ const Advertisement = () => {
                 name='category'
                 value='category'
                 checked={isCategory}
-                onClick={handleRadio}
+                onChange={handleRadio}
+                // onClick={handleRadio}
               />
-              <label className='mr-2' for='category'>
+              <label className='mr-2' htmlFor='category'>
                 Category
               </label>
               {/* <br /> */}
@@ -245,9 +246,10 @@ const Advertisement = () => {
                 name='category'
                 checked={!isCategory}
                 value='subCategory'
-                onClick={handleRadio}
+                onChange={handleRadio}
+                // onClick={handleRadio}
               />
-              <label for='subCategory'>Sub-Category</label>
+              <label htmlFor='subCategory'>Sub-Category</label>
             </ContainerColumn>
             <ContainerColumn className='col-md-6 mt-2'>
               <RightAlign>Select Sub-Category</RightAlign>

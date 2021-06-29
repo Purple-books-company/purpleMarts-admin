@@ -28,11 +28,11 @@ const OffersMain = () => {
 
   return (
     <>
-      <Nav navItems={['dashboard']} navLinks={['/']} Show={true} />
+      <Nav navItems={['dashboard']} navLinks={['/']} View={true} />
       <Container>
         <Card nohover>
           <ContainerRow dynamic style={{ backgroundColor: ColorOne }}>
-            <ContainerColumn height='10%' className='col'>
+            <ContainerColumn height='10%' className='col-md-4 col-6'>
               <ToggleButton
                 active={active.offer}
                 value='offer'
@@ -42,7 +42,7 @@ const OffersMain = () => {
               </ToggleButton>
             </ContainerColumn>
 
-            <ContainerColumn height='10%' className='col'>
+            <ContainerColumn height='10%' className='col-md-4 col-6'>
               <ToggleButton
                 active={active.advertisement}
                 value='advertisement'
@@ -52,7 +52,7 @@ const OffersMain = () => {
               </ToggleButton>
             </ContainerColumn>
 
-            <ContainerColumn height='10%' className='col'>
+            <ContainerColumn height='10%' className='col-md-4 col'>
               <ToggleButton
                 active={active.social}
                 value='social'
