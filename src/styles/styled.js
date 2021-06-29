@@ -173,16 +173,19 @@ export const MarginAround = styled.div`
 `;
 export const ToggleButton = styled.button.attrs((props) => ({
   type: props.type ? props.type : 'button',
-  className: 'btn mt-3',
+  className: 'btn ',
   value: props.value,
 }))`
-  background-color: ${(props) => (props.active ? ColorOne : 'white')};
-  color: ${(props) => (!props.active ? ColorOne : 'white')};
-  border: 1px solid ${ColorOne};
+  background-color: ${(props) => (!props.active ? ColorOne : 'white')};
+  color: ${(props) => (props.active ? ColorOne : 'white')};
+  border: none;
+  padding: 2%;
+
+  border-radius: 0px;
   width: auto;
-  min-width: 80%;
+  min-width: 100%;
   &:hover {
-    color: white;
-    background-color: ${ColorOne};
+    background-color: white;
+    color: ${ColorOne};
   }
 `;

@@ -12,6 +12,7 @@ import Offers from '../components/offersComponents/Offers';
 import Advertisement from '../components/offersComponents/Advertisement';
 import SocialMedia from '../components/offersComponents/SocialMedia';
 import Nav from '../components/Nav';
+import { ColorOne, ColorTwo } from '../styles/color';
 
 const OffersMain = () => {
   let initialState = { offer: true, advertisement: false, social: false };
@@ -29,8 +30,8 @@ const OffersMain = () => {
     <>
       <Nav navItems={['dashboard']} navLinks={['/']} Show={true} />
       <Container>
-        <Card deg='45' nohover>
-          <ContainerRow dynamic>
+        <Card nohover>
+          <ContainerRow dynamic style={{ backgroundColor: ColorOne }}>
             <ContainerColumn height='10%' className='col'>
               <ToggleButton
                 active={active.offer}
