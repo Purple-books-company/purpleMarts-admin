@@ -24,6 +24,9 @@ export const Title = styled.h5`
   margin: 0.5%;
 `;
 let linear1 = (deg) => {
+  if (deg == null) {
+    deg = '125';
+  }
   let temp = `${deg}deg,${ColorTwo} 10%,white 10%`;
 
   return temp;
@@ -51,7 +54,7 @@ export const Card = styled.div`
   color: ${ColorTwo};
   border-radius: 10px;
   background: linear-gradient(
-    ${(props) => (props.single ? linear1(140) : linear2(props.deg))}
+    ${(props) => (props.single ? linear1(props.deg) : linear2(props.deg))}
   );
   &:hover {
     background: ${(props) => (props.nohover ? '' : ColorOne)};
@@ -170,16 +173,19 @@ export const MarginAround = styled.div`
 `;
 export const ToggleButton = styled.button.attrs((props) => ({
   type: props.type ? props.type : 'button',
-  className: 'btn mt-3',
+  className: 'btn ',
   value: props.value,
 }))`
-  background-color: ${(props) => (props.active ? ColorOne : 'white')};
-  color: ${(props) => (!props.active ? ColorOne : 'white')};
-  border: 1px solid ${ColorOne};
+  background-color: ${(props) => (!props.active ? ColorOne : 'white')};
+  color: ${(props) => (props.active ? ColorOne : 'white')};
+  border: none;
+  padding: 2%;
+
+  border-radius: 0px;
   width: auto;
-  min-width: 80%;
+  min-width: 100%;
   &:hover {
-    color: white;
-    background-color: ${ColorOne};
+    background-color: white;
+    color: ${ColorOne};
   }
 `;

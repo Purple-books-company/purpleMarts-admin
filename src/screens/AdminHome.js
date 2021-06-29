@@ -46,8 +46,8 @@ function AdminHome({ logout }) {
   return (
     <>
       <Nav
-        navItems={['logout']}
-        navLinks={['/logout']}
+        navItems={['offer', 'logout']}
+        navLinks={['/offer', '/']}
         View={true}
         logout={logout}
       />
