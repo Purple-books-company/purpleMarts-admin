@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { ColorTwo } from '../styles/color';
 import { Card, Container, Title } from '../styles/styled';
 import { useLocation } from 'react-router';
-import ProductForm from '../components/formComponents/ProductForm';
+import ProductForm from '../components/formComponents/ProductTest';
 import CatagoryForm from '../components/formComponents/CatagoryForm';
 import SupplierForm from '../components/formComponents/SupplierForm';
 import Nav from '../components/Nav';
@@ -14,7 +14,7 @@ function Crud() {
     newProduct: false,
     newSupplier: false,
     newCategory: false,
-    newSubCategory:false
+    newSubCategory: false,
   };
   const location = useLocation();
 
@@ -38,7 +38,7 @@ function Crud() {
 
   const handleChange = (e) => {
     console.log('change');
-  
+
     let newState = { ...initialForm };
     newState[e.target.name] = true;
     setForm(newState);
@@ -47,62 +47,64 @@ function Crud() {
 
   return (
     <>
-      <Nav navItems={['Dashboard',"offer"]} navLinks={['/',"/offer"]} />
+      <Nav navItems={['Dashboard', 'offer']} navLinks={['/', '/offer']} />
       <Container>
         <Card deg='-40' width='100%' height='100%' margin='0%' nohover>
-        {fillForm===null &&  <div style={{ textAlign: 'right', margin: '2%' }}>
-            <div className='dropdown'>
-              <button
-                className='btn btn-secondary dropdown-toggle'
-                type='button'
-                id='dropdownMenuButton'
-                data-toggle='dropdown'
-                aria-haspopup='true'
-                style={{ background: ColorTwo }}
-                aria-expanded='false'
-              >
-                {currentForm || 'select form'}
-              </button>
+          {fillForm === null && (
+            <div style={{ textAlign: 'right', margin: '2%' }}>
+              <div className='dropdown'>
+                <button
+                  className='btn btn-secondary dropdown-toggle'
+                  type='button'
+                  id='dropdownMenuButton'
+                  data-toggle='dropdown'
+                  aria-haspopup='true'
+                  style={{ background: ColorTwo }}
+                  aria-expanded='false'
+                >
+                  {currentForm || 'select form'}
+                </button>
 
-              <div
-                className='dropdown-menu'
-                aria-labelledby='dropdownMenuButton'
-              >
-                <button
-                  class='dropdown-item'
-                  name='newCategory'
-                  value={'catagory section'}
-                  onClick={handleChange}
+                <div
+                  className='dropdown-menu'
+                  aria-labelledby='dropdownMenuButton'
                 >
-                  catagory section
-                </button>
-                <button
-                  className='dropdown-item'
-                  name='newSupplier'
-                  value={'supplier section'}
-                  onClick={handleChange}
-                >
-                  supplier section
-                </button>
-                <button
-                  className='dropdown-item'
-                  name='newProduct'
-                  value={'product section'}
-                  onClick={handleChange}
-                >
-                  product section
-                </button>
-                <button
-                  className='dropdown-item'
-                  name='newSubCategory'
-                  value={'subCategory section'}
-                  onClick={handleChange}
-                >
-                  SubCategory section
-                </button>
+                  <button
+                    class='dropdown-item'
+                    name='newCategory'
+                    value={'catagory section'}
+                    onClick={handleChange}
+                  >
+                    catagory section
+                  </button>
+                  <button
+                    className='dropdown-item'
+                    name='newSupplier'
+                    value={'supplier section'}
+                    onClick={handleChange}
+                  >
+                    supplier section
+                  </button>
+                  <button
+                    className='dropdown-item'
+                    name='newProduct'
+                    value={'product section'}
+                    onClick={handleChange}
+                  >
+                    product section
+                  </button>
+                  <button
+                    className='dropdown-item'
+                    name='newSubCategory'
+                    value={'subCategory section'}
+                    onClick={handleChange}
+                  >
+                    SubCategory section
+                  </button>
+                </div>
               </div>
             </div>
-          </div>}
+          )}
           <Title>{currentForm}</Title>
 
           {form.newProduct && <ProductForm />}

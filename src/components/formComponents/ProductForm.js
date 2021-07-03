@@ -183,7 +183,7 @@ function ProductForm() {
         <ContainerColumn height='auto' className='col-md-12'>
           <ErrorText>{errorMsg}</ErrorText>
           <SuccessText>{successMsg}</SuccessText>
-          <ContainerRow>
+          <ContainerRow dynamic>
             <ContainerColumn height='auto' className='col-md-4' auto>
               <Input
                 type='text'

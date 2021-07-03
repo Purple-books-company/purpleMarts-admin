@@ -123,7 +123,14 @@ export async function getAllSubCategory(category) {
     SubcategoryObject[category] = res;
   }
 }
-function getSubCategoryDetail(category) {
+async function getSubCategoryDetail(category) {
+  if (
+    SubcategoryObject[category] === null ||
+    SubcategoryObject[category] === undefined ||
+    SubcategoryObject[category].length === 0
+  ) {
+    await getAllSubCategory(category);
+  }
   return SubcategoryObject[category];
 }
 
