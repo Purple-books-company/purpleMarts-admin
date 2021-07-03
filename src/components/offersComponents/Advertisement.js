@@ -132,12 +132,12 @@ const Advertisement = () => {
 
   async function getSubData(name) {
     setLoader(true);
-    let subCat = getSubCategoryDetail(name);
+    let subCat = await getSubCategoryDetail(name);
 
-    if (subCat === undefined || subCat === null) {
-      await getAllSubCategory(name);
-      subCat = getSubCategoryDetail(name);
-    }
+    // if (subCat === undefined || subCat === null) {
+    //   await getAllSubCategory(name);
+    //   subCat = getSubCategoryDetail(name);
+    // }
     setSubCategoryDetail(subCat);
 
     setLoader(false);

@@ -8,7 +8,7 @@ const Request = {
   allCategory: `/api/category/all/`,
   categoryAdd: `/api/category/add`,
 
-  productAdd: `/api/product/add/`,
+  product: `/api/admin/product/`,
   Products: `/api/product/admin/subcategory/`,
 
   subCategoryAdd: `/api/category/sub/add/`,
@@ -17,8 +17,6 @@ const Request = {
   socialMedia: `/api/admin/meta/social/`,
   offerList: `/api/admin/meta/offerlist/`,
   offerProduct: `/api/admin/meta/offerproduct/`,
-
-  
 
   advertisement: `/api/admin/meta/advertisement/`,
   category: `/api/admin/product/category/`,

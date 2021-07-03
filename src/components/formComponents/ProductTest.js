@@ -5,6 +5,7 @@ import {
   getSubCategoryDetail,
   SupplierData,
 } from '../../services/AdminServices';
+import { ApiPostService } from '../../services/ApiServices';
 import {
   ContainerColumn,
   ContainerRow,
@@ -15,6 +16,7 @@ import {
   ErrorText,
   SuccessText,
   ToggleButton,
+  CenterAlign,
 } from '../../styles/styled';
 
 function ProductTest() {
@@ -27,6 +29,7 @@ function ProductTest() {
     name: '',
     description: '',
     quantityPerUnit: '',
+    originalPrice: '',
     unitWeight: '',
     offerPrice: '',
     image: [],
@@ -36,11 +39,25 @@ function ProductTest() {
     subCategory: '',
     varients: '',
   };
+  let initialVarient = {
+    offerPrice: '',
+    originalPrice: '',
+    buyingPrice: '',
+    image: [],
+    types: [],
+  };
   const [toggleForm, setToggleForm] = useState(initialState);
   const [product, setProduct] = useState(initialDetail);
   const [categoryData, setCategoryData] = useState([]);
   const [supplierData, setSupplierData] = useState([]);
   const [subCategoryData, setSubCategoryData] = useState([]);
+  const [varientKey, setVarientKey] = useState([]);
+  const [varientDetail, setVarientDetail] = useState([]);
+  const [addVarient, setAddVarient] = useState(initialVarient);
+  const [image, setImages] = useState([]);
+  const [loader, setLoader] = useState(false);
+  const [imageCheck, setImageCheck] = useState('');
+  const [key, setKey] = useState('');
 
   useEffect(() => {
     setToggleForm({ ...initialState, product: true });
@@ -59,11 +76,74 @@ function ProductTest() {
     setProduct({ ...product, category: category });
   }
   function handleToggle(e) {
+    if (toggleForm.product === true) {
+      console.log(image);
+      setProduct({ ...product, image: image });
+    }
+    if (e.target.id === 'product') {
+      setImages(product.image);
+    } else {
+      setImages([]);
+    }
     setToggleForm({ ...initialState, [e.target.id]: true });
   }
-  function handleCategoryChange(e) {}
-  function handleProductChange(e) {}
-  function handleImageChange(e) {}
+  function handleVarientKey(e) {
+    if (toggleForm.varientType) {
+      if (e.target.name === 'key') {
+        setKey(e.target.value);
+      } else {
+        for (let i in varientKey) {
+          if (varientKey[i].key == key) {
+            alert('alreay key available');
+            return;
+          }
+        }
+
+        setVarientKey([...varientKey, { key: key, value: '' }]);
+        setKey('');
+      }
+    } else {
+      let temp = varientKey;
+      temp[e.target.id].value = e.target.value;
+      setVarientKey(temp);
+    }
+  }
+  async function handleSubmit(e) {
+    e.preventDefault();
+    let data = { ...product };
+    data.varients = varientDetail;
+    let res = await ApiPostService('product', data);
+    console.log(res);
+    console.log(data);
+  }
+  function removeVarientKey(e) {}
+  function handleVarientDetail(e) {
+    if (e.target.name !== 'AddVarient') {
+      setAddVarient({ ...addVarient, [e.target.name]: e.target.value });
+    } else {
+      let detail = { ...addVarient };
+      detail.types = varientKey;
+      detail.image = image;
+      console.log(detail);
+      setVarientDetail([...varientDetail, detail]);
+      setImages([]);
+    }
+  }
+  function handleCategoryChange(e) {
+    setProduct({ ...product, category: e.target.value });
+    getSubCategory(e.target.value);
+  }
+  function handleProductChange(e) {
+    setProduct({ ...product, [e.target.name]: e.target.value });
+  }
+  function handleImageChange(e) {
+    if (e.target.name === 'image') {
+      setImageCheck(e.target.value);
+    } else {
+      setImages([...image, { image: imageCheck }]);
+      setImageCheck('');
+    }
+  }
 
   return (
     <>
@@ -99,6 +179,48 @@ function ProductTest() {
             Varient details
           </ToggleButton>
         </ContainerColumn>
+      </ContainerRow>
+      <ContainerRow
+        dynamic
+        style={{
+          padding: '10px',
+          display: toggleForm.varientType ? '' : 'none',
+          marginTop: '2%',
+        }}
+      >
+        <ContainerColumn className='col-md-12'>
+          <ErrorText>
+            Warning adding or removing before adding varient, else varient
+            detail will be deleted
+          </ErrorText>
+        </ContainerColumn>
+        <ContainerColumn className='col-md-6 '>
+          <Formlable>Add Varient types</Formlable>
+          eg(colour,size....)
+        </ContainerColumn>
+        <ContainerColumn className='col-md-6 '>
+          <Input
+            type='text'
+            placeholder='add varient'
+            value={key}
+            name='key'
+            onChange={handleVarientKey}
+          />
+          {varientKey.map((value, index) => (
+            <p
+              className='btn btn-outline-danger ml-1'
+              value={index}
+              key={value.key}
+              onClick={removeVarientKey}
+            >
+              {value.key}
+            </p>
+          ))}
+        </ContainerColumn>
+
+        <Submitbutton name='addKey' onClick={handleVarientKey}>
+          Add Key
+        </Submitbutton>
       </ContainerRow>
       <form>
         <ContainerRow
@@ -209,7 +331,7 @@ function ProductTest() {
               onChange={handleProductChange}
             >
               {supplierData.map((value, index) => (
-                <option value={value.name} key={value.name}>
+                <option value={value.id} key={value.name}>
                   {value.name}
                 </option>
               ))}
@@ -219,6 +341,7 @@ function ProductTest() {
             <textarea
               onChange={handleProductChange}
               row='2'
+              name='description'
               placeholder='description'
               // value={product.description}
               className='form-control m-2  '
@@ -230,12 +353,110 @@ function ProductTest() {
               placeholder='image'
               type='text'
               name='image'
+              value={imageCheck}
               onChange={handleImageChange}
             />
-            <button className='btn btn-outline-success m-2'>Add Image</button>
+            <button
+              type='button'
+              className='btn btn-outline-success m-2'
+              onClick={handleImageChange}
+            >
+              Add Image
+            </button>
           </ContainerColumn>
         </ContainerRow>
+        <Submitbutton onClick={handleSubmit} type='submit'>
+          ADD PRODUCT
+        </Submitbutton>
       </form>
+      <ContainerRow
+        dynamic
+        style={{
+          padding: '10px',
+          display: toggleForm.varientDetail ? '' : 'none',
+        }}
+      >
+        <ContainerColumn className='col-md-4'>
+          <Input
+            type='number'
+            name='offerPrice'
+            placeholder='offerPrice'
+            min='0'
+            value={addVarient.offerPrice}
+            onChange={handleVarientDetail}
+            required
+          />
+        </ContainerColumn>
+        <ContainerColumn className='col-md-4'>
+          <Input
+            type='number'
+            name='buyingPrice'
+            placeholder='buyingPrice'
+            min='0'
+            value={addVarient.buyingPrice}
+            onChange={handleVarientDetail}
+            required
+          />
+        </ContainerColumn>
+        <ContainerColumn className='col-md-4'>
+          <Input
+            type='number'
+            name='originalPrice'
+            placeholder='originalPrice'
+            min='0'
+            value={addVarient.originalPrice}
+            onChange={handleVarientDetail}
+            required
+          />
+        </ContainerColumn>
+        {varientKey.map((value, index) => (
+          <ContainerColumn className='col-md-4'>
+            <Input
+              type='text'
+              name={value.key}
+              id={index}
+              placeholder={value.key}
+              onChange={handleVarientKey}
+              required
+            />
+          </ContainerColumn>
+        ))}
+        <ContainerColumn className='col-md-6'>
+          <Input
+            placeholder='image'
+            type='text'
+            name='image'
+            value={imageCheck}
+            onChange={handleImageChange}
+          />
+          <button
+            className='btn btn-outline-success m-2'
+            onClick={handleImageChange}
+          >
+            Add Image
+          </button>
+          <button
+            className='btn btn-outline-primary m-2'
+            onClick={() => {
+              if (varientDetail.length === 0 && product.image.length === 0) {
+                alert('No previous Images');
+              } else if (varientDetail.length != 0) {
+                setImages(varientDetail[varientDetail.length - 1].image);
+              } else {
+                setImages(product.image);
+              }
+            }}
+          >
+            Add previous Image
+          </button>
+        </ContainerColumn>
+        <Submitbutton onClick={handleVarientDetail} name='AddVarient'>
+          Add Varient
+        </Submitbutton>
+      </ContainerRow>
+      {imageCheck.length > 10 && (
+        <Imageview src={imageCheck} width='100px' height='100px' />
+      )}
     </>
   );
 }

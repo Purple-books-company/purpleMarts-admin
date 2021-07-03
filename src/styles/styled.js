@@ -112,7 +112,7 @@ export const Input = styled.input.attrs((props) => ({
 `;
 
 export const Formlable = styled.p`
-  color: ${ColorTwo};
+  color: ${ColorOne};
 `;
 
 export const Imageview = styled.img.attrs((props) => ({
