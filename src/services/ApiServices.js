@@ -18,6 +18,8 @@ const Request = {
   offerList: `/api/admin/meta/offerlist/`,
   offerProduct: `/api/admin/meta/offerproduct/`,
 
+  
+
   advertisement: `/api/admin/meta/advertisement/`,
   category: `/api/admin/product/category/`,
   subCategory: `/api/admin/product/subcategory/`,

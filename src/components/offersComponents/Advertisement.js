@@ -156,7 +156,8 @@ const Advertisement = () => {
     getAdvertisementData();
   }
 
-  function handleUpdate(value) {
+  async function handleUpdate(value) {
+    console.log(value);
     if (value.advType === 'Product') {
       setForm('product');
     } else {
@@ -164,6 +165,9 @@ const Advertisement = () => {
       if (value.advType === 'Category') {
         setIsCategory(true);
       } else {
+        let subCat = await ApiGetService('subCategory');
+        setSubCategoryDetail(subCat);
+
         setIsCategory(false);
       }
     }
@@ -217,7 +221,11 @@ const Advertisement = () => {
               <select
                 onChange={handleCategoryChange}
                 name='category'
-                className='form-control '
+                className='form-control'
+                value={
+                  isCategory ? detail.advId : subCategoryDetail[0].category
+                }
+                disabled={isUpdate && detail.advType === 'SubCategory'}
               >
                 {categoryDetail.map((value, index) => (
                   <option value={value.name} key={`AdvertisementCat+${index}`}>
@@ -258,6 +266,7 @@ const Advertisement = () => {
                 className='form-control'
                 style={{ width: '100%' }}
                 onChange={handleChange}
+                value={!isCategory ? detail.advId : ''}
                 disabled={isCategory}
               >
                 {subCategoryDetail.map((value, index) => (
@@ -309,7 +318,12 @@ const Advertisement = () => {
 
         <ContainerColumn className='col-md-6'>
           <RightAlign>Select type</RightAlign>
-          <select name='type' onChange={handleChange} className='form-control'>
+          <select
+            name='type'
+            onChange={handleChange}
+            value={detail.type}
+            className='form-control'
+          >
             <option value='Single'>Single</option>
             <option value='Multiple'>Multiple</option>
           </select>
@@ -370,7 +384,12 @@ const Advertisement = () => {
                     <br />
                   </td>
                   <td>
-                    <Imageview src={value.image} height='100px' width='20%' style={{minWidth:"100px"}} />
+                    <Imageview
+                      src={value.image}
+                      height='100px'
+                      width='20%'
+                      style={{ minWidth: '100px' }}
+                    />
                   </td>
                   <td>
                     <button
