@@ -15,9 +15,10 @@ import {
   Title,
 } from '../../styles/styled';
 
-import { CategoryData } from '../../services/AdminServices';
+import { CategoryData, getAllCategory } from '../../services/AdminServices';
 import Loader from '../Loader';
 import Nodata from '../Nodata';
+import { ApiDeleteService } from '../../services/ApiServices';
 
 function CatagoryView({ showSubCategory }) {
   const [catagoryData, setCatagoryData] = useState([]);
@@ -26,7 +27,10 @@ function CatagoryView({ showSubCategory }) {
   const [loader, setLoader] = useState(false);
 
   useEffect(() => {
-    async function getData() {
+   
+    getData();
+  }, []);
+   async function getData() {
       setLoader(true);
       let data = await CategoryData();
 
@@ -36,9 +40,21 @@ function CatagoryView({ showSubCategory }) {
 
       setLoader(false);
     }
-    getData();
-  }, []);
+  const handleDelete=async (e)=>{
+   if(!window.confirm("Are you sure you want to delete"+e.target.value)) return;
+   setLoader(true);
+   
+   let res = await ApiDeleteService("category",e.target.value);
+   if(res===true){
+     await getAllCategory();
+     getData();
+   }
+   else{
+      alert("some error occured");
+   }
+   setLoader(false);
 
+  }
   const updateFilteredData = (filterData) => {
     if (filterData.length === 0) {
       setFilteredData(catagoryData);
@@ -73,7 +89,7 @@ function CatagoryView({ showSubCategory }) {
                 className='col-md-3'
                 height='50%'
                 // title="Click to open sub-categories"
-                onClick={() => showSubCategory(value.name)}
+               
               >
                 <Card deg='40' nohover single>
                   <Imageview
@@ -81,6 +97,7 @@ function CatagoryView({ showSubCategory }) {
                     width='150px'
                     height='150px'
                     style={{ marginTop: '2%' }}
+                     onClick={() => showSubCategory(value.name)}
                     // alternate="no image"
                   />
                   <CenterAlign style={{ color: ColorOne }}>
@@ -97,6 +114,7 @@ function CatagoryView({ showSubCategory }) {
                       <button
                         className='btn btn-outline-danger   mb-2 mr-2  '
                         value={value.name}
+                        onClick={handleDelete}
                       >
                         <AiFillDelete
                           size='18'

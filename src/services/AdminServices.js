@@ -109,17 +109,18 @@ export async function getAllSubCategory(category) {
     alert('server responding error');
   }
   if (res.length > 0) {
-    if (
-      !SubcategoryObject[category] ||
-      SubcategoryObject[category].length === 0 ||
-      SubcategoryObject[category] === undefined
-    ) {
-      let tempData = [];
-      for (let i in res) {
-        tempData.push(res[i]);
-      }
-      SubcategoryObject[category] = tempData;
-    }
+    // if (
+    //   !SubcategoryObject[category] ||
+    //   SubcategoryObject[category].length === 0 ||
+    //   SubcategoryObject[category] === undefined
+    // ) {
+    //   let tempData = [];
+    //   for (let i in res) {
+    //     tempData.push(res[i]);
+    //   }
+    //   SubcategoryObject[category] = tempData;
+    // }
+    SubcategoryObject[category]=res;
   }
 }
 function getSubCategoryDetail(category) {

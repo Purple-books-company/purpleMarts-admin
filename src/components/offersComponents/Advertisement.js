@@ -370,7 +370,7 @@ const Advertisement = () => {
                     <br />
                   </td>
                   <td>
-                    <Imageview src={value.image} height='100px' width='50px' />
+                    <Imageview src={value.image} height='100px' width='20%' style={{minWidth:"100px"}} />
                   </td>
                   <td>
                     <button

@@ -1,7 +1,7 @@
 import { Link, NavLink } from 'react-router-dom';
 import '../assets/nav.css';
 import { ColorOne } from '../styles/color';
-
+import logo from '../assets/logo/logo.png';
 function Nav({ navItems, navLinks, View, Show, logout }) {
   function handleLogout() {
     let isconfirm = window.confirm('Are you sure for logout');
@@ -9,12 +9,15 @@ function Nav({ navItems, navLinks, View, Show, logout }) {
   }
   return (
     <nav
-      className='navbar sticky-top navbar-light navbar-expand-lg  colour'
-      style={{ display: '' }}
+      className='navbar sticky-top navbar-light navbar-expand-lg colour '
+      style={{ display: '', backgroundColor: '#e9e3f4' }}
     >
       <div className='container'>
         <span className='navbar-brand mb-0 h1  font-weight-bold'>
-          <h4 style={{ color: ColorOne }}>Purple Marts Admin</h4>
+          <img
+            src='https://raw.githubusercontent.com/Purple-books-company/purple-marts-user-ui/main/src/assets/images/logo.png'
+            style={{ height: '45px', textAlign: 'center' }}
+          />
         </span>
         <button
           className='navbar-toggler text-light bg-light'
@@ -25,23 +28,23 @@ function Nav({ navItems, navLinks, View, Show, logout }) {
           aria-expanded='false'
           aria-label='Toggle navigation'
         >
-          <span className='navbar-toggler-icon text-light'></span>
+          <span className='navbar-toggler-icon text-right text-light'></span>
         </button>
         <div className='collapse navbar-collapse' id='navbarNavDropdown'>
           <ul className='navbar-nav  mx-auto mt-2 nav-fill w-75'>
             {View && (
               <li className='nav-item dropdown'>
-                <span
+                <a
                   href='#'
-                  className='nav-link  mt-2  h6 font-weight-bold'
-                  id='navbarDropdown'
+                  className='nav-link  mt-2 purple-text   h6 font-weight-bold'
+                  id='navbarDropdown '
                   role='button'
                   data-toggle='dropdown'
                   aria-haspopup='true'
                   aria-expanded='false'
                 >
                   View All
-                </span>
+                </a>
                 <div className='dropdown-menu' aria-labelledby='navbarDropdown'>
                   <Link
                     to={{ pathname: '/View', state: { show: 'category' } }}
@@ -66,17 +69,16 @@ function Nav({ navItems, navLinks, View, Show, logout }) {
               </li>
             )}
             {Show && Show !== null && (
-              <li className='text-center'>
+              <li className='text-center purple-text'>
                 <select
                   onChange={Show}
-                  id='check'
                   style={{
                     border: 'none',
                     backgroundColor: 'transparent',
                     outline: 'none',
                     marginTop: '15px',
                     minWidth: 'auto',
-                    color: 'white',
+                    color: 'black',
                   }}
                 >
                   <option style={{ color: ColorOne }} value='' defaultValue=''>
@@ -100,7 +102,7 @@ function Nav({ navItems, navLinks, View, Show, logout }) {
                 <li className='nav-item  ' key={index} id='check'>
                   <NavLink
                     to={navLinks[index]}
-                    className='nav-link  h6 font-weight-bold'
+                    className='nav-link purple-text  h6 font-weight-bold'
                     id='check'
                   >
                     {value === 'logout' ? (

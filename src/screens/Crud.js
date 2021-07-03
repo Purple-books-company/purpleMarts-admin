@@ -38,6 +38,7 @@ function Crud() {
 
   const handleChange = (e) => {
     console.log('change');
+  
     let newState = { ...initialForm };
     newState[e.target.name] = true;
     setForm(newState);
@@ -107,7 +108,7 @@ function Crud() {
           {form.newProduct && <ProductForm />}
           {form.newSupplier && <SupplierForm data={fillForm} />}
           {form.newCategory && <CatagoryForm data={fillForm} />}
-          {form.newSubCategory && <SubCategoryForm />}
+          {form.newSubCategory && <SubCategoryForm data={fillForm} />}
         </Card>
       </Container>
     </>

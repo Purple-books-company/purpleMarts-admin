@@ -19,6 +19,8 @@ const Request = {
   offerProduct: `/api/admin/meta/offerproduct/`,
 
   advertisement: `/api/admin/meta/advertisement/`,
+  category:`/api/admin/product/category/`,
+  subCategory:`/api/admin/product/subcategory/`
 };
 
 const Token = process.env.REACT_APP_TOKEN;

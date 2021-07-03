@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { CategoryData } from '../../services/AdminServices';
-import { ApiPostService } from '../../services/ApiServices';
+import { CategoryData, getAllSubCategory } from '../../services/AdminServices';
+import { ApiPostService, ApiPutService } from '../../services/ApiServices';
 import { ColorOne, ColorTwo } from '../../styles/color';
 import {
   ContainerColumn,
@@ -24,10 +24,12 @@ function SubCategoryForm({ data }) {
 
   const [detail, setDetail] = useState(initialstate);
   const [categoryDetail, setCatagoryDetail] = useState([]);
+  const[isUpdate,setIsUpdate] = useState(false);
 
   useEffect(() => {
-    if (data != null) {
+    if (data !== null && data!==undefined) {
       setDetail(data);
+      setIsUpdate(true);
     }
     //need to get all category
     CategoryData().then((res) => setCatagoryDetail(res));
@@ -59,13 +61,22 @@ function SubCategoryForm({ data }) {
     //   return;
     // }
 
+
     if (detail.category === '' || detail.category.length < 1) {
       setErrorMsg('Select category');
       setLoader(false);
       return;
     }
+    let res;
+    if(isUpdate){
+      res=await ApiPutService("subCategory",detail.name,detail);
+    
+    }
+    else{
+  res = await ApiPostService('subCategory', detail);
+    }
 
-    const res = await ApiPostService('subCategoryAdd', detail);
+  
     // console.log(res);
 
     if (res === null) {
@@ -74,6 +85,7 @@ function SubCategoryForm({ data }) {
       return;
     }
     if (res === true) {
+      await getAllSubCategory(detail.name)
       setDetail({ ...initialstate }); // form reset
       setSuccessMsg('Sub-Category saved!');
       // await getAllCategory();
@@ -89,6 +101,8 @@ function SubCategoryForm({ data }) {
 
       setErrorMsg(errors);
     }
+    
+    setIsUpdate(false);
     setLoader(false);
   }
   return (
@@ -116,6 +130,7 @@ function SubCategoryForm({ data }) {
                   className='form-control m-2'
                   style={{ borderColor: ColorTwo, border: '1px solid' }}
                   onChange={handleChange}
+                  value={detail.category} disabled={isUpdate}
                 >
                   <option defaultValue={''}>Select Category</option>
                   {categoryDetail.map((value, index) => (
@@ -135,6 +150,7 @@ function SubCategoryForm({ data }) {
                   name='name'
                   onChange={handleChange}
                   value={detail.name}
+                  disabled={isUpdate}
                   required
                 />
               </ContainerColumn>
@@ -172,7 +188,7 @@ function SubCategoryForm({ data }) {
               </ContainerColumn>
             </ContainerRow>
             <Submitbutton type='submit' style={{ marginBottom: '2%' }}>
-              {data ? 'Update' : 'POST'}
+              {isUpdate ? 'Update' : 'POST'}
             </Submitbutton>
             <br />
           </form>
