@@ -36,13 +36,14 @@ let linear2 = (deg) => {
 };
 
 export const Card = styled.div`
-  width: ${(props) => (props.width ? props.width : '94%')};
-  height: ${(props) => (props.height ? props.height : '94%')};
+  width: ${(props) => (props.width ? props.width : '97%')};
+  min-height: ${(props) => (props.height ? props.height : '97%')};
   text-align: center;
 
   margin: ${(props) => (props.margin ? props.margin : '1.5%')};
+  max-height:auto;
   overflow: scroll;
-
+  padding: 0.1%;
   &::-webkit-scrollbar {
     display: none;
   }

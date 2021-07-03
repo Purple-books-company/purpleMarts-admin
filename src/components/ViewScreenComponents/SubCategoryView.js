@@ -24,6 +24,7 @@ import {
 
 import Loader from '../Loader';
 import Nodata from '../Nodata';
+import { ApiDeleteService } from '../../services/ApiServices';
 
 function SubCatagoryView({ categoryName, handleSubPage }) {
   const [catagoryData, setCatagoryData] = useState([]);
@@ -40,19 +41,9 @@ function SubCatagoryView({ categoryName, handleSubPage }) {
     setCategory(categoryName);
     getSubCategory(categoryName);
 
-    let data = CategoryData();
-    if (data.length === 0) {
-      getAllCategory().then(() => {
-        data = CategoryData();
-        console.log(data);
-        console.log('cat');
-        setCatagoryData(data);
-      });
-    } else {
-      setCatagoryData(data);
-    }
+   
   }, [categoryName]);
-
+  
   const updateFilteredData = (filterData) => {
     if (filterData.length === 0) {
       setFilteredData(subCategoryDetail);
@@ -63,7 +54,22 @@ function SubCatagoryView({ categoryName, handleSubPage }) {
     setFilteredData(filterData);
     setErrorMsg('');
   };
+  const handleDelete=async(e)=>{
+    if(!window.confirm(`Are you sure you want to delete ${e.target.value}`)) return;
+    setLoader(true);
+    let res = await ApiDeleteService("subCategory",e.target.value);
+    if(res===true){
+      await getAllSubCategory(category);
+      getSubCategory(category);
+    }
+    else{
+      alert("some error occured");
 
+    }
+    setLoader(false);
+   
+
+  }
   const getSubCategory = async (name) => {
     setLoader(true);
 
@@ -143,6 +149,7 @@ function SubCatagoryView({ categoryName, handleSubPage }) {
                       <button
                         className='btn   btn-outline-danger mb-2 mr-2  '
                         value={value.name}
+                        onClick={handleDelete}
                       >
                         <AiFillDelete
                           size='18'
@@ -154,7 +161,7 @@ function SubCatagoryView({ categoryName, handleSubPage }) {
                       <Link
                         to={{
                           pathname: '/post',
-                          state: { show: 'newCategory', value: value },
+                          state: { show: 'newSubCategory', value: value },
                         }}
                       >
                         <button

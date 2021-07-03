@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
+import { AiTwotoneFileZip } from 'react-icons/ai';
 import { CategoryData, getAllCategory } from '../../services/AdminServices';
-import { ApiPostService } from '../../services/ApiServices';
+import { ApiPostService, ApiPutService } from '../../services/ApiServices';
 import { ColorOne } from '../../styles/color';
 import {
   ContainerColumn,
@@ -24,8 +25,9 @@ function CatagoryForm({ data }) {
   const [detail, setDetail] = useState(initialstate);
   const [categoryDetail, setCatagoryDetail] = useState([]);
 useEffect(()=>{
-if (data != null) {
+if (data !== null && data!==undefined) {
       setDetail(data);
+      setIsUpdate(true);
     }
 },[data])
   useEffect(() => {
@@ -40,6 +42,7 @@ if (data != null) {
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
   const [loader, setLoader] = useState(false);
+  const [isUpdate,setIsUpdate]=useState(false);
 
   function handleChange(e) {
     setDetail({ ...detail, [e.target.name]: e.target.value });
@@ -68,15 +71,12 @@ if (data != null) {
     setErrorMsg('');
     setLoader(true);
     //change initial
-
-    if (data !== null) {
-      console.log('updated');
-      setLoader(false);
-      return;
+   let res ;
+    if (isUpdate) {
+     res = await ApiPutService("category",detail.name,detail);
     }
-    console.log(detail);
-
-    const res = await ApiPostService('categoryAdd', detail);
+   else
+     res = await ApiPostService('category', detail);
     console.log(res);
 
     if (res === null) {
@@ -87,6 +87,7 @@ if (data != null) {
     if (res === true) {
       setDetail({ ...initialstate });
       setSuccessMsg('Category saved!');
+      setIsUpdate(false);
       await getAllCategory();
     } else if (res !== false) {
       let datakey = Object.keys(res);
@@ -128,6 +129,7 @@ if (data != null) {
                   name='name'
                   onChange={handleChange}
                   value={detail.name}
+                  disabled={isUpdate}
                   required
                 />
               </ContainerColumn>
@@ -165,7 +167,7 @@ if (data != null) {
               </ContainerColumn>
             </ContainerRow>
             <Submitbutton type='submit' style={{ marginBottom: '2%' }}>
-              {data ? 'Update' : 'POST'}
+              {isUpdate ? 'Update' : 'POST'}
             </Submitbutton>
             <br />
           </form>

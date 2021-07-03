@@ -15,6 +15,12 @@
 #check:hover {
   color: #4b3049 !important ;
 }
+.purple-text {
+  color: #b369db !important;
+}
+.purple-text:hover {
+  color: #8c49ad !important;
+}
 
 .dropdown-item:hover {
   background-color: #8c49ad;

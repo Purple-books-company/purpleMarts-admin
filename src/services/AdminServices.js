@@ -65,7 +65,7 @@ export async function getAllCategory() {
 }
 
 export async function getAllSupplier() {
-  let res = await ApiGetService('allSupplier');
+  let res = await ApiGetService('supplier');
   if (res) {
     Supplierarray = res;
     console.log(res);
@@ -109,20 +109,28 @@ export async function getAllSubCategory(category) {
     alert('server responding error');
   }
   if (res.length > 0) {
-    if (
-      !SubcategoryObject[category] ||
-      SubcategoryObject[category].length === 0 ||
-      SubcategoryObject[category] === undefined
-    ) {
-      let tempData = [];
-      for (let i in res) {
-        tempData.push(res[i]);
-      }
-      SubcategoryObject[category] = tempData;
-    }
+    // if (
+    //   !SubcategoryObject[category] ||
+    //   SubcategoryObject[category].length === 0 ||
+    //   SubcategoryObject[category] === undefined
+    // ) {
+    //   let tempData = [];
+    //   for (let i in res) {
+    //     tempData.push(res[i]);
+    //   }
+    //   SubcategoryObject[category] = tempData;
+    // }
+    SubcategoryObject[category] = res;
   }
 }
-function getSubCategoryDetail(category) {
+async function getSubCategoryDetail(category) {
+  if (
+    SubcategoryObject[category] === null ||
+    SubcategoryObject[category] === undefined ||
+    SubcategoryObject[category].length === 0
+  ) {
+    await getAllSubCategory(category);
+  }
   return SubcategoryObject[category];
 }
 

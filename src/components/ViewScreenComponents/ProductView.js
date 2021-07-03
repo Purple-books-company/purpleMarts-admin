@@ -167,6 +167,7 @@ function ProductView() {
                     value={value.name}
                     onClick={handleRadio}
                     id={'radioInput' + index}
+                    checked={productDetail[0].subCategory === value.name}
                   />
                   <label
                     className='form-check-label text-light '
