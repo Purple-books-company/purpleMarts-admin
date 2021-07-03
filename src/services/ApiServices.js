@@ -19,8 +19,10 @@ const Request = {
   offerProduct: `/api/admin/meta/offerproduct/`,
 
   advertisement: `/api/admin/meta/advertisement/`,
-  category:`/api/admin/product/category/`,
-  subCategory:`/api/admin/product/subcategory/`
+  category: `/api/admin/product/category/`,
+  subCategory: `/api/admin/product/subcategory/`,
+  supplierInfo: `/api/admin/user/personal_info/`,
+  supplier: `/api/admin/user/supplier/`,
 };
 
 const Token = process.env.REACT_APP_TOKEN;
@@ -63,12 +65,20 @@ async function ApiPostService(method, data) {
     });
     console.log(res);
     if (res.data.success) {
-      if (method === 'Products' || method === 'subCategoryAll') {
+      if (
+        method === 'Products' ||
+        method === 'subCategoryAll' ||
+        method === 'supplierInfo'
+      ) {
         return res.data.data;
       }
       return true;
     } else {
-      if (method === 'Products' || method === 'subCategoryAll') {
+      if (
+        method === 'Products' ||
+        method === 'subCategoryAll' ||
+        method === 'supplierInfo'
+      ) {
         return false;
       }
       console.log(res.data.err);

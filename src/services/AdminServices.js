@@ -65,7 +65,7 @@ export async function getAllCategory() {
 }
 
 export async function getAllSupplier() {
-  let res = await ApiGetService('allSupplier');
+  let res = await ApiGetService('supplier');
   if (res) {
     Supplierarray = res;
     console.log(res);
@@ -120,7 +120,7 @@ export async function getAllSubCategory(category) {
     //   }
     //   SubcategoryObject[category] = tempData;
     // }
-    SubcategoryObject[category]=res;
+    SubcategoryObject[category] = res;
   }
 }
 function getSubCategoryDetail(category) {
