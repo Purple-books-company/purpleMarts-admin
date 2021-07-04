@@ -58,6 +58,8 @@ function ProductTest() {
   const [loader, setLoader] = useState(false);
   const [imageCheck, setImageCheck] = useState('');
   const [key, setKey] = useState('');
+  const [successMsg, setSuccessMsg] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
     setToggleForm({ ...initialState, product: true });
@@ -69,11 +71,12 @@ function ProductTest() {
     getSubCategory(catData[0].name);
     let suppData = await SupplierData();
     setSupplierData(suppData);
+    setProduct({ ...product, category: catData[0].name });
   }
   async function getSubCategory(category) {
     let subCat = await getSubCategoryDetail(category);
     setSubCategoryData(subCat);
-    setProduct({ ...product, category: category });
+    setProduct({ ...product, category: category, subCategory: subCat[0].name });
   }
   function handleToggle(e) {
     if (toggleForm.product === true) {
@@ -98,13 +101,19 @@ function ProductTest() {
             return;
           }
         }
+        if (key === '') return;
 
         setVarientKey([...varientKey, { key: key, value: '' }]);
         setKey('');
       }
     } else {
-      let temp = varientKey;
+      let temp = [];
+      for (let i in varientKey) {
+        temp[i] = varientKey[i];
+      }
       temp[e.target.id].value = e.target.value;
+      console.log(temp);
+
       setVarientKey(temp);
     }
   }
@@ -114,19 +123,49 @@ function ProductTest() {
     data.varients = varientDetail;
     let res = await ApiPostService('product', data);
     console.log(res);
-    console.log(data);
+    if (res === true) {
+      setProduct(initialDetail);
+      setVarientDetail([]);
+      setImages([]);
+      setAddVarient(initialVarient);
+      setSuccessMsg('product saved');
+    } else {
+      setSuccessMsg('');
+      setErrorMsg('error fields!!');
+    }
   }
-  function removeVarientKey(e) {}
+  function removeVarientKey(e) {
+    console.log('removed');
+    let detail = varientKey;
+    detail.splice(e.target.value, 1);
+    setVarientDetail([]);
+    setImages([]);
+    setVarientKey(detail);
+  }
   function handleVarientDetail(e) {
+    e.preventDefault();
     if (e.target.name !== 'AddVarient') {
       setAddVarient({ ...addVarient, [e.target.name]: e.target.value });
     } else {
       let detail = { ...addVarient };
-      detail.types = varientKey;
-      detail.image = image;
+      detail.types = JSON.parse(JSON.stringify(varientKey));
+
+      for (let i in detail.types) {
+        if (detail.types[i].value === '' || detail.types[i].value === null) {
+          setErrorMsg('varients keys are empty');
+          return;
+        }
+      }
+
+      detail.image = JSON.parse(JSON.stringify(image));
+
       console.log(detail);
       setVarientDetail([...varientDetail, detail]);
+      setAddVarient(initialVarient);
+      e.target.reset();
+
       setImages([]);
+      setSuccessMsg('Varient Added');
     }
   }
   function handleCategoryChange(e) {
@@ -137,12 +176,42 @@ function ProductTest() {
     setProduct({ ...product, [e.target.name]: e.target.value });
   }
   function handleImageChange(e) {
+    e.preventDefault();
     if (e.target.name === 'image') {
       setImageCheck(e.target.value);
     } else {
       setImages([...image, { image: imageCheck }]);
       setImageCheck('');
     }
+  }
+  function handleRemoveImage(index, imageIndex) {
+    // console.log(varientDetail[index]);
+    let detail = [...varientDetail];
+    let tempDat = detail.splice(index, 1);
+    tempDat = tempDat[0];
+    if (tempDat.image.length <= 1) {
+      alert('atleast one image for a varient');
+      return;
+    }
+    tempDat.image.splice(imageIndex, 1);
+    console.log(tempDat);
+    detail.push(tempDat);
+    setVarientDetail(detail);
+    return;
+    // let tempDetail = detail.splice(index, 1);
+    // tempDetail.image.splice(imageIndex, 1);
+    // detail.push(tempDetail);
+    // setVarientDetail(detail);
+  }
+  function handleEditVarient(e) {
+    let detail = [...varientDetail];
+    let tempDetail = detail.splice(e.target.value, 1);
+    tempDetail = tempDetail[0];
+    console.log(tempDetail);
+    setVarientDetail(detail);
+    setImages(tempDetail.image);
+    setVarientKey(tempDetail.types);
+    setAddVarient(tempDetail);
   }
 
   return (
@@ -179,6 +248,8 @@ function ProductTest() {
             Varient details
           </ToggleButton>
         </ContainerColumn>
+        <SuccessText>{successMsg}</SuccessText>
+        <ErrorText>{errorMsg}</ErrorText>
       </ContainerRow>
       <ContainerRow
         dynamic
@@ -222,7 +293,96 @@ function ProductTest() {
           Add Key
         </Submitbutton>
       </ContainerRow>
-      <form>
+
+      <form
+        name='AddVarient'
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleVarientDetail(e);
+        }}
+      >
+        {varientKey.length > 0 && (
+          <ContainerRow
+            dynamic
+            style={{
+              padding: '10px',
+              display: toggleForm.varientDetail ? '' : 'none',
+            }}
+          >
+            <ContainerColumn className='col-md-4'>
+              <Input
+                type='number'
+                name='offerPrice'
+                placeholder='offerPrice'
+                min='0'
+                value={addVarient.offerPrice}
+                onChange={handleVarientDetail}
+                required
+              />
+            </ContainerColumn>
+            <ContainerColumn className='col-md-4'>
+              <Input
+                type='number'
+                name='buyingPrice'
+                placeholder='buyingPrice'
+                min='0'
+                value={addVarient.buyingPrice}
+                onChange={handleVarientDetail}
+                required
+              />
+            </ContainerColumn>
+            <ContainerColumn className='col-md-4'>
+              <Input
+                type='number'
+                name='originalPrice'
+                placeholder='originalPrice'
+                min='0'
+                value={addVarient.originalPrice}
+                onChange={handleVarientDetail}
+                required
+              />
+            </ContainerColumn>
+            {varientKey.map((value, index) => (
+              <ContainerColumn className='col-md-4'>
+                {value.value.length !== 0 && `currentValue : ${value.value}`}
+                <Input
+                  type='text'
+                  name={value.key}
+                  id={index}
+                  // value={value.value}
+                  placeholder={value.key}
+                  onChange={handleVarientKey}
+                />
+              </ContainerColumn>
+            ))}
+            <ContainerColumn className='col-md-6'>
+              No of Images Added:{image.length}
+              <Input
+                placeholder='image'
+                type='text'
+                name='image'
+                value={imageCheck}
+                onChange={handleImageChange}
+              />
+              <button
+                className='btn btn-outline-success m-2'
+                onClick={handleImageChange}
+              >
+                Add Image
+              </button>
+            </ContainerColumn>
+            <Submitbutton type='submit' name='AddVarient'>
+              Add Varient
+            </Submitbutton>
+          </ContainerRow>
+        )}
+      </form>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
+        }}
+      >
         <ContainerRow
           dynamic
           style={{ padding: '10px', display: toggleForm.product ? '' : 'none' }}
@@ -349,6 +509,7 @@ function ProductTest() {
             />
           </ContainerColumn>
           <ContainerColumn className='col-md-6'>
+            No of Images:{image.length}
             <Input
               placeholder='image'
               type='text'
@@ -364,99 +525,66 @@ function ProductTest() {
               Add Image
             </button>
           </ContainerColumn>
+          <Submitbutton type='submit'>ADD PRODUCT</Submitbutton>
         </ContainerRow>
-        <Submitbutton onClick={handleSubmit} type='submit'>
-          ADD PRODUCT
-        </Submitbutton>
       </form>
-      <ContainerRow
-        dynamic
-        style={{
-          padding: '10px',
-          display: toggleForm.varientDetail ? '' : 'none',
-        }}
-      >
-        <ContainerColumn className='col-md-4'>
-          <Input
-            type='number'
-            name='offerPrice'
-            placeholder='offerPrice'
-            min='0'
-            value={addVarient.offerPrice}
-            onChange={handleVarientDetail}
-            required
-          />
-        </ContainerColumn>
-        <ContainerColumn className='col-md-4'>
-          <Input
-            type='number'
-            name='buyingPrice'
-            placeholder='buyingPrice'
-            min='0'
-            value={addVarient.buyingPrice}
-            onChange={handleVarientDetail}
-            required
-          />
-        </ContainerColumn>
-        <ContainerColumn className='col-md-4'>
-          <Input
-            type='number'
-            name='originalPrice'
-            placeholder='originalPrice'
-            min='0'
-            value={addVarient.originalPrice}
-            onChange={handleVarientDetail}
-            required
-          />
-        </ContainerColumn>
-        {varientKey.map((value, index) => (
-          <ContainerColumn className='col-md-4'>
-            <Input
-              type='text'
-              name={value.key}
-              id={index}
-              placeholder={value.key}
-              onChange={handleVarientKey}
-              required
-            />
-          </ContainerColumn>
-        ))}
-        <ContainerColumn className='col-md-6'>
-          <Input
-            placeholder='image'
-            type='text'
-            name='image'
-            value={imageCheck}
-            onChange={handleImageChange}
-          />
-          <button
-            className='btn btn-outline-success m-2'
-            onClick={handleImageChange}
-          >
-            Add Image
-          </button>
-          <button
-            className='btn btn-outline-primary m-2'
-            onClick={() => {
-              if (varientDetail.length === 0 && product.image.length === 0) {
-                alert('No previous Images');
-              } else if (varientDetail.length != 0) {
-                setImages(varientDetail[varientDetail.length - 1].image);
-              } else {
-                setImages(product.image);
-              }
-            }}
-          >
-            Add previous Image
-          </button>
-        </ContainerColumn>
-        <Submitbutton onClick={handleVarientDetail} name='AddVarient'>
-          Add Varient
-        </Submitbutton>
-      </ContainerRow>
       {imageCheck.length > 10 && (
         <Imageview src={imageCheck} width='100px' height='100px' />
       )}
+      <ContainerRow dynamic>
+        {varientDetail.map((value, index) => (
+          <ContainerColumn className=' col-md-12'>
+            <ContainerColumn className='row col-md-12'>
+              {value.image.map((imageUrl, imageIndex) => (
+                <ContainerColumn className='col-md-3 col-sm-6'>
+                  <Imageview
+                    src={imageUrl.image}
+                    height='100px'
+                    width='100px'
+                  ></Imageview>
+                  <br />
+                  <button
+                    onClick={() => {
+                      handleRemoveImage(index, imageIndex);
+                    }}
+                    className='btn btn-outline-danger'
+                  >
+                    remove
+                  </button>
+                </ContainerColumn>
+              ))}
+            </ContainerColumn>
+
+            <Formlable>
+              Original price:{value.originalPrice}
+              offer Price:{value.offerPrice}
+              buyingPrice:{value.buyingPrice}
+              {value.types.map((typeKey, typeIndex) => (
+                <>
+                  <Formlable>
+                    {typeKey.key}:{typeKey.value}
+                    <br />
+                  </Formlable>
+                </>
+              ))}
+            </Formlable>
+            <button
+              className='btn btn-outline-primary m-2'
+              onClick={() => setImages(value.image)}
+            >
+              Add This Image
+            </button>
+            <button
+              className='btn btn-outline-info'
+              name='edit'
+              value={index}
+              onClick={handleEditVarient}
+            >
+              Remove and edit
+            </button>
+          </ContainerColumn>
+        ))}
+      </ContainerRow>
     </>
   );
 }
