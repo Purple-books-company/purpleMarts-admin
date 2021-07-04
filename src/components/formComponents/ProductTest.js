@@ -186,7 +186,9 @@ function ProductTest() {
   }
   function handleRemoveImage(index, imageIndex) {
     // console.log(varientDetail[index]);
-    let detail = [...varientDetail];
+    let detail = JSON.parse(JSON.stringify(varientDetail));
+    
+
     let tempDat = detail.splice(index, 1);
     tempDat = tempDat[0];
     if (tempDat.image.length <= 1) {
