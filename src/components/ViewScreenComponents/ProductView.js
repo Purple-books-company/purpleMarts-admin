@@ -48,7 +48,7 @@ function ProductView() {
     let categoryDetail = await CategoryData();
     console.log(categoryDetail.length);
     setCategoryList(categoryDetail);
-    let subCat = getSubCategoryDetail(categoryDetail[0].name);
+    let subCat = await getSubCategoryDetail(categoryDetail[0].name);
     //need to optimize this!!
     if (subCat === undefined || subCat === null) {
       await getAllSubCategory(categoryDetail[0].name);
@@ -64,12 +64,7 @@ function ProductView() {
     Loader.product = true;
     setLoader(Loader);
 
-    let subCat = getSubCategoryDetail(e.target.value);
-
-    if (subCat === undefined || subCat === null) {
-      await getAllSubCategory(e.target.value);
-      subCat = getSubCategoryDetail(e.target.value);
-    }
+    let subCat = await getSubCategoryDetail(e.target.value);
 
     setSubCategoryDetail(subCat);
     setLoader({ ...initialLoader });
@@ -88,7 +83,7 @@ function ProductView() {
       page: 1,
     };
     let res = await ApiPostService('Products', data);
-    console.log(res);
+    alert(res);
 
     if (res && res.length > 0) {
       console.log(res);
@@ -167,7 +162,7 @@ function ProductView() {
                     value={value.name}
                     onClick={handleRadio}
                     id={'radioInput' + index}
-                    checked={productDetail[0].subCategory === value.name}
+                    // checked={productDetail[0].subCategory === value.name}
                   />
                   <label
                     className='form-check-label text-light '
@@ -312,6 +307,9 @@ function ProductView() {
                             <br />
                             <a
                               href={'#showdata' + index}
+                              // data-bs-toggle='collapse'
+
+                              // aria-controls='collapseExample'
                               // className="ml-2"
 
                               data-toggle='collapse'
