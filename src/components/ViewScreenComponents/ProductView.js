@@ -197,9 +197,9 @@ function ProductView() {
             <ContainerColumn height='100%' className='col-md-9 ml-2 col-sm-12'>
               {productDetail.length === 0 && <Nodata />}
 
-              <ContainerRow dynamic>
+              <ContainerRow height='30%'>
                 {productDetail.map((value, index) => (
-                  <ContainerColumn key={index} className='col-md-4'>
+                  <ContainerColumn key={index} className='col-md-3'>
                     <Card nohover>
                       <div
                         // onClick={() => handleImageClick(index)}
@@ -224,7 +224,7 @@ function ProductView() {
                         <br />
                       </div>
                       <ContainerRow dynamic>
-                        <ContainerColumn className='col-md-12 col-12 '>
+                        <ContainerColumn className='col-md-12 col-12 mb-2 '>
                           <div
                             className='col-md-12 col-12'
                             id={'changeVarient' + index}
@@ -237,6 +237,7 @@ function ProductView() {
                               // alternate="no image"
                             />
                           </div>
+
                           <button
                             class='btn btn-outline-primary mt-4'
                             type='button'
@@ -251,38 +252,11 @@ function ProductView() {
                               role='status'
                               aria-hidden='true'
                             ></span>
-                            {offerId !== value.id && 'Addoffer'}
+
+                            {offerId !== value.id && 'Add-to-offer'}
                           </button>
 
                           <CenterAlign dark>
-                            <p className='collapse' id={'showdata' + index}>
-                              <a
-                                href={'#showdata' + index}
-                                // className="ml-2"
-                                className='text-danger'
-                                style={{
-                                  textAlign: 'right',
-                                  marginLeft: '60%',
-                                }}
-                                data-toggle='collapse'
-                              >
-                                X
-                              </a>
-                              <br />
-                              OurPrice:{value.offerPrice}
-                              <br />
-                              OriginalPrice:{value.originalPrice}
-                              <br />
-                              <br />
-                              hello
-                              <br /> hello
-                              <br /> hello
-                              <br /> hello
-                              <br />
-                              hello
-                              <br />
-                            </p>
-
                             <br />
                             <button
                               className='btn btn-outline-danger mr-2 '
@@ -305,17 +279,6 @@ function ProductView() {
                               Edit
                             </Link>
                             <br />
-                            <a
-                              href={'#showdata' + index}
-                              // data-bs-toggle='collapse'
-
-                              // aria-controls='collapseExample'
-                              // className="ml-2"
-
-                              data-toggle='collapse'
-                            >
-                              <AiFillCaretDown />
-                            </a>
                           </CenterAlign>
                         </ContainerColumn>
                       </ContainerRow>
@@ -332,3 +295,30 @@ function ProductView() {
 }
 
 export default ProductView;
+// <p className='collapse' id={'showdata' + index}>
+//   <a
+//     href={'#showdata' + index}
+//     // className="ml-2"
+//     className='text-danger'
+//     style={{
+//       textAlign: 'right',
+//       marginLeft: '60%',
+//     }}
+//     data-toggle='collapse'
+//   >
+//     X
+//   </a>
+//   OurPrice:{value.offerPrice}
+//   OriginalPrice:{value.originalPrice}
+// </p>;
+// <a
+//   href={'#showdata' + index}
+//   // data-bs-toggle='collapse'
+
+//   // aria-controls='collapseExample'
+//   // className="ml-2"
+
+//   data-toggle='collapse'
+// >
+//   <AiFillCaretDown />
+// </a>;

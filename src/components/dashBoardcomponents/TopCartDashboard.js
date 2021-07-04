@@ -27,11 +27,11 @@ function TopCartDashBoard() {
           series={series.options.series}
           type='donut'
           width={'100%'}
-          height={window.innerHeight > 450 ? window.innerHeight / 2 : '100%'}
+          height={window.innerHeight > 450 ? window.innerHeight / 3 : '100%'}
           options={{
             ...series.options,
             dataLabels: { enabled: true },
-            legend: { show: true, position: 'bottom', fontSize: '8px' },
+            legend: { show: true, position: 'right', fontSize: '8px' },
             plotOptions: { pie: { size: 100, donut: { size: '60%' } } },
           }}
         />
