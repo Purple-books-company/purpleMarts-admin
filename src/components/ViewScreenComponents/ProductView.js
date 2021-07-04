@@ -83,7 +83,6 @@ function ProductView() {
       page: 1,
     };
     let res = await ApiPostService('Products', data);
-    alert(res);
 
     if (res && res.length > 0) {
       console.log(res);
@@ -162,7 +161,10 @@ function ProductView() {
                     value={value.name}
                     onClick={handleRadio}
                     id={'radioInput' + index}
-                    // checked={productDetail[0].subCategory === value.name}
+                    checked={
+                      productDetail.length > 0 &&
+                      productDetail[0].subCategory === value.name
+                    }
                   />
                   <label
                     className='form-check-label text-light '
