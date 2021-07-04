@@ -48,7 +48,7 @@ function ProductView() {
     let categoryDetail = await CategoryData();
     console.log(categoryDetail.length);
     setCategoryList(categoryDetail);
-    let subCat = getSubCategoryDetail(categoryDetail[0].name);
+    let subCat = await getSubCategoryDetail(categoryDetail[0].name);
     //need to optimize this!!
     if (subCat === undefined || subCat === null) {
       await getAllSubCategory(categoryDetail[0].name);
@@ -64,12 +64,7 @@ function ProductView() {
     Loader.product = true;
     setLoader(Loader);
 
-    let subCat = getSubCategoryDetail(e.target.value);
-
-    if (subCat === undefined || subCat === null) {
-      await getAllSubCategory(e.target.value);
-      subCat = getSubCategoryDetail(e.target.value);
-    }
+    let subCat = await getSubCategoryDetail(e.target.value);
 
     setSubCategoryDetail(subCat);
     setLoader({ ...initialLoader });
@@ -88,7 +83,7 @@ function ProductView() {
       page: 1,
     };
     let res = await ApiPostService('Products', data);
-    console.log(res);
+    alert(res);
 
     if (res && res.length > 0) {
       console.log(res);
@@ -167,7 +162,7 @@ function ProductView() {
                     value={value.name}
                     onClick={handleRadio}
                     id={'radioInput' + index}
-                    checked={productDetail[0].subCategory === value.name}
+                    // checked={productDetail[0].subCategory === value.name}
                   />
                   <label
                     className='form-check-label text-light '
@@ -202,9 +197,9 @@ function ProductView() {
             <ContainerColumn height='100%' className='col-md-9 ml-2 col-sm-12'>
               {productDetail.length === 0 && <Nodata />}
 
-              <ContainerRow dynamic>
+              <ContainerRow height='30%'>
                 {productDetail.map((value, index) => (
-                  <ContainerColumn key={index} className='col-md-4'>
+                  <ContainerColumn key={index} className='col-md-3'>
                     <Card nohover>
                       <div
                         // onClick={() => handleImageClick(index)}
@@ -229,7 +224,7 @@ function ProductView() {
                         <br />
                       </div>
                       <ContainerRow dynamic>
-                        <ContainerColumn className='col-md-12 col-12 '>
+                        <ContainerColumn className='col-md-12 col-12 mb-2 '>
                           <div
                             className='col-md-12 col-12'
                             id={'changeVarient' + index}
@@ -242,6 +237,7 @@ function ProductView() {
                               // alternate="no image"
                             />
                           </div>
+
                           <button
                             class='btn btn-outline-primary mt-4'
                             type='button'
@@ -256,38 +252,11 @@ function ProductView() {
                               role='status'
                               aria-hidden='true'
                             ></span>
-                            {offerId !== value.id && 'Addoffer'}
+
+                            {offerId !== value.id && 'Add-to-offer'}
                           </button>
 
                           <CenterAlign dark>
-                            <p className='collapse' id={'showdata' + index}>
-                              <a
-                                href={'#showdata' + index}
-                                // className="ml-2"
-                                className='text-danger'
-                                style={{
-                                  textAlign: 'right',
-                                  marginLeft: '60%',
-                                }}
-                                data-toggle='collapse'
-                              >
-                                X
-                              </a>
-                              <br />
-                              OurPrice:{value.offerPrice}
-                              <br />
-                              OriginalPrice:{value.originalPrice}
-                              <br />
-                              <br />
-                              hello
-                              <br /> hello
-                              <br /> hello
-                              <br /> hello
-                              <br />
-                              hello
-                              <br />
-                            </p>
-
                             <br />
                             <button
                               className='btn btn-outline-danger mr-2 '
@@ -310,14 +279,6 @@ function ProductView() {
                               Edit
                             </Link>
                             <br />
-                            <a
-                              href={'#showdata' + index}
-                              // className="ml-2"
-
-                              data-toggle='collapse'
-                            >
-                              <AiFillCaretDown />
-                            </a>
                           </CenterAlign>
                         </ContainerColumn>
                       </ContainerRow>
@@ -334,3 +295,30 @@ function ProductView() {
 }
 
 export default ProductView;
+// <p className='collapse' id={'showdata' + index}>
+//   <a
+//     href={'#showdata' + index}
+//     // className="ml-2"
+//     className='text-danger'
+//     style={{
+//       textAlign: 'right',
+//       marginLeft: '60%',
+//     }}
+//     data-toggle='collapse'
+//   >
+//     X
+//   </a>
+//   OurPrice:{value.offerPrice}
+//   OriginalPrice:{value.originalPrice}
+// </p>;
+// <a
+//   href={'#showdata' + index}
+//   // data-bs-toggle='collapse'
+
+//   // aria-controls='collapseExample'
+//   // className="ml-2"
+
+//   data-toggle='collapse'
+// >
+//   <AiFillCaretDown />
+// </a>;

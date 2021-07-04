@@ -42,7 +42,7 @@ function OrderDashBoard() {
           series={orderDetail.series}
           type='bar'
           width={'100%'}
-          height={window.innerHeight > 450 ? window.innerHeight / 2 : '100%'}
+          height={window.innerHeight > 450 ? window.innerHeight / 2.5 : '100%'}
           options={{
             ...orderDetail.options,
             fill: {
