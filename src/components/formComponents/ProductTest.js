@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import {
   CategoryData,
   getSubCategoryDetail,
   SupplierData,
-} from '../../services/AdminServices';
-import { ApiPostService } from '../../services/ApiServices';
+} from "../../services/AdminServices";
+import { ApiPostService } from "../../services/ApiServices";
 import {
   ContainerColumn,
   ContainerRow,
@@ -17,7 +17,7 @@ import {
   SuccessText,
   ToggleButton,
   CenterAlign,
-} from '../../styles/styled';
+} from "../../styles/styled";
 
 function ProductTest() {
   let initialState = {
@@ -26,23 +26,23 @@ function ProductTest() {
     varientDetail: false,
   };
   let initialDetail = {
-    name: '',
-    description: '',
-    quantityPerUnit: '',
-    originalPrice: '',
-    unitWeight: '',
-    offerPrice: '',
+    name: "",
+    description: "",
+    quantityPerUnit: "",
+    originalPrice: "",
+    unitWeight: "",
+    offerPrice: "",
     image: [],
     buyingPrice: [],
-    supplier: '',
-    category: '',
-    subCategory: '',
-    varients: '',
+    supplier: "",
+    category: "",
+    subCategory: "",
+    varients: "",
   };
   let initialVarient = {
-    offerPrice: '',
-    originalPrice: '',
-    buyingPrice: '',
+    offerPrice: "",
+    originalPrice: "",
+    buyingPrice: "",
     image: [],
     types: [],
   };
@@ -56,10 +56,10 @@ function ProductTest() {
   const [addVarient, setAddVarient] = useState(initialVarient);
   const [image, setImages] = useState([]);
   const [loader, setLoader] = useState(false);
-  const [imageCheck, setImageCheck] = useState('');
-  const [key, setKey] = useState('');
-  const [successMsg, setSuccessMsg] = useState('');
-  const [errorMsg, setErrorMsg] = useState('');
+  const [imageCheck, setImageCheck] = useState("");
+  const [key, setKey] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
     setToggleForm({ ...initialState, product: true });
@@ -84,13 +84,13 @@ function ProductTest() {
     setProduct({ ...product, category: category, subCategory: subCat[0].name });
   }
   function handleToggle(e) {
-    setSuccessMsg('');
-    setErrorMsg('');
+    setSuccessMsg("");
+    setErrorMsg("");
     if (toggleForm.product === true) {
       console.log(image);
       setProduct({ ...product, image: image });
     }
-    if (e.target.id === 'product') {
+    if (e.target.id === "product") {
       setImages(product.image);
     } else {
       setImages([]);
@@ -99,19 +99,19 @@ function ProductTest() {
   }
   function handleVarientKey(e) {
     if (toggleForm.varientType) {
-      if (e.target.name === 'key') {
+      if (e.target.name === "key") {
         setKey(e.target.value);
       } else {
         for (let i in varientKey) {
           if (varientKey[i].key == key) {
-            alert('alreay key available');
+            alert("alreay key available");
             return;
           }
         }
-        if (key === '') return;
+        if (key === "") return;
 
-        setVarientKey([...varientKey, { key: key, value: '' }]);
-        setKey('');
+        setVarientKey([...varientKey, { key: key, value: "" }]);
+        setKey("");
       }
     } else {
       let temp = [];
@@ -125,25 +125,25 @@ function ProductTest() {
     }
   }
   async function handleSubmit(e) {
-    setSuccessMsg('');
-    setErrorMsg('');
+    setSuccessMsg("");
+    setErrorMsg("");
     let data = { ...product };
     data.varients = varientDetail;
-    let res = await ApiPostService('product', data);
+    let res = await ApiPostService("product", data);
     console.log(res);
     if (res === true) {
       setProduct(initialDetail);
       setVarientDetail([]);
       setImages([]);
       setAddVarient(initialVarient);
-      setSuccessMsg('product saved');
+      setSuccessMsg("product saved");
     } else {
-      setSuccessMsg('');
-      setErrorMsg('error fields!!');
+      setSuccessMsg("");
+      setErrorMsg("error fields!!");
     }
   }
   function removeVarientKey(e) {
-    console.log('removed');
+    console.log("removed");
     let detail = varientKey;
     detail.splice(e.target.value, 1);
     setVarientDetail([]);
@@ -152,15 +152,15 @@ function ProductTest() {
   }
   function handleVarientDetail(e) {
     e.preventDefault();
-    if (e.target.name !== 'AddVarient') {
+    if (e.target.name !== "AddVarient") {
       setAddVarient({ ...addVarient, [e.target.name]: e.target.value });
     } else {
       let detail = { ...addVarient };
       detail.types = JSON.parse(JSON.stringify(varientKey));
 
       for (let i in detail.types) {
-        if (detail.types[i].value === '' || detail.types[i].value === null) {
-          setErrorMsg('varients keys are empty');
+        if (detail.types[i].value === "" || detail.types[i].value === null) {
+          setErrorMsg("varients keys are empty");
           return;
         }
       }
@@ -173,7 +173,7 @@ function ProductTest() {
       e.target.reset();
 
       setImages([]);
-      setSuccessMsg('Varient Added');
+      setSuccessMsg("Varient Added");
     }
   }
   function handleCategoryChange(e) {
@@ -185,19 +185,19 @@ function ProductTest() {
   }
   function handleImageChange(e) {
     e.preventDefault();
-    if (e.target.name === 'image') {
+    if (e.target.name === "image") {
       setImageCheck(e.target.value);
     } else {
       setImages([...image, { image: imageCheck }]);
-      setImageCheck('');
+      setImageCheck("");
     }
   }
   function handleRemoveImage(index, imageIndex) {
-    if (index === 'default') {
+    if (index === "default") {
       let detail;
 
       if (toggleForm.product) {
-        alert('productForm');
+        alert("productForm");
         detail = JSON.parse(JSON.stringify(image));
       } else {
         detail = JSON.parse(JSON.stringify(product.image));
@@ -213,7 +213,7 @@ function ProductTest() {
     let tempDat = detail.splice(index, 1);
     tempDat = tempDat[0];
     if (tempDat.image.length <= 1) {
-      alert('atleast one image for a varient');
+      alert("atleast one image for a varient");
       return;
     }
     tempDat.image.splice(imageIndex, 1);
@@ -240,39 +240,39 @@ function ProductTest() {
   return (
     <>
       <ContainerRow dynamic>
-        <ContainerColumn height='10%' className='col-md-4 col-6'>
+        <ContainerColumn height="10%" className="col-md-4 col-6">
           <ToggleButton
             active={toggleForm.product}
-            id='product'
-            value='productdetail'
+            id="product"
+            value="productdetail"
             onClick={handleToggle}
           >
             product detail
           </ToggleButton>
         </ContainerColumn>
 
-        <ContainerColumn height='10%' className='col-md-4 col-6'>
+        <ContainerColumn height="10%" className="col-md-4 col-6">
           <ToggleButton
             active={toggleForm.varientType}
-            id='varientType'
-            value='advertisement'
+            id="varientType"
+            value="advertisement"
             onClick={handleToggle}
           >
             Types
           </ToggleButton>
         </ContainerColumn>
 
-        <ContainerColumn height='10%' className='col-md-4 col'>
+        <ContainerColumn height="10%" className="col-md-4 col">
           <ToggleButton
             active={toggleForm.varientDetail}
-            id='varientDetail'
+            id="varientDetail"
             onClick={handleToggle}
           >
             Varient details
           </ToggleButton>
         </ContainerColumn>
 
-        <ContainerColumn className='col-md-12 col-12'>
+        <ContainerColumn className="col-md-12 col-12">
           <SuccessText>{successMsg}</SuccessText>
           <ErrorText>{errorMsg}</ErrorText>
         </ContainerColumn>
@@ -280,32 +280,32 @@ function ProductTest() {
       <ContainerRow
         dynamic
         style={{
-          padding: '10px',
-          display: toggleForm.varientType ? '' : 'none',
-          marginTop: '2%',
+          padding: "10px",
+          display: toggleForm.varientType ? "" : "none",
+          marginTop: "2%",
         }}
       >
-        <ContainerColumn className='col-md-12'>
+        <ContainerColumn className="col-md-12">
           <ErrorText>
             Warning adding or removing before adding varient, else varient
             detail will be deleted
           </ErrorText>
         </ContainerColumn>
-        <ContainerColumn className='col-md-6 '>
+        <ContainerColumn className="col-md-6 ">
           <Formlable>Add Varient types</Formlable>
           eg(colour,size....)
         </ContainerColumn>
-        <ContainerColumn className='col-md-6 '>
+        <ContainerColumn className="col-md-6 ">
           <Input
-            type='text'
-            placeholder='add varient'
+            type="text"
+            placeholder="add varient"
             value={key}
-            name='key'
+            name="key"
             onChange={handleVarientKey}
           />
           {varientKey.map((value, index) => (
             <p
-              className='btn btn-outline-danger ml-1'
+              className="btn btn-outline-danger ml-1"
               value={index}
               key={value.key}
               onClick={removeVarientKey}
@@ -315,13 +315,13 @@ function ProductTest() {
           ))}
         </ContainerColumn>
 
-        <Submitbutton name='addKey' onClick={handleVarientKey}>
+        <Submitbutton name="addKey" onClick={handleVarientKey}>
           Add Key
         </Submitbutton>
       </ContainerRow>
 
       <form
-        name='AddVarient'
+        name="AddVarient"
         onSubmit={(e) => {
           e.preventDefault();
           handleVarientDetail(e);
@@ -331,48 +331,48 @@ function ProductTest() {
           <ContainerRow
             dynamic
             style={{
-              padding: '10px',
-              display: toggleForm.varientDetail ? '' : 'none',
+              padding: "10px",
+              display: toggleForm.varientDetail ? "" : "none",
             }}
           >
-            <ContainerColumn className='col-md-4'>
+            <ContainerColumn className="col-md-4">
               <Input
-                type='number'
-                name='offerPrice'
-                placeholder='offerPrice'
-                min='0'
+                type="number"
+                name="offerPrice"
+                placeholder="offerPrice"
+                min="0"
                 value={addVarient.offerPrice}
                 onChange={handleVarientDetail}
                 required
               />
             </ContainerColumn>
-            <ContainerColumn className='col-md-4'>
+            <ContainerColumn className="col-md-4">
               <Input
-                type='number'
-                name='buyingPrice'
-                placeholder='buyingPrice'
-                min='0'
+                type="number"
+                name="buyingPrice"
+                placeholder="buyingPrice"
+                min="0"
                 value={addVarient.buyingPrice}
                 onChange={handleVarientDetail}
                 required
               />
             </ContainerColumn>
-            <ContainerColumn className='col-md-4'>
+            <ContainerColumn className="col-md-4">
               <Input
-                type='number'
-                name='originalPrice'
-                placeholder='originalPrice'
-                min='0'
+                type="number"
+                name="originalPrice"
+                placeholder="originalPrice"
+                min="0"
                 value={addVarient.originalPrice}
                 onChange={handleVarientDetail}
                 required
               />
             </ContainerColumn>
             {varientKey.map((value, index) => (
-              <ContainerColumn className='col-md-4'>
+              <ContainerColumn className="col-md-4">
                 {value.value.length !== 0 && `currentValue : ${value.value}`}
                 <Input
-                  type='text'
+                  type="text"
                   name={value.key}
                   id={index}
                   // value={value.value}
@@ -381,23 +381,23 @@ function ProductTest() {
                 />
               </ContainerColumn>
             ))}
-            <ContainerColumn className='col-md-6'>
+            <ContainerColumn className="col-md-6">
               No of Images Added:{image.length}
               <Input
-                placeholder='image'
-                type='text'
-                name='image'
+                placeholder="image"
+                type="text"
+                name="image"
                 value={imageCheck}
                 onChange={handleImageChange}
               />
               <button
-                className='btn btn-outline-success m-2'
+                className="btn btn-outline-success m-2"
                 onClick={handleImageChange}
               >
                 Add Image
               </button>
             </ContainerColumn>
-            <Submitbutton type='submit' name='AddVarient'>
+            <Submitbutton type="submit" name="AddVarient">
               Add Varient
             </Submitbutton>
           </ContainerRow>
@@ -411,81 +411,81 @@ function ProductTest() {
       >
         <ContainerRow
           dynamic
-          style={{ padding: '10px', display: toggleForm.product ? '' : 'none' }}
+          style={{ padding: "10px", display: toggleForm.product ? "" : "none" }}
         >
-          <ContainerColumn className='col-md-4'>
+          <ContainerColumn className="col-md-4">
             <Input
-              type='text'
-              placeholder='product name'
-              name='name'
+              type="text"
+              placeholder="product name"
+              name="name"
               value={product.name}
               onChange={handleProductChange}
               required
             />
           </ContainerColumn>
-          <ContainerColumn className='col-md-4'>
+          <ContainerColumn className="col-md-4">
             <Input
-              type='number'
-              name='quantityPerUnit'
-              placeholder='quantity per unit'
-              min='0'
+              type="number"
+              name="quantityPerUnit"
+              placeholder="quantity per unit"
+              min="0"
               value={product.quantityPerUnit}
               onChange={handleProductChange}
               required
             />
           </ContainerColumn>
-          <ContainerColumn className='col-md-4'>
+          <ContainerColumn className="col-md-4">
             <Input
-              type='number'
-              name='unitWeight'
-              placeholder='weight'
-              min='0'
+              type="number"
+              name="unitWeight"
+              placeholder="weight"
+              min="0"
               value={product.unitWeight}
               onChange={handleProductChange}
               required
             />
           </ContainerColumn>
-          <ContainerColumn className='col-md-4'>
+          <ContainerColumn className="col-md-4">
             <Input
-              type='number'
-              name='offerPrice'
-              placeholder='offerPrice'
-              min='0'
+              type="number"
+              name="offerPrice"
+              placeholder="offerPrice"
+              min="0"
               value={product.offerPrice}
               onChange={handleProductChange}
               required
             />
           </ContainerColumn>
-          <ContainerColumn className='col-md-4'>
+          <ContainerColumn className="col-md-4">
             <Input
-              type='number'
-              name='originalPrice'
-              placeholder='originalPrice'
-              min='0'
+              type="number"
+              name="originalPrice"
+              placeholder="originalPrice"
+              min="0"
               value={product.originalPrice}
               onChange={handleProductChange}
               required
             />
           </ContainerColumn>
-          <ContainerColumn className='col-md-4'>
+          <ContainerColumn className="col-md-4">
             <Input
-              type='number'
-              name='buyingPrice'
-              placeholder='buyingPrice'
-              min='0'
+              type="number"
+              name="buyingPrice"
+              placeholder="buyingPrice"
+              min="0"
               value={product.buyingPrice}
               onChange={handleProductChange}
               required
             />
           </ContainerColumn>
 
-          <ContainerColumn className='col-md-4'>
+          <ContainerColumn className="col-md-4">
             <select
-              className='form-control m-2'
-              name='category'
+              className="form-control m-2"
+              name="category"
               value={product.category}
               onChange={handleCategoryChange}
-              title='choose category'
+              title="choose category"
             >
               {categoryData.map((value, index) => (
                 <option value={value.name} key={value.name}>
@@ -494,13 +494,13 @@ function ProductTest() {
               ))}
             </select>
           </ContainerColumn>
-          <ContainerColumn className='col-md-4'>
+          <ContainerColumn className="col-md-4">
             <select
-              className='form-control m-2'
-              name='subCategory'
+              className="form-control m-2"
+              name="subCategory"
               value={product.subCategory}
               onChange={handleProductChange}
-              title='choose sub category'
+              title="choose sub category"
             >
               {subCategoryData.map((value, index) => (
                 <option value={value.name} key={value.name}>
@@ -509,12 +509,12 @@ function ProductTest() {
               ))}
             </select>
           </ContainerColumn>
-          <ContainerColumn className='col-md-4'>
+          <ContainerColumn className="col-md-4">
             <select
-              className='form-control m-2'
-              name='supplier'
+              className="form-control m-2"
+              name="supplier"
               value={product.supplier}
-              title='choose supplier'
+              title="choose supplier"
               onChange={handleProductChange}
             >
               {supplierData.map((value, index) => (
@@ -524,56 +524,56 @@ function ProductTest() {
               ))}
             </select>
           </ContainerColumn>
-          <ContainerColumn className='col-md-6'>
+          <ContainerColumn className="col-md-6">
             <textarea
               onChange={handleProductChange}
-              row='2'
-              name='description'
-              placeholder='description'
+              row="2"
+              name="description"
+              placeholder="description"
               // value={product.description}
-              className='form-control m-2  '
+              className="form-control m-2  "
               required
             />
           </ContainerColumn>
-          <ContainerColumn className='col-md-6'>
+          <ContainerColumn className="col-md-6">
             No of Images:{image.length}
             <Input
-              placeholder='image'
-              type='text'
-              name='image'
+              placeholder="image"
+              type="text"
+              name="image"
               value={imageCheck}
               onChange={handleImageChange}
             />
             <button
-              type='button'
-              className='btn btn-outline-success m-2'
+              type="button"
+              className="btn btn-outline-success m-2"
               onClick={handleImageChange}
             >
               Add Image
             </button>
           </ContainerColumn>
 
-          <Submitbutton type='submit'>ADD PRODUCT</Submitbutton>
+          <Submitbutton type="submit">ADD PRODUCT</Submitbutton>
           {imageCheck.length > 10 && (
-            <Imageview src={imageCheck} width='100px' height='100px' />
+            <Imageview src={imageCheck} width="100px" height="100px" />
           )}
         </ContainerRow>
-        <ContainerColumn className='col-md-12'>
+        <ContainerColumn className="col-md-12">
           <Formlable>product images</Formlable>
           <ContainerRow dynamic>
             {product.image.map((value, index) => (
               <ContainerColumn
-                className='col-md-3 col-6'
-                key={'renderProductImage' + index}
+                className="col-md-3 col-6"
+                key={"renderProductImage" + index}
               >
-                <Imageview src={value.image} width='100px' height='130px' />
+                <Imageview src={value.image} width="100px" height="130px" />
                 <br />
                 <button
-                  type='button'
-                  className='btn btn-outline-danger'
+                  type="button"
+                  className="btn btn-outline-danger"
                   onClick={(e) => {
                     e.preventDefault();
-                    handleRemoveImage('default', index);
+                    handleRemoveImage("default", index);
                   }}
                 >
                   delete
@@ -581,32 +581,36 @@ function ProductTest() {
               </ContainerColumn>
             ))}
           </ContainerRow>
-          {toggleForm.varientDetail &&  <button
-            className='btn btn-outline-primary m-2'
-            onClick={() => setImages(JSON.parse(JSON.stringify(product.image)))}
-          >
-            Add This Image
-          </button>}
+          {toggleForm.varientDetail && (
+            <button
+              className="btn btn-outline-primary m-2"
+              onClick={() =>
+                setImages(JSON.parse(JSON.stringify(product.image)))
+              }
+            >
+              Add This Image
+            </button>
+          )}
         </ContainerColumn>
       </form>
 
       <ContainerRow dynamic>
         {varientDetail.map((value, index) => (
-          <ContainerColumn className=' col-md-12'>
-            <ContainerColumn className='row col-md-12'>
+          <ContainerColumn className=" col-md-12">
+            <ContainerColumn className="row col-md-12">
               {value.image.map((imageUrl, imageIndex) => (
-                <ContainerColumn className='col-md-3 col-sm-6'>
+                <ContainerColumn className="col-md-3 col-sm-6">
                   <Imageview
                     src={imageUrl.image}
-                    height='100px'
-                    width='100px'
+                    height="100px"
+                    width="100px"
                   ></Imageview>
                   <br />
                   <button
                     onClick={() => {
                       handleRemoveImage(index, imageIndex);
                     }}
-                    className='btn btn-outline-danger'
+                    className="btn btn-outline-danger"
                   >
                     remove
                   </button>
@@ -628,14 +632,14 @@ function ProductTest() {
               ))}
             </Formlable>
             <button
-              className='btn btn-outline-primary m-2'
+              className="btn btn-outline-primary m-2"
               onClick={() => setImages(value.image)}
             >
               Add This Image
             </button>
             <button
-              className='btn btn-outline-info'
-              name='edit'
+              className="btn btn-outline-info"
+              name="edit"
               value={index}
               onClick={handleEditVarient}
             >
