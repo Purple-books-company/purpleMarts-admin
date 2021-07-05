@@ -3,8 +3,8 @@ import { AiFillDelete, AiFillEdit } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 
 import {
-  CategoryData,
-  getAllCategory,
+  // CategoryData,
+  // getAllCategory,
   getAllSubCategory,
   getSubCategoryDetail,
 } from '../../services/AdminServices';
@@ -27,7 +27,7 @@ import Nodata from '../Nodata';
 import { ApiDeleteService } from '../../services/ApiServices';
 
 function SubCatagoryView({ categoryName, handleSubPage }) {
-  const [catagoryData, setCatagoryData] = useState([]);
+  // const [catagoryData, setCatagoryData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
 
   const [errorMsg, setErrorMsg] = useState('');

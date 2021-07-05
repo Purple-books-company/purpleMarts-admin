@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import {
   ApiPostService,
-  ApiGetService,
+
   ApiDeleteService,
 } from "../../services/ApiServices";
 import Loader from "../Loader";

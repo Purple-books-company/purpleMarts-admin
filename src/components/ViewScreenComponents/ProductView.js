@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { AiFillDelete, AiFillInfoCircle, AiFillUpSquare } from 'react-icons/ai';
-import { AiFillCaretDown } from 'react-icons/ai';
+import { AiFillDelete, AiFillInfoCircle } from 'react-icons/ai';
+
 import { Link } from 'react-router-dom';
 import {
   CategoryData,

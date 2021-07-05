@@ -553,7 +553,17 @@ function ProductTest() {
             </button>
           </ContainerColumn>
 
-          <Submitbutton type='submit'>ADD PRODUCT</Submitbutton>
+          <Submitbutton type='submit'>
+            {' '}
+            ADD PRODUCT
+            <input
+              type='checkbox'
+              className='btn ml-2 '
+              style={{ display: varientDetail.length > 0 ? 'none' : '' }}
+              required={varientDetail.length == 0}
+              title='no varients added'
+            />
+          </Submitbutton>
           {imageCheck.length > 10 && (
             <Imageview src={imageCheck} width='100px' height='100px' />
           )}
@@ -581,12 +591,16 @@ function ProductTest() {
               </ContainerColumn>
             ))}
           </ContainerRow>
-          {toggleForm.varientDetail &&  <button
-            className='btn btn-outline-primary m-2'
-            onClick={() => setImages(JSON.parse(JSON.stringify(product.image)))}
-          >
-            Add This Image
-          </button>}
+          {toggleForm.varientDetail && (
+            <button
+              className='btn btn-outline-primary m-2'
+              onClick={() =>
+                setImages(JSON.parse(JSON.stringify(product.image)))
+              }
+            >
+              Add This Image
+            </button>
+          )}
         </ContainerColumn>
       </form>
 

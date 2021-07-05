@@ -34,7 +34,7 @@ function Crud() {
     }
 
     setForm(newState);
-  }, []);
+  }, [location]);
 
   const handleChange = (e) => {
     console.log('change');

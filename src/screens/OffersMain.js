@@ -12,7 +12,7 @@ import Offers from '../components/offersComponents/Offers';
 import Advertisement from '../components/offersComponents/Advertisement';
 import SocialMedia from '../components/offersComponents/SocialMedia';
 import Nav from '../components/Nav';
-import { ColorOne, ColorTwo } from '../styles/color';
+import { ColorOne } from '../styles/color';
 
 const OffersMain = () => {
   let initialState = { offer: true, advertisement: false, social: false };
