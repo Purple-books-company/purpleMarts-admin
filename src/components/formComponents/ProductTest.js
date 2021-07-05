@@ -71,7 +71,12 @@ function ProductTest() {
     getSubCategory(catData[0].name);
     let suppData = await SupplierData();
     setSupplierData(suppData);
-    setProduct({ ...product, category: catData[0].name });
+    console.log(suppData);
+    setProduct({
+      ...product,
+      category: catData[0].name,
+      supplier: suppData[0].id,
+    });
   }
   async function getSubCategory(category) {
     let subCat = await getSubCategoryDetail(category);
@@ -79,6 +84,8 @@ function ProductTest() {
     setProduct({ ...product, category: category, subCategory: subCat[0].name });
   }
   function handleToggle(e) {
+    setSuccessMsg('');
+    setErrorMsg('');
     if (toggleForm.product === true) {
       console.log(image);
       setProduct({ ...product, image: image });
@@ -118,7 +125,8 @@ function ProductTest() {
     }
   }
   async function handleSubmit(e) {
-    e.preventDefault();
+    setSuccessMsg('');
+    setErrorMsg('');
     let data = { ...product };
     data.varients = varientDetail;
     let res = await ApiPostService('product', data);
@@ -185,9 +193,22 @@ function ProductTest() {
     }
   }
   function handleRemoveImage(index, imageIndex) {
+    if (index === 'default') {
+      let detail;
+
+      if (toggleForm.product) {
+        alert('productForm');
+        detail = JSON.parse(JSON.stringify(image));
+      } else {
+        detail = JSON.parse(JSON.stringify(product.image));
+      }
+      detail.splice(imageIndex, 1);
+      if (toggleForm.product) setImages(detail);
+      setProduct({ ...product, image: detail });
+      return;
+    }
     // console.log(varientDetail[index]);
     let detail = JSON.parse(JSON.stringify(varientDetail));
-    
 
     let tempDat = detail.splice(index, 1);
     tempDat = tempDat[0];
@@ -250,8 +271,11 @@ function ProductTest() {
             Varient details
           </ToggleButton>
         </ContainerColumn>
-        <SuccessText>{successMsg}</SuccessText>
-        <ErrorText>{errorMsg}</ErrorText>
+
+        <ContainerColumn className='col-md-12 col-12'>
+          <SuccessText>{successMsg}</SuccessText>
+          <ErrorText>{errorMsg}</ErrorText>
+        </ContainerColumn>
       </ContainerRow>
       <ContainerRow
         dynamic
@@ -435,17 +459,6 @@ function ProductTest() {
           <ContainerColumn className='col-md-4'>
             <Input
               type='number'
-              name='buyingPrice'
-              placeholder='buyingPrice'
-              min='0'
-              value={product.buyingPrice}
-              onChange={handleProductChange}
-              required
-            />
-          </ContainerColumn>
-          <ContainerColumn className='col-md-4'>
-            <Input
-              type='number'
               name='originalPrice'
               placeholder='originalPrice'
               min='0'
@@ -454,6 +467,18 @@ function ProductTest() {
               required
             />
           </ContainerColumn>
+          <ContainerColumn className='col-md-4'>
+            <Input
+              type='number'
+              name='buyingPrice'
+              placeholder='buyingPrice'
+              min='0'
+              value={product.buyingPrice}
+              onChange={handleProductChange}
+              required
+            />
+          </ContainerColumn>
+
           <ContainerColumn className='col-md-4'>
             <select
               className='form-control m-2'
@@ -527,12 +552,44 @@ function ProductTest() {
               Add Image
             </button>
           </ContainerColumn>
+
           <Submitbutton type='submit'>ADD PRODUCT</Submitbutton>
+          {imageCheck.length > 10 && (
+            <Imageview src={imageCheck} width='100px' height='100px' />
+          )}
         </ContainerRow>
+        <ContainerColumn className='col-md-12'>
+          <Formlable>product images</Formlable>
+          <ContainerRow dynamic>
+            {product.image.map((value, index) => (
+              <ContainerColumn
+                className='col-md-3 col-6'
+                key={'renderProductImage' + index}
+              >
+                <Imageview src={value.image} width='100px' height='130px' />
+                <br />
+                <button
+                  type='button'
+                  className='btn btn-outline-danger'
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleRemoveImage('default', index);
+                  }}
+                >
+                  delete
+                </button>
+              </ContainerColumn>
+            ))}
+          </ContainerRow>
+          {toggleForm.varientDetail &&  <button
+            className='btn btn-outline-primary m-2'
+            onClick={() => setImages(JSON.parse(JSON.stringify(product.image)))}
+          >
+            Add This Image
+          </button>}
+        </ContainerColumn>
       </form>
-      {imageCheck.length > 10 && (
-        <Imageview src={imageCheck} width='100px' height='100px' />
-      )}
+
       <ContainerRow dynamic>
         {varientDetail.map((value, index) => (
           <ContainerColumn className=' col-md-12'>
