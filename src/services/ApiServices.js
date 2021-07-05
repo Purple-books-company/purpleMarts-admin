@@ -21,7 +21,7 @@ const Request = {
   advertisement: `/api/admin/meta/advertisement/`,
   category: `/api/admin/product/category/`,
   subCategory: `/api/admin/product/subcategory/`,
-  supplierInfo: `/api/admin/user/personal_info/`,
+  supplierInfo: `/api/admin/user/personal_info/`,    
   supplier: `/api/admin/user/supplier/`,
 };
 
