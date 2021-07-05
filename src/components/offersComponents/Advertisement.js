@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import {
   CategoryData,
-
   getSubCategoryDetail,
 } from '../../services/AdminServices';
 import {
@@ -157,7 +156,10 @@ const Advertisement = () => {
   }
 
   async function handleUpdate(value) {
-    console.log(value);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
     if (value.advType === 'Product') {
       setForm('product');
     } else {
