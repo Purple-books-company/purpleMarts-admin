@@ -39,16 +39,15 @@ const Advertisement = () => {
 
   useEffect(() => {
     getData();
+    async function getData() {
+      setLoader(true);
+      let data = await CategoryData();
+      setCategoryDetail(data);
+      if (data.length > 0) getSubData(data[0].name);
+      else setLoader(false);
+    }
     getAdvertisementData();
   }, []);
-
-  async function getData() {
-    setLoader(true);
-    let data = await CategoryData();
-    setCategoryDetail(data);
-    if (data.length > 0) getSubData(data[0].name);
-    else setLoader(false);
-  }
 
   async function getAdvertisementData() {
     setLoader(true);
