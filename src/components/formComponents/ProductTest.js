@@ -112,8 +112,13 @@ function ProductTest() {
           }
         }
         if (key === '') return;
-
-        setVarientKey([...varientKey, { key: key, value: '' }]);
+        if (key.toLowerCase() == 'color' || key.toLowerCase() == 'colour') {
+          if (varientKey.length == 1) {
+            setErrorMsg('colour should be th first key');
+          } else {
+            setVarientKey([...varientKey, { key: 'colour', value: '' }]);
+          }
+        } else setVarientKey([...varientKey, { key: key, value: '' }]);
         setKey('');
       }
     } else {

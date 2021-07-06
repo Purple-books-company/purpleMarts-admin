@@ -41,7 +41,7 @@ export const Card = styled.div`
   text-align: center;
 
   margin: ${(props) => (props.margin ? props.margin : '1.5%')};
-  max-height:auto;
+  max-height: auto;
   overflow: scroll;
   padding: 0.1%;
   &::-webkit-scrollbar {
@@ -189,4 +189,21 @@ export const ToggleButton = styled.button.attrs((props) => ({
     background-color: white;
     color: ${ColorOne};
   }
+`;
+export const ColorButton = styled.button`
+  border: ${(props) =>
+    props.active ? `4px solid lightgreen` : '4px solid white'};
+  background-color: ${(props) => props.color};
+  border-radius: 70%;
+  width: 1%;
+  height: 20px;
+`;
+
+export const TypeButton = styled.button.attrs((props) => ({
+  className: `btn ${props.active ? 'btn-primary' : 'btn-outline-primary'}`,
+}))`
+  color: ${(props) => (props.active ? 'white' : ColorTwo)};
+`;
+export const LightColor = styled.p`
+  color: ${ColorTwo};
 `;
