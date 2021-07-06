@@ -87,7 +87,6 @@ function ProductTest() {
     setSuccessMsg('');
     setErrorMsg('');
     if (toggleForm.product === true) {
-      console.log(image);
       setProduct({ ...product, image: image });
     }
     if (e.target.id === 'product') {
@@ -144,9 +143,9 @@ function ProductTest() {
     if (data.subCategory === '') data.subCategory = subCategoryData[0].name;
     if (data.category === '') data.category = subCategoryData[0].category;
     if (data.supplier === '') data.supplier = supplierData[0].id;
+    console.log(data);
     let res = await ApiPostService('product', data);
 
-    console.log(res);
     if (res === true) {
       setProduct(initialDetail);
       setVarientDetail([]);
@@ -183,7 +182,6 @@ function ProductTest() {
 
       detail.image = JSON.parse(JSON.stringify(image));
 
-      console.log(detail);
       setVarientDetail([...varientDetail, detail]);
       setAddVarient(initialVarient);
       e.target.reset();
@@ -246,7 +244,7 @@ function ProductTest() {
     let detail = [...varientDetail];
     let tempDetail = detail.splice(e.target.value, 1);
     tempDetail = tempDetail[0];
-    console.log(tempDetail);
+
     setVarientDetail(detail);
     setImages(tempDetail.image);
     setVarientKey(tempDetail.types);
@@ -416,19 +414,10 @@ function ProductTest() {
             <Submitbutton type='submit' name='AddVarient'>
               Add Varient
             </Submitbutton>
-            <button
-              active={toggleForm.product}
-              id='product'
-              className='btn btn-success'
-              style={{ width: '30%', textAlign: 'center', marginLeft: '35%' }}
-              value='productdetail'
-              onClick={handleToggle}
-            >
-              finish
-            </button>
           </ContainerRow>
         )}
       </form>
+
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -595,8 +584,19 @@ function ProductTest() {
         {imageCheck.length > 10 && (
           <Imageview src={imageCheck} width='100px' height='100px' />
         )}
-        <ContainerColumn className='col-md-12 '>
-          =======
+        {toggleForm.varientDetail && (
+          <button
+            active={toggleForm.product}
+            id='product'
+            className='btn btn-success'
+            style={{ width: '30%', textAlign: 'center' }}
+            value='productdetail'
+            onClick={handleToggle}
+          >
+            finish
+          </button>
+        )}
+        <ContainerColumn className='col-md-6 '>
           <Formlable>product images</Formlable>
           <ContainerRow dynamic>
             {product.image.map((value, index) => (
@@ -619,6 +619,7 @@ function ProductTest() {
               </ContainerColumn>
             ))}
           </ContainerRow>
+
           {toggleForm.varientDetail && product.image.length > 0 && (
             <button
               className='btn btn-outline-primary m-2'
@@ -642,7 +643,7 @@ function ProductTest() {
               Varient-{index + 1}
               <ContainerRow dynamic>
                 {value.image.map((imageUrl, imageIndex) => (
-                  <ContainerColumn className='col-md-2 col-sm-6 p-1'>
+                  <ContainerColumn className='col-md-3 col-sm-6 p-1'>
                     <Imageview
                       src={imageUrl.image}
                       height='100px'
