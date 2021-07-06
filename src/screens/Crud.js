@@ -8,14 +8,17 @@ import CatagoryForm from '../components/formComponents/CatagoryForm';
 import SupplierForm from '../components/formComponents/SupplierForm';
 import Nav from '../components/Nav';
 import SubCategoryForm from '../components/formComponents/SubCategoryForm';
+import React from 'react';
 
 function Crud() {
-  let initialForm = {
-    newProduct: false,
-    newSupplier: false,
-    newCategory: false,
-    newSubCategory: false,
-  };
+  let initialForm = React.useMemo(() => {
+    return {
+      newProduct: false,
+      newSupplier: false,
+      newCategory: false,
+      newSubCategory: false,
+    };
+  }, []);
   const location = useLocation();
 
   const [form, setForm] = useState(initialForm);
@@ -34,7 +37,7 @@ function Crud() {
     }
 
     setForm(newState);
-  }, [location]);
+  }, [initialForm, location]);
 
   const handleChange = (e) => {
     console.log('change');

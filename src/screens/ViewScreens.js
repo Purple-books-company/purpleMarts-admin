@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router';
 import Loader from '../components/Loader';
@@ -10,12 +10,14 @@ import SubCategoryView from '../components/ViewScreenComponents/SubCategoryView'
 import Nav from '../components/Nav';
 
 function ViewScreens() {
-  const initialState = {
-    category: false,
-    supplier: false,
-    product: false,
-    subCategory: false,
-  };
+  const initialState = React.useMemo(() => {
+    return {
+      category: false,
+      supplier: false,
+      product: false,
+      subCategory: false,
+    };
+  }, []);
   const show = useLocation();
   const [loader, setLoader] = useState(false);
   const [mountView, setMountView] = useState(initialState);
@@ -27,6 +29,7 @@ function ViewScreens() {
 
     if (show && show.state) {
       console.log(show.state.show);
+      // alert('ee');
       newState[show.state.show] = true;
       if (show.state.value) {
         setData(show.state.value);
@@ -36,7 +39,7 @@ function ViewScreens() {
 
     setMountView(newState);
     setLoader(false);
-  }, []);
+  }, [show, initialState]);
   const handleChange = (e) => {
     if (e.target.value !== '') {
       let newState = { ...initialState };

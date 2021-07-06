@@ -15,7 +15,7 @@ import {
 } from '../../services/ApiServices';
 import Loader from '../Loader';
 import { getAllSupplier } from '../../services/AdminServices';
-import { Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 function SupplierForm({ data }) {
   let initialDetail = {
@@ -43,25 +43,25 @@ function SupplierForm({ data }) {
   }
 
   useEffect(() => {
+    const setData = () => {
+      if (data !== null && data !== undefined) {
+        let temp = {
+          name: data.name,
+          companyName: data.companyName,
+          phoneNumber: data.personalInfo.phoneNumber,
+          address: data.personalInfo.address,
+          pincode: data.personalInfo.pincode,
+          nation: data.personalInfo.nation,
+          deliveryName: data.personalInfo.deliveryName,
+          state: data.personalInfo.state,
+          city: data.personalInfo.city,
+        };
+        setDetail(temp);
+        setIsUpdate(true);
+      }
+    };
     setData();
   }, [data]);
-  const setData = () => {
-    if (data !== null && data !== undefined) {
-      let temp = {
-        name: data.name,
-        companyName: data.companyName,
-        phoneNumber: data.personalInfo.phoneNumber,
-        address: data.personalInfo.address,
-        pincode: data.personalInfo.pincode,
-        nation: data.personalInfo.nation,
-        deliveryName: data.personalInfo.deliveryName,
-        state: data.personalInfo.state,
-        city: data.personalInfo.city,
-      };
-      setDetail(temp);
-      setIsUpdate(true);
-    }
-  };
 
   async function handleSubmit() {
     console.log('submitted');
