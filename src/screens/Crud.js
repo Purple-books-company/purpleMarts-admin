@@ -28,7 +28,7 @@ function Crud() {
 
   useEffect(() => {
     let newState = { ...initialForm };
-
+    console.log('rendering');
     if (location && location.state) {
       newState[location.state.show] = true;
       setFillForm(location.state.value);

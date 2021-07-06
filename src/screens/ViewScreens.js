@@ -26,10 +26,10 @@ function ViewScreens() {
   useEffect(() => {
     setLoader(true);
     let newState = { ...initialState };
-
+console.log('rendering');
     if (show && show.state) {
       console.log(show.state.show);
-      // alert('ee');
+    
       newState[show.state.show] = true;
       if (show.state.value) {
         setData(show.state.value);
