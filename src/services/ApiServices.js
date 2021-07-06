@@ -11,7 +11,7 @@ const Request = {
   product: `/api/admin/product/`,
   Products: `/api/product/admin/subcategory/`,
 
-  getSingleProduct: `/api/product/get/8d87e358-8b49-4fee-af5e-7d2c69e1440d/`,
+  getSingleProduct: `/api/product/get/bf5e9916-7dd6-434a-aa0f-acc5f06097c3//`,
 
   subCategoryAdd: `/api/category/sub/add/`,
   subCategoryAll: `/api/category/sub/all/`,
