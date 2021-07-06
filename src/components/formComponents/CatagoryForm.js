@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { AiTwotoneFileZip } from 'react-icons/ai';
+
 import { CategoryData, getAllCategory } from '../../services/AdminServices';
 import { ApiPostService, ApiPutService } from '../../services/ApiServices';
 import { ColorOne } from '../../styles/color';

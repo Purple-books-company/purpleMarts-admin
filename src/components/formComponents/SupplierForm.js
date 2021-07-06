@@ -15,7 +15,7 @@ import {
 } from '../../services/ApiServices';
 import Loader from '../Loader';
 import { getAllSupplier } from '../../services/AdminServices';
-import { Redirect, useHistory } from 'react-router-dom';
+import { Redirect} from 'react-router-dom';
 
 function SupplierForm({ data }) {
   let initialDetail = {
@@ -96,8 +96,8 @@ function SupplierForm({ data }) {
       tempdata.personalInfo.id = res.id;
       if (isUpdate) {
         if (
-          tempdata.name != data.name ||
-          tempdata.companyName != data.companyName
+          tempdata.name !== data.name ||
+          tempdata.companyName !== data.companyName
         ) {
           res = await ApiPutService('supplier', data.id, tempdata);
         } else {

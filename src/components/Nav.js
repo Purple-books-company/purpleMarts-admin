@@ -1,7 +1,7 @@
 import { Link, NavLink } from 'react-router-dom';
 import '../assets/nav.css';
 import { ColorOne } from '../styles/color';
-import logo from '../assets/logo/logo.png';
+// import logo from '../assets/logo/logo.png';
 function Nav({ navItems, navLinks, View, Show, logout }) {
   function handleLogout() {
     let isconfirm = window.confirm('Are you sure for logout');
@@ -17,6 +17,7 @@ function Nav({ navItems, navLinks, View, Show, logout }) {
           <img
             src='https://raw.githubusercontent.com/Purple-books-company/purple-marts-user-ui/main/src/assets/images/logo.png'
             style={{ height: '45px', textAlign: 'center' }}
+            alt="Purple marts"
           />
         </span>
         <button

@@ -39,7 +39,7 @@ function VarientDetail({ data }) {
       tempData.push(initialData);
     }
     setDetail(tempData);
-  }, []);
+  }, [data]);
 
   function handleRemove(e) {
     let index = e.target.value;
