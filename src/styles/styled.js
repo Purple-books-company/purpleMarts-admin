@@ -15,9 +15,10 @@ export const Heading = styled.h2.attrs(() => ({
 }))`
   font-weight: bold;
 `;
-export const Title = styled.h5`
+export const Title = styled.h4`
   text-align: center;
   color: ${ColorOne};
+  font-style:"bolder";
   justify-content: center;
   width: auto;
 
@@ -206,4 +207,5 @@ export const TypeButton = styled.button.attrs((props) => ({
 `;
 export const LightColor = styled.p`
   color: ${ColorTwo};
+  font-weight: bolder;
 `;
