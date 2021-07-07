@@ -11,10 +11,7 @@ const Request = {
   product: `/api/admin/product/`,
   Products: `/api/product/admin/subcategory/`,
 
-  getSingleProduct: `/api/product/get/b0caa6b1-7d99-4c84-88d6-7e644eaba174/`,
-//bf5e9916-7dd6-434a-aa0f-acc5f06097c3
-//a2f08dcf-b369-4bba-9ea4-f2380fd325c6
-//c81ad187-72a0-4c84-b887-89e8f2195727
+  getSingleProduct: `/api/product/get/`,
   subCategoryAdd: `/api/category/sub/add/`,
   subCategoryAll: `/api/category/sub/all/`,
 
@@ -31,10 +28,11 @@ const Request = {
 
 const Token = process.env.REACT_APP_TOKEN;
 
-async function ApiGetService(method) {
+async function ApiGetService(method, id = null) {
   let url = API;
   url += Request[method];
-  console.log("getService");
+  if (id !== null) url += id + "/";
+  console.log("getService:" + url);
   try {
     const res = await axios.get(url, {
       headers: {
