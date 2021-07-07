@@ -22,6 +22,7 @@ import {
   // Submitbutton,
 } from '../../styles/styled';
 import Nodata from '../Nodata';
+import SingleProductView from "./SingleProductView"
 import Loader from '../Loader';
 
 function ProductView() {
@@ -33,6 +34,8 @@ function ProductView() {
   const [offerList, setOfferList] = useState([]);
   const [offerId, Addtooffer] = useState('');
   const [chooseOffer, setChooseOffer] = useState('');
+  const [isListProduct,setIsListProduct] =useState(false);
+
 
   useEffect(() => {
     getData();
@@ -122,6 +125,7 @@ function ProductView() {
         <Loader />
       ) : (
         <ContainerRow full>
+        
           <ContainerColumn
             className='col-md-2 col-sm-12 fixed-top sticky-top p-2'
             id='productSide-Nav'
@@ -159,7 +163,7 @@ function ProductView() {
                     className='form-check-input'
                     name='subcat'
                     value={value.name}
-                    onClick={handleRadio}
+                    onChange={handleRadio}
                     id={'radioInput' + index}
                     checked={
                       productDetail.length > 0 &&
@@ -196,10 +200,24 @@ function ProductView() {
               <Loader />
             </ContainerColumn>
           ) : (
-            <ContainerColumn height='100%' className='col-md-9 ml-2 col-sm-12'>
+            <>
+            
+            <ContainerColumn height='100%'  className='col-md-9 ml-2 col-sm-12'>
+      
               {productDetail.length === 0 && <Nodata />}
+              <div style={{display:isListProduct===false?"":"none",textAlign:"center"}} >
+                          <SingleProductView/>
+                          <button className="btn btn-danger" onClick={()=>setIsListProduct(true)}>X CLOSE</button>
+              </div>
+              
 
-              <ContainerRow height='30%'>
+              <ContainerRow dynamic>
+                          <button  id="myScrollBtn" onClick={()=>window.scrollTo({
+  top: 20,
+
+  behavior: 'smooth'
+})} title="Go to top"> top
+                          </button>
                 {productDetail.map((value, index) => (
                   <ContainerColumn key={index} className='col-md-3'>
                     <Card nohover>
@@ -235,6 +253,7 @@ function ProductView() {
                               src='https://tse2.mm.bing.net/th?id=OIP.gglt0reNlCdAGCn9Le9N6gHaE8&pid=Api&P=0&w=231&h=155'
                               width='90%'
                               height='150px'
+                              onClick={()=>setIsListProduct(false)}
                               style={{ marginTop: '2%', maxHeight: '130px' }}
                               // alternate="no image"
                             />
@@ -289,6 +308,7 @@ function ProductView() {
                 ))}
               </ContainerRow>
             </ContainerColumn>
+            </>
           )}
         </ContainerRow>
       )}

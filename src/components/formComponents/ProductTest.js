@@ -112,8 +112,13 @@ function ProductTest() {
           }
         }
         if (key === '') return;
-
-        setVarientKey([...varientKey, { key: key, value: '' }]);
+        if (key.toLowerCase() == 'color' || key.toLowerCase() == 'colour') {
+          if (varientKey.length == 1) {
+            setErrorMsg('colour should be th first key');
+          } else {
+            setVarientKey([...varientKey, { key: 'colour', value: '' }]);
+          }
+        } else setVarientKey([...varientKey, { key: key, value: '' }]);
         setKey('');
       }
     } else {
@@ -131,14 +136,24 @@ function ProductTest() {
     setSuccessMsg('');
     setErrorMsg('');
     let data = { ...product };
+   
 
     if (varientDetail.length === 0) {
+       if(data.image.length===0){
+      if(image.length===0){
+        setErrorMsg("atleast one images");
+return;
+      }
+    data.image=image;
+    }
       let tempVarient = { ...initialVarient };
       tempVarient.offerPrice = product.offerPrice;
       tempVarient.originalPrice = product.originalPrice;
       tempVarient.buyingPrice = product.buyingPrice;
-      tempVarient.image = product.image;
+      tempVarient.image = image;
+      
       data.varients = [tempVarient];
+    
     } else data.varients = varientDetail;
     if (data.subCategory === '') data.subCategory = subCategoryData[0].name;
     if (data.category === '') data.category = subCategoryData[0].category;
