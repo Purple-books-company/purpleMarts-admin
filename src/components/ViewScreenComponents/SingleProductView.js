@@ -34,10 +34,11 @@ const SingleProductView = () => {
     setProduct(res);
     setImages(res.varients[0].images);
     setVarient(res.varients);
+
     let tmp = Object.keys(res.type);
     console.log(tmp);
     if (tmp.length === 0 || tmp[0]==="null") {
-      alert(tmp);
+     
       if(res.varients.length===0){
         setVarient(res);
       }
@@ -75,7 +76,7 @@ const SingleProductView = () => {
       });
       console.log(varient);
     } else {
-      alert();
+    
       key = currentType.key;
       value = e.target.value;
       setCurrentType({
@@ -98,7 +99,7 @@ const SingleProductView = () => {
 
   return (
     <ContainerColumn height='100%' className='col-md-12'  >
-      {product === null || currentVarient == null ? (
+      {product === null || currentVarient === null ? (
         <Loader />
       ) : (
         <ContainerRow full style={{marginTop:"40px"}}>

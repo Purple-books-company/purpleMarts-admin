@@ -34,7 +34,7 @@ function ProductView() {
   const [offerList, setOfferList] = useState([]);
   const [offerId, Addtooffer] = useState('');
   const [chooseOffer, setChooseOffer] = useState('');
-  const [isListProduct,setIsListProduct] =useState(true);
+  const [isListProduct,setIsListProduct] =useState(false);
 
 
   useEffect(() => {
@@ -206,7 +206,7 @@ function ProductView() {
       
               {productDetail.length === 0 && <Nodata />}
               <div style={{display:isListProduct===false?"":"none",textAlign:"center"}} >
-                          {/* <SingleProductView/> */}
+                          <SingleProductView/>
                           <button className="btn btn-danger" onClick={()=>setIsListProduct(true)}>X CLOSE</button>
               </div>
               
