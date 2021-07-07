@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { ApiGetService } from "../../services/ApiServices";
+import { useState, useEffect } from 'react';
+import { ApiGetService } from '../../services/ApiServices';
 import {
   ContainerColumn,
   ContainerRow,
@@ -11,9 +11,9 @@ import {
   LightColor,
   ErrorText,
   SuccessText,
-} from "../../styles/styled";
-import { ColorOne } from "../../styles/color";
-import Loader from "../Loader";
+} from '../../styles/styled';
+import { ColorOne } from '../../styles/color';
+import Loader from '../Loader';
 
 const SingleProductView = ({ id }) => {
   const [product, setProduct] = useState(null);
@@ -23,36 +23,43 @@ const SingleProductView = ({ id }) => {
   const [currentType, setCurrentType] = useState(null);
 
   useEffect(() => {
-    if (id !== null || id !== undefined) getProduct(id);
-  }, []);
+    if (id !== null || id !== undefined) {
+      setProduct(null);
+      setImages([]);
+      setVarient([]);
+      setCurrentVarient(null);
+      setCurrentType(null);
+      getProduct(id);
+    }
+  }, [id]);
 
   // Need to handle corner cases
   async function getProduct(id) {
-    let res = await ApiGetService("getSingleProduct", id);
+    let res = await ApiGetService('getSingleProduct', id);
     console.log(res);
     setProduct(res);
-    setImages(res.varients[0].images);
-    setVarient(res.varients);
 
     let tmp = Object.keys(res.type);
     console.log(tmp);
-    if (tmp.length === 0 || tmp[0] === "null") {
+    if (tmp.length === 0 || tmp[0] === 'null') {
       if (res.varients.length === 0) {
-        setVarient(res); //current varient to be checked
-      }
-      setCurrentVarient(res.varients[0]);
+        setVarient([res]); //current varient to be checked
+        setCurrentVarient(res);
+      } else setCurrentVarient(res.varients[0]);
       return;
     }
+    setVarient(res.varients);
     tmp = tmp[0];
-    let value = res.type[tmp].length > 0 ? res.type[tmp][0] : "";
+    let value = res.type[tmp].length > 0 ? res.type[tmp][0] : '';
     setCurrentType({ key: tmp, value: value });
     for (let i = 0; i < res.varients.length; i++) {
       if (
-        res.varients[i]["varientType"][0].value === tmp &&
+        res.varients[i]['varientType'][0].value === tmp &&
         (res.typeKey.length === 1 ||
-          res.varients[i]["varientType"][1].value === res.type[tmp][0])
+          res.varients[i]['varientType'][1].value === res.type[tmp][0])
       ) {
         setCurrentVarient(res.varients[i]); //images to be set here
+        setImages(res.varients[i].images);
       }
     }
   }
@@ -60,15 +67,15 @@ const SingleProductView = ({ id }) => {
     window.scrollTo({
       top: 10,
 
-      behavior: "smooth",
+      behavior: 'smooth',
     });
     let key;
     let value;
     console.log(e.target.value);
     console.log(product.type[e.target.value]);
-    if (e.target.id === "0") {
+    if (e.target.id === '0') {
       key = e.target.value;
-      value = product.type[e.target.value][0] || "";
+      value = product.type[e.target.value][0] || '';
       setCurrentType({
         key: key,
         value: value,
@@ -84,9 +91,9 @@ const SingleProductView = ({ id }) => {
     }
     for (let i = 0; i < varient.length; i++) {
       if (
-        varient[i]["varientType"][0].value === key &&
+        varient[i]['varientType'][0].value === key &&
         (product.typeKey.length === 1 ||
-          varient[i]["varientType"][1].value === value)
+          varient[i]['varientType'][1].value === value)
       ) {
         setImages(varient[i].images);
         setCurrentVarient(varient[i]);
@@ -96,76 +103,76 @@ const SingleProductView = ({ id }) => {
   }
 
   return (
-    <ContainerColumn height="100%" className="col-md-12">
+    <ContainerColumn height='100%' className='col-md-12'>
       {product === null || currentVarient === null ? (
         <Loader />
       ) : (
-        <ContainerRow full style={{ marginTop: "40px" }}>
-          <ContainerColumn height="40%" className="col-md-5 col-sm-12 mb-5  ">
+        <ContainerRow full style={{ marginTop: '40px' }}>
+          <ContainerColumn height='40%' className='col-md-5 col-sm-12 mb-5  '>
             <div
-              id="carouselExampleInterval"
-              className="carousel slide w-100 p-5 ml-4  "
-              data-ride="carousel"
+              id='carouselExampleInterval'
+              className='carousel slide w-100 p-5 ml-4  '
+              data-ride='carousel'
             >
-              {" "}
-              <CenterAlign style={{ fontWeight: "bolder", fontSize: "20px" }}>
-                {currentType && currentType.key + " " + currentType.value}
+              {' '}
+              <CenterAlign style={{ fontWeight: 'bolder', fontSize: '20px' }}>
+                {currentType && currentType.key + ' ' + currentType.value}
               </CenterAlign>
-              <div className="carousel-inner">
+              <div className='carousel-inner'>
                 {images.map((image, index) => (
                   <div
                     className={`carousel-item w-100 ml-6 ${
-                      index === 0 && "active"
+                      index === 0 && 'active'
                     }`}
-                    data-interval="2000"
+                    data-interval='2000'
                   >
-                    <img src={image.image} className="d-block w-75" alt="..." />
+                    <img src={image.image} className='d-block w-75' alt='...' />
                   </div>
                 ))}
               </div>
               <a
-                className="carousel-control-prev"
-                href="#carouselExampleInterval"
-                role="button"
-                data-slide="prev"
+                className='carousel-control-prev'
+                href='#carouselExampleInterval'
+                role='button'
+                data-slide='prev'
               >
                 <span
-                  className="carousel-control-prev-icon bg-dark"
-                  aria-hidden="true"
+                  className='carousel-control-prev-icon bg-dark'
+                  aria-hidden='true'
                 ></span>
-                <span className="sr-only">Previous</span>
+                <span className='sr-only'>Previous</span>
               </a>
               <a
-                className="carousel-control-next"
-                href="#carouselExampleInterval"
-                role="button"
-                data-slide="next"
+                className='carousel-control-next'
+                href='#carouselExampleInterval'
+                role='button'
+                data-slide='next'
               >
                 <span
-                  className="carousel-control-next-icon bg-dark"
-                  aria-hidden="true"
+                  className='carousel-control-next-icon bg-dark'
+                  aria-hidden='true'
                 ></span>
-                <span className="sr-only">Next</span>
+                <span className='sr-only'>Next</span>
               </a>
             </div>
           </ContainerColumn>
           <ContainerColumn
-            height="65%"
-            className="col-md-7
-          "
+            height='65%'
+            className='col-md-7
+          '
           >
-            <Card nohover style={{ paddingBottom: "10px" }}>
-              <Title style={{ backgroundColor: ColorOne, color: "white" }}>
+            <Card nohover style={{ paddingBottom: '10px' }}>
+              <Title style={{ backgroundColor: ColorOne, color: 'white' }}>
                 {product.name}
               </Title>
 
               <table
-                className="table  table-borderless table-sm mt-2 "
-                style={{ width: "80%" }}
+                className='table  table-borderless table-sm mt-2 '
+                style={{ width: '80%' }}
               >
                 <tbody>
                   <tr>
-                    {" "}
+                    {' '}
                     <td>
                       <LightColor>originalPrice:</LightColor>
 
@@ -236,8 +243,8 @@ const SingleProductView = ({ id }) => {
               </table>
               <Title>VARIENTS</Title>
               <table
-                className="table table-borderless w-auto mb-5"
-                style={{ minWidth: "30%", width: "auto" }}
+                className='table table-borderless w-auto mb-5'
+                style={{ minWidth: '30%', width: 'auto' }}
               >
                 <tbody>
                   <tr>
@@ -245,12 +252,12 @@ const SingleProductView = ({ id }) => {
                       Object.keys(product.type).map((value, index) => {
                         if (
                           product.typeKey.length > 0 &&
-                          product.typeKey[0].toLowerCase() === "colour"
+                          product.typeKey[0].toLowerCase() === 'colour'
                         )
                           return (
                             <td>
                               <ColorButton
-                                id="0"
+                                id='0'
                                 onClick={handleTypeClick}
                                 color={value}
                                 value={value}
@@ -262,12 +269,12 @@ const SingleProductView = ({ id }) => {
                           return (
                             <td>
                               <TypeButton
-                                id="0"
+                                id='0'
                                 onClick={handleTypeClick}
                                 active={currentType.key === value}
                                 value={value}
                               >
-                                {value === "null" ? "No varients" : value}
+                                {value === 'null' ? 'No varients' : value}
                               </TypeButton>
                             </td>
                           );
@@ -282,7 +289,7 @@ const SingleProductView = ({ id }) => {
                           // <p>{typeValue}</p>
                           <td>
                             <TypeButton
-                              id="1"
+                              id='1'
                               onClick={handleTypeClick}
                               value={typeValue}
                               active={currentType.value === typeValue}
@@ -295,7 +302,7 @@ const SingleProductView = ({ id }) => {
                   </tr>
                 </tbody>
               </table>
-              <button className="btn btn-info">EDIT PRODUCT</button>
+              <button className='btn btn-info'>EDIT PRODUCT</button>
             </Card>
           </ContainerColumn>
         </ContainerRow>

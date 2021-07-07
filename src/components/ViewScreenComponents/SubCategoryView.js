@@ -40,10 +40,8 @@ function SubCatagoryView({ categoryName, handleSubPage }) {
     setLoader(true);
     setCategory(categoryName);
     getSubCategory(categoryName);
-
-   
   }, [categoryName]);
-  
+
   const updateFilteredData = (filterData) => {
     if (filterData.length === 0) {
       setFilteredData(subCategoryDetail);
@@ -54,30 +52,27 @@ function SubCatagoryView({ categoryName, handleSubPage }) {
     setFilteredData(filterData);
     setErrorMsg('');
   };
-  const handleDelete=async(e)=>{
-    if(!window.confirm(`Are you sure you want to delete ${e.target.value}`)) return;
+  const handleDelete = async (e) => {
+    if (!window.confirm(`Are you sure you want to delete ${e.target.value}`))
+      return;
     setLoader(true);
-    let res = await ApiDeleteService("subCategory",e.target.value);
-    if(res===true){
+    let res = await ApiDeleteService('subCategory', e.target.value);
+    if (res === true) {
       await getAllSubCategory(category);
       getSubCategory(category);
-    }
-    else{
-      alert("some error occured");
-
+    } else {
+      alert('some error occured');
     }
     setLoader(false);
-   
-
-  }
+  };
   const getSubCategory = async (name) => {
     setLoader(true);
 
-    let subCat = getSubCategoryDetail(name); // available already
+    let subCat = await getSubCategoryDetail(name); // available already
 
     if (subCat === null || subCat === undefined) {
       await getAllSubCategory(name); // fetch from api
-      subCat = getSubCategoryDetail(name);
+      subCat = getSubCategoryDetail(name);//need to check this again
     }
 
     setSubCategoryDetail(subCat);
