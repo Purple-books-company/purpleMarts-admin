@@ -1,173 +1,228 @@
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { ApiPutService } from '../../services/ApiServices';
 import {
   Card,
+  CenterAlign,
   ContainerColumn,
   ContainerRow,
   Imageview,
   Input,
+  Submitbutton,
+  LightColor,
 } from '../../styles/styled';
 
-function VarientDetail({ data }) {
-  let initialstate = {
-    sizeValue: '',
-    sizeOriginalPrice: '',
-    sizeOfferPrice: '',
-    colorValue: '',
-    colorOriginalPrice: '',
-    colorOfferPrice: '',
-    image: '',
+function VarientDetail({ varient }) {
+  let initialVarient = {
+    offerPrice: '',
+    buyingPrice: '',
+    originalPrice: '',
+    unitInStock: '',
   };
-  const [newdetail, setNewDetail] = useState(initialstate);
-  const [detail, setDetail] = useState([]);
-
+  let initialUpdate = {
+    varient: null,
+    varientType: null,
+    varientImage: null,
+  };
+  const [Update, isUpdate] = useState(initialUpdate);
+  const [varientDetail, setVarientDetail] = useState(null);
+  const [detail, setDetail] = useState(initialVarient);
+  const [Images, setImages] = useState([]);
+  const [types, setTypes] = useState([]);
+  function handleChange() {}
   useEffect(() => {
-    console.log(data);
-    let tempData = [];
-    for (let i in data.images) {
-      console.log(i);
-      let varient = data.varients;
-      let initialData = {
-        size: '',
-        color: '',
-        image: '',
-      };
-      initialData.size = varient.size[i] || '';
-      initialData.color = varient.color[i] || 'no color';
-      initialData.image = data.images[i].image;
-      console.log(initialData);
-      tempData.push(initialData);
-    }
-    setDetail(tempData);
-  }, [data]);
-
-  function handleRemove(e) {
-    let index = e.target.value;
-    let tempData = [];
-    for (let i in detail) {
-      if (i === index) {
-        continue;
+    if (varient !== null && varient !== undefined) {
+      setVarientDetail(varient);
+      console.log(varient);
+      let type = JSON.parse(JSON.stringify(varient[0].types));
+      for (let i in type) {
+        type[i].value = '';
       }
-      tempData.push(detail[i]);
+      setTypes(type);
     }
-    setDetail(tempData);
+  }, [varient]);
+  function EditVarient(value) {
+    setTypes(value.types);
+    setDetail(value);
   }
-  function handleChange(e) {
-    setNewDetail({ ...newdetail, [e.target.name]: e.target.value });
+  function handleTypeChange(e) {
+    let type = JSON.parse(JSON.stringify(types));
+    type[e.target.name].value = e.target.value;
+    setTypes(type);
   }
-  function handleVarient(e) {
-    let initialData = {
-      size: null,
-      color: 'no-color',
-      image: '',
-    };
-    let sizedetail = {
-      value: newdetail.sizeValue,
-      originalPrice: newdetail.sizeOriginalPrice,
-      offerPrice: newdetail.sizeOfferPrice,
-    };
-    console.log(sizedetail);
-    // let sizedetail = { for color
-    //   value: newdetail.sizeValue,
-    //   originalPrice: newdetail.sizeOriginalPrice,
-    //   offerPrice: newdetail.sizeOfferPrice,
-    // };
-    initialData.size = sizedetail;
-    initialData.image = newdetail.image;
-    console.log(initialData);
-    setDetail([...detail, initialData]);
+  async function handleUpdate(e) {
+    let type = JSON.parse(JSON.stringify(types));
+    console.log(e.target.value);
+
+    if (e.target.name === 'varientType') {
+      for (let i in type) {
+        console.log(type[i].id);
+        if (type[i].id === Number(e.target.value)) {
+          type[i].varient = Update.varientType;
+          let res = await ApiPutService('varientType', e.target.value, type[i]);
+          alert(res);
+          return;
+        }
+      }
+    }
+  }
+  function EditTypeVarient(value) {
+    setTypes(value.types);
+    isUpdate({ ...initialUpdate, varientType: value.id });
   }
   return (
     <>
-      <ContainerRow dynamic>
-        {detail.map((value, index) => (
-          <ContainerColumn className='col-md-3'>
-            <Card deg='40'>
-              <Imageview src={value.image} />
-              <br />
-              size-{value.size.value}
-              <br />
-              size Price -{value.size.originalPrice}
-              <br />
-              size Offer -{value.size.offerPrice}
-              <button
-                type='button'
-                onClick={handleRemove}
-                value={index}
-                className='form-control btn btn-danger my-2 w-75'
-              >
-                delete
-              </button>
-            </Card>
+      {detail && (
+        <ContainerRow dynamic>
+          <ContainerColumn className='col-md-4'>
+            <CenterAlign dark>offerPrice</CenterAlign>
+            <Input
+              type='text'
+              name='offerPrice'
+              placeholder='offerPrice'
+              value={detail.offerPrice}
+              onChange={handleChange}
+            />
           </ContainerColumn>
-        ))}
-      </ContainerRow>
-      <ContainerRow dynamic>
-        <ContainerColumn className='col-md-4'>
-          <Input
-            type='text'
-            className='form-control'
-            name='sizeValue'
-            placeholder='size'
-            onChange={handleChange}
-          />
-        </ContainerColumn>
-        <ContainerColumn className='col-md-4'>
-          <Input
-            type='text'
-            className='form-control'
-            name='sizeOriginalPrice'
-            placeholder='size original price'
-            onChange={handleChange}
-          />
-        </ContainerColumn>
-        <ContainerColumn className='col-md-4'>
-          <Input
-            type='text'
-            className='form-control'
-            name='sizeOfferPrice'
-            placeholder='size offer price'
-            onChange={handleChange}
-          />
-        </ContainerColumn>
+          <ContainerColumn className='col-md-4'>
+            <CenterAlign dark>originalPrice</CenterAlign>
+            <Input
+              type='text'
+              name='originalPrice'
+              placeholder='originalPrice'
+              value={detail.originalPrice}
+              onChange={handleChange}
+            />
+          </ContainerColumn>
+          <ContainerColumn className='col-md-4'>
+            <CenterAlign dark>buyingPrice</CenterAlign>
+            <Input
+              type='text'
+              name='buyingPrice'
+              placeholder='buyingPrice'
+              value={detail.buyingPrice}
+              onChange={handleChange}
+            />
+          </ContainerColumn>
 
-        <ContainerColumn className='col-md-4'>
-          <Input
-            type='text'
-            className='form-control'
-            name='colorValue'
-            placeholder='color'
-            onChange={handleChange}
-          />{' '}
-        </ContainerColumn>
-        <ContainerColumn className='col-md-4'>
-          <Input
-            type='text'
-            className='form-control'
-            name='colorOfferPrice'
-            placeholder='size offer price'
-            onChange={handleChange}
-          />
-        </ContainerColumn>
-        <ContainerColumn className='col-md-4'>
-          <Input
-            type='text'
-            className='form-control'
-            name='colorOfferPrice'
-            placeholder='size offer price'
-            onChange={handleChange}
-          />
-        </ContainerColumn>
-        <ContainerColumn className='col-md-4'>
-          <Input
-            type='text'
-            className='form-control'
-            name='image'
-            placeholder='image'
-            onChange={handleChange}
-          />
-        </ContainerColumn>
-        <button onClick={handleVarient}>add</button>
+          <ContainerColumn className='col-md-4'>
+            <CenterAlign dark>UnitInstock</CenterAlign>
+            <Input
+              type='text'
+              name='unitInStock'
+              placeholder='unitInStock'
+              value={detail.unitInStock}
+              onChange={handleChange}
+            />
+          </ContainerColumn>
+          {!Update.varient &&
+            types.length > 0 &&
+            types.map((value, typeIndex) => (
+              <ContainerColumn className='col-md-4'>
+                <CenterAlign>{value.key}</CenterAlign>
+                <Input
+                  type='text'
+                  value={types[typeIndex].value}
+                  name='typeIndex'
+                  name={typeIndex}
+                  onChange={handleTypeChange}
+                />
+                {Update.varientType && (
+                  <button
+                    name='varientType'
+                    value={value.id}
+                    onClick={handleUpdate}
+                    className='btn btn-outline-success'
+                  >
+                    Update
+                  </button>
+                )}
+              </ContainerColumn>
+            ))}
+          <Submitbutton>UPDATE</Submitbutton>
+        </ContainerRow>
+      )}
+      <ContainerRow dynamic>
+        {varientDetail &&
+          varientDetail.map((value, index) => (
+            <ContainerColumn className='col-md-3 col-sm-12'>
+              <ContainerColumn className='col-md-12'>
+                <ContainerRow dynamic>
+                  {value.image.map((imageUrl, Imageindex) => (
+                    <ContainerColumn className='col-md-3 col-6'>
+                      <Imageview
+                        src={imageUrl.image}
+                        height='100px'
+                        width='100px'
+                      />
+                      <br />
+                      <button className='btn btn-outline-danger ml-1 mb-2'>
+                        delete
+                      </button>
+                      <button className='btn btn-outline-info ml-1 mb-2'>
+                        edit
+                      </button>
+                    </ContainerColumn>
+                  ))}
+                </ContainerRow>
+              </ContainerColumn>
+              <ContainerColumn className='col-md-12'>
+                <table className='table table-borderless'>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <LightColor>originalPrice:</LightColor>
+                        {value.originalPrice}
+                      </td>
+                      <td>
+                        <LightColor>offerPrice:</LightColor>
+                        {value.offerPrice}
+                      </td>
+                      <td>
+                        <LightColor>buyingPrice:</LightColor>
+                        {value.buyingPrice}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <LightColor>unitInStock :</LightColor>
+                        {value.unitInStock}
+                      </td>
+                      {value.types.map((typeKey, typeIndex) => (
+                        <td>
+                          <LightColor>{typeKey.key}</LightColor>
+                          {typeKey.value}
+                        </td>
+                      ))}
+                    </tr>
+                    <tr>
+                      <td>
+                        <button className='btn btn-outline-danger ml-1 mb-2'>
+                          delete
+                        </button>
+                      </td>
+                      <td>
+                        <button
+                          onClick={() => EditVarient(value)}
+                          className='btn btn-outline-info ml-1 mb-2'
+                        >
+                          edit Varient
+                        </button>
+                      </td>
+                      <td>
+                        <button
+                          value={value.id}
+                          onClick={() => EditTypeVarient(value)}
+                          className='btn btn-outline-info ml-1 mb-2'
+                        >
+                          edit Type
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </ContainerColumn>
+            </ContainerColumn>
+          ))}
       </ContainerRow>
     </>
   );

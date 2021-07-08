@@ -267,8 +267,7 @@ function ProductView() {
                                 width='90%'
                                 height='150px'
                                 onClick={() => {
-                                  if (isListProduct.length > 0)
-                                    setIsListProduct(value.id);
+                                  setIsListProduct(value.id);
                                 }}
                                 style={{ marginTop: '2%', maxHeight: '130px' }}
                                 // alternate="no image"
@@ -306,7 +305,7 @@ function ProductView() {
                               <Link
                                 to={{
                                   pathname: '/editproduct',
-                                  state: { product: value },
+                                  state: { product: value.id },
                                 }}
                                 className='btn purple '
                                 name='addImages'
