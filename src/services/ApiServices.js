@@ -26,6 +26,8 @@ const Request = {
   supplier: `/api/admin/user/supplier/`,
 
   varientType: `/api/admin/product/varient/type/`,
+  varientImage: `/api/admin/product/varient/image/`,
+  varient: `/api/admin/product/varient/`,
 };
 
 const Token = process.env.REACT_APP_TOKEN;

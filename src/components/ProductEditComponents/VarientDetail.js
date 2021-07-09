@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react';
-import { ApiPutService } from '../../services/ApiServices';
+import {
+  ApiDeleteService,
+  ApiPostService,
+  ApiPutService,
+} from '../../services/ApiServices';
 import {
   Card,
   CenterAlign,
@@ -9,9 +13,11 @@ import {
   Input,
   Submitbutton,
   LightColor,
+  SuccessText,
+  ErrorText,
 } from '../../styles/styled';
 
-function VarientDetail({ varient }) {
+function VarientDetail({ varient, productId, refetch }) {
   let initialVarient = {
     offerPrice: '',
     buyingPrice: '',
@@ -28,7 +34,12 @@ function VarientDetail({ varient }) {
   const [detail, setDetail] = useState(initialVarient);
   const [Images, setImages] = useState([]);
   const [types, setTypes] = useState([]);
-  function handleChange() {}
+  const [image, setImage] = useState('');
+  const [successMsg, setSuccessMsg] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
+  function handleChange(e) {
+    setDetail({ ...detail, [e.target.name]: e.target.value });
+  }
   useEffect(() => {
     if (varient !== null && varient !== undefined) {
       setVarientDetail(varient);
@@ -40,9 +51,38 @@ function VarientDetail({ varient }) {
       setTypes(type);
     }
   }, [varient]);
+  async function handleImage(e) {
+    if (e.target.name === 'image') setImage(e.target.value);
+    if (e.target.name === 'Add') {
+      if (Update.varientImage !== null) {
+        Update.varientImage.image = image;
+        let res = await ApiPostService(
+          'varientImage',
+
+          Update.varientImage
+        );
+        if (res === true) {
+          setSuccessMsg('ImageUpdated');
+          isUpdate(initialUpdate);
+          setImage('');
+          refetch();
+        } else {
+          setErrorMsg('someErrorOccured');
+        }
+      } else {
+        setImages([...Images, { image: image }]);
+        setImage('');
+      }
+    }
+  }
   function EditVarient(value) {
     setTypes(value.types);
     setDetail(value);
+    isUpdate({ ...initialUpdate, varient: value.id });
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   }
   function handleTypeChange(e) {
     let type = JSON.parse(JSON.stringify(types));
@@ -52,6 +92,30 @@ function VarientDetail({ varient }) {
   async function handleUpdate(e) {
     let type = JSON.parse(JSON.stringify(types));
     console.log(e.target.value);
+    if (e.target.name === 'varientDetail') {
+      if (Update.varient !== null) {
+        detail.product = productId;
+        let res = await ApiPutService('varient', Update.varient, detail);
+        if (res === true) {
+          setSuccessMsg(' Varient Updated');
+          setDetail(initialVarient);
+          refetch();
+        } else {
+          setSuccessMsg('');
+          setErrorMsg('SomeError Occured');
+        }
+
+        return;
+      } else {
+        let tempDetail = { ...detail };
+        tempDetail.types = types;
+        tempDetail.image = Images;
+        tempDetail.product = productId;
+        // tempDetail.order = varientDetail.length;
+        let res = await ApiPostService('varient', tempDetail);
+        alert(res);
+      }
+    }
 
     if (e.target.name === 'varientType') {
       for (let i in type) {
@@ -59,18 +123,78 @@ function VarientDetail({ varient }) {
         if (type[i].id === Number(e.target.value)) {
           type[i].varient = Update.varientType;
           let res = await ApiPutService('varientType', e.target.value, type[i]);
-          alert(res);
+          if (res === true) {
+            setSuccessMsg('varient Updated Successfully');
+            refetch();
+            isUpdate({ ...initialUpdate });
+            for (let i in type) {
+              type[i].value = '';
+            }
+            setTypes(type);
+          } else {
+            setSuccessMsg('');
+            setErrorMsg('Some Error Occurred');
+          }
+
           return;
         }
       }
     }
   }
+  function handleAddImages(e) {
+    let data = {
+      varient: e.target.value,
+      order: e.target.id,
+    };
+    isUpdate({ ...initialUpdate, varientImage: data });
+  }
   function EditTypeVarient(value) {
     setTypes(value.types);
     isUpdate({ ...initialUpdate, varientType: value.id });
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  }
+  async function deleteImage(e) {
+    if (!window.confirm('sure to delete image')) return;
+    let res = await ApiDeleteService('varientImage', e.target.value);
+    if (res === true) {
+      setSuccessMsg('deleted succesfully');
+      setErrorMsg('');
+      refetch();
+    } else {
+      setSuccessMsg('');
+      setErrorMsg('Error while deleting');
+    }
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  }
+  async function deleteVarient(e) {
+    if (!window.confirm('sure to delete Varient')) return;
+    let res = await ApiDeleteService('varient', e.target.value);
+    if (res === true) {
+      setSuccessMsg('deleted succesfully !!');
+      setErrorMsg('');
+      refetch();
+    } else {
+      setSuccessMsg('');
+      setErrorMsg('Error while deleting');
+    }
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   }
   return (
     <>
+      <ContainerColumn height='auto' className='col-md-12 text-center'>
+        <SuccessText>{successMsg}</SuccessText>
+        <br />
+        <ErrorText>{errorMsg}</ErrorText>
+      </ContainerColumn>
       {detail && (
         <ContainerRow dynamic>
           <ContainerColumn className='col-md-4'>
@@ -114,6 +238,7 @@ function VarientDetail({ varient }) {
               onChange={handleChange}
             />
           </ContainerColumn>
+
           {!Update.varient &&
             types.length > 0 &&
             types.map((value, typeIndex) => (
@@ -138,14 +263,52 @@ function VarientDetail({ varient }) {
                 )}
               </ContainerColumn>
             ))}
-          <Submitbutton>UPDATE</Submitbutton>
+          <ContainerColumn className='col-md-4 text-center'>
+            <CenterAlign dark>
+              Images{' '}
+              {Update.varientImage && `id=` + Update.varientImage.varient}
+            </CenterAlign>
+            <Input
+              type='text'
+              name='image'
+              placeholder='AddImage'
+              value={image}
+              onChange={handleImage}
+              disabled={Update.varient !== null}
+            />
+            <button
+              onClick={handleImage}
+              name='Add'
+              className='btn btn-success text-center'
+            >
+              Add
+            </button>
+          </ContainerColumn>
+          {image !== '' && (
+            <Imageview src={image} width='100px' height='100px' />
+          )}
+          <Submitbutton name='varientDetail' onClick={handleUpdate}>
+            UPDATE
+          </Submitbutton>
         </ContainerRow>
       )}
+
       <ContainerRow dynamic>
+        <ContainerColumn className='col-md-12'>
+          <ContainerRow dynamic>
+            {Images.length > 0 &&
+              Images.map((value, index) => (
+                <ContainerColumn className='col-md-3 col-6'>
+                  <Imageview src={value.image} width='100px' height='100px' />
+                </ContainerColumn>
+              ))}
+          </ContainerRow>
+        </ContainerColumn>
         {varientDetail &&
           varientDetail.map((value, index) => (
             <ContainerColumn className='col-md-3 col-sm-12'>
               <ContainerColumn className='col-md-12'>
+                Id:{value.id}
                 <ContainerRow dynamic>
                   {value.image.map((imageUrl, Imageindex) => (
                     <ContainerColumn className='col-md-3 col-6'>
@@ -155,12 +318,16 @@ function VarientDetail({ varient }) {
                         width='100px'
                       />
                       <br />
-                      <button className='btn btn-outline-danger ml-1 mb-2'>
+                      <button
+                        onClick={deleteImage}
+                        value={imageUrl.id}
+                        className='btn btn-outline-danger ml-1 mb-2'
+                      >
                         delete
                       </button>
-                      <button className='btn btn-outline-info ml-1 mb-2'>
+                      {/* <button className='btn btn-outline-info ml-1 mb-2'>
                         edit
-                      </button>
+                      </button> */}
                     </ContainerColumn>
                   ))}
                 </ContainerRow>
@@ -168,6 +335,18 @@ function VarientDetail({ varient }) {
               <ContainerColumn className='col-md-12'>
                 <table className='table table-borderless'>
                   <tbody>
+                    <tr>
+                      <td colSpan='3'>
+                        <button
+                          onClick={handleAddImages}
+                          value={value.id}
+                          id={value.image.length}
+                          className='btn btn-info'
+                        >
+                          Add Images
+                        </button>
+                      </td>
+                    </tr>
                     <tr>
                       <td>
                         <LightColor>originalPrice:</LightColor>
@@ -196,7 +375,11 @@ function VarientDetail({ varient }) {
                     </tr>
                     <tr>
                       <td>
-                        <button className='btn btn-outline-danger ml-1 mb-2'>
+                        <button
+                          value={value.id}
+                          onClick={deleteVarient}
+                          className='btn btn-outline-danger ml-1 mb-2'
+                        >
                           delete
                         </button>
                       </td>

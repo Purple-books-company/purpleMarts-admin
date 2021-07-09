@@ -15,12 +15,14 @@ function ProductEditScreen() {
 
   useEffect(() => {
     if (product.state && product.state.product != null) {
-      alert(product.state.product);
       ApiGetService('product', product.state.product).then((res) =>
         setDetail(res)
       );
     }
   }, [product]);
+  function refetch() {
+    ApiGetService('product', detail.id).then((res) => setDetail(res));
+  }
   return (
     <>
       <Container>
@@ -30,7 +32,13 @@ function ProductEditScreen() {
         </select>
 
         {/* {detail && <ProductDetail res={detail} />} */}
-        {detail && <VarientDetail varient={detail.varients} />}
+        {detail && (
+          <VarientDetail
+            varient={detail.varients}
+            productId={detail.id}
+            refetch={refetch}
+          />
+        )}
       </Container>
     </>
   );
