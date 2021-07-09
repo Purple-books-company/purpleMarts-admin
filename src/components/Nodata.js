@@ -5,7 +5,7 @@ function Nodata() {
     <div className='container'>
       <Msg>
         <FcDeleteDatabase size={100} />
-        Data not found
+        Data Not Found
       </Msg>
     </div>
   );
