@@ -4,7 +4,10 @@ import { useLocation } from 'react-router';
 
 import VarientDetail from '../components/ProductEditComponents/VarientDetail';
 
+import ProductDetail from '../components/ProductEditComponents/ProductDetail';
+
 import { Container } from '../styles/styled';
+import { ApiGetService } from '../services/ApiServices';
 
 function ProductEditScreen() {
   const product = useLocation();
@@ -12,9 +15,14 @@ function ProductEditScreen() {
 
   useEffect(() => {
     if (product.state && product.state.product != null) {
-      setDetail(product.state.product);
+      ApiGetService('product', product.state.product).then((res) =>
+        setDetail(res)
+      );
     }
   }, [product]);
+  function refetch() {
+    ApiGetService('product', detail.id).then((res) => setDetail(res));
+  }
   return (
     <>
       <Container>
@@ -23,7 +31,14 @@ function ProductEditScreen() {
           <option value=''>hello</option>
         </select>
 
-        {detail && <VarientDetail data={detail} />}
+        {/* {detail && <ProductDetail res={detail} />} */}
+        {detail && (
+          <VarientDetail
+            varient={detail.varients}
+            productId={detail.id}
+            refetch={refetch}
+          />
+        )}
       </Container>
     </>
   );

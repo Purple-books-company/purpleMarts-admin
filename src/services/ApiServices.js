@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 // import { Token } from '../env';
 const API = `http://purplemart.pythonanywhere.com`;
 const Request = {
@@ -24,6 +24,10 @@ const Request = {
   subCategory: `/api/admin/product/subcategory/`,
   supplierInfo: `/api/admin/user/personal_info/`,
   supplier: `/api/admin/user/supplier/`,
+
+  varientType: `/api/admin/product/varient/type/`,
+  varientImage: `/api/admin/product/varient/image/`,
+  varient: `/api/admin/product/varient/`,
 };
 
 const Token = process.env.REACT_APP_TOKEN;
@@ -31,8 +35,8 @@ const Token = process.env.REACT_APP_TOKEN;
 async function ApiGetService(method, id = null) {
   let url = API;
   url += Request[method];
-  if (id !== null) url += id + "/";
-  console.log("getService:" + url);
+  if (id !== null) url += id + '/';
+  console.log('getService:' + url);
   try {
     const res = await axios.get(url, {
       headers: {
@@ -43,7 +47,7 @@ async function ApiGetService(method, id = null) {
       console.log(res);
       return res.data.data;
     } else {
-      console.log("error");
+      console.log('error');
       console.log(res);
       return false;
     }
@@ -68,18 +72,18 @@ async function ApiPostService(method, data) {
     console.log(res);
     if (res.data.success) {
       if (
-        method === "Products" ||
-        method === "subCategoryAll" ||
-        method === "supplierInfo"
+        method === 'Products' ||
+        method === 'subCategoryAll' ||
+        method === 'supplierInfo'
       ) {
         return res.data.data;
       }
       return true;
     } else {
       if (
-        method === "Products" ||
-        method === "subCategoryAll" ||
-        method === "supplierInfo"
+        method === 'Products' ||
+        method === 'subCategoryAll' ||
+        method === 'supplierInfo'
       ) {
         return false;
       }
@@ -94,7 +98,7 @@ async function ApiPostService(method, data) {
 
 async function ApiPutService(method, key, data) {
   let url = API;
-  url += Request[method] + key + "/";
+  url += Request[method] + key + '/';
   console.log(url);
 
   try {
@@ -116,7 +120,7 @@ async function ApiPutService(method, key, data) {
 
 async function ApiDeleteService(method, key) {
   let url = API;
-  url += Request[method] + key + "/";
+  url += Request[method] + key + '/';
   console.log(url);
 
   try {
