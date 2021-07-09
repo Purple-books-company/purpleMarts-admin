@@ -77,18 +77,33 @@ function ProductView() {
       setChooseOffer(e.target.value);
       return;
     }
+    setProductDetail([]);
     getDetail(e.target.value);
   }
   async function getDetail(cat) {
+    let tempData = JSON.parse(JSON.stringify(productDetail));
+
+    let page;
+    if (tempData.length == 0) {
+      page = 1;
+    } else if (tempData[0].subCategory === cat) {
+      page = tempData.length / 10 + 1;
+    } else {
+      page = 1;
+      tempData = [];
+    }
+    alert('getting' + page);
     let data = {
       subCategory: cat,
-      page: 1,
+      page: page,
     };
     let res = await ApiPostService('Products', data);
 
     if (res && res.length > 0) {
       console.log(res);
-      setProductDetail(res);
+
+      let detail = tempData.concat(res);
+      setProductDetail(detail);
     } else {
       alert('no products found');
     }
@@ -322,6 +337,14 @@ function ProductView() {
                     </ContainerColumn>
                   ))}
                 </ContainerRow>
+                {productDetail.length % 10 === 0 && (
+                  <button
+                    onClick={() => getDetail(productDetail[0].subCategory)}
+                    className='btn w-100 text-info text-centre col-12 mb-3 '
+                  >
+                    <b>show more</b>
+                  </button>
+                )}
               </ContainerColumn>
             </>
           )}
