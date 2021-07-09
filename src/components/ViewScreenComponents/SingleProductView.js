@@ -45,7 +45,10 @@ const SingleProductView = ({ id }) => {
       if (res.varients.length === 0) {
         setVarient([res]); //current varient to be checked
         setCurrentVarient(res);
-      } else setCurrentVarient(res.varients[0]);
+      } else {
+        setCurrentVarient(res.varients[0]);
+        setImages(res.varients[0].images);
+      }
       return;
     }
     setVarient(res.varients);

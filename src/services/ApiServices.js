@@ -28,6 +28,7 @@ const Request = {
   varientType: `/api/admin/product/varient/type/`,
   varientImage: `/api/admin/product/varient/image/`,
   varient: `/api/admin/product/varient/`,
+  search: `/api/admin/product/search/`,
 };
 
 const Token = process.env.REACT_APP_TOKEN;
@@ -74,7 +75,8 @@ async function ApiPostService(method, data) {
       if (
         method === 'Products' ||
         method === 'subCategoryAll' ||
-        method === 'supplierInfo'
+        method === 'supplierInfo' ||
+        method === 'search'
       ) {
         return res.data.data;
       }

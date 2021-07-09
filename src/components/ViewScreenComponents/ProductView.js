@@ -18,12 +18,14 @@ import {
   Imageview,
   ContainerRow,
   Title,
+  Input,
   // Input,
   // Submitbutton,
 } from '../../styles/styled';
 import Nodata from '../Nodata';
 import SingleProductView from './SingleProductView';
 import Loader from '../Loader';
+import ProductDetail from '../ProductEditComponents/ProductDetail';
 
 function ProductView() {
   let initialLoader = { product: false, page: false };
@@ -35,11 +37,26 @@ function ProductView() {
   const [offerId, Addtooffer] = useState('');
   const [chooseOffer, setChooseOffer] = useState('');
   const [isListProduct, setIsListProduct] = useState('');
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     getData();
   }, []);
-
+  async function handleSearch(page = null) {
+    if (page === null) {
+      page = JSON.parse(JSON.stringify(productDetail)).length / 10 + 1;
+    }
+    let payLoad = {
+      key: search,
+      page: page,
+    };
+    let res = await ApiPostService('search', payLoad);
+    if (page === 1) setProductDetail(res);
+    else {
+      let tempData = JSON.parse(JSON.stringify(productDetail)).concat(res);
+      setProductDetail(tempData);
+    }
+  }
   async function getData() {
     let Loader = { ...initialLoader };
     Loader.page = true;
@@ -73,6 +90,7 @@ function ProductView() {
     getDetail(subCat[0].name);
   }
   async function handleRadio(e) {
+    setSearch('');
     if (e.target.name === 'chooseOffer') {
       setChooseOffer(e.target.value);
       return;
@@ -92,7 +110,7 @@ function ProductView() {
       page = 1;
       tempData = [];
     }
-    alert('getting' + page);
+    // alert('getting' + page);
     let data = {
       subCategory: cat,
       page: page,
@@ -121,7 +139,7 @@ function ProductView() {
     };
     let res = await ApiPostService('offerProduct', data);
     if (res !== true) {
-      alert('some error');
+      alert('Product already in Offer');
     }
     if (res === true) {
       alert('success');
@@ -164,6 +182,7 @@ function ProductView() {
                 </option>
               ))}
             </select>
+
             <ContainerRow dynamic style={{ margin: '3%', marginLeft: '10%' }}>
               {subCategoryDetail.map((value, index) => (
                 <div
@@ -192,6 +211,34 @@ function ProductView() {
                 </div>
               ))}
             </ContainerRow>
+            <form
+              name='search'
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleSearch(1);
+              }}
+            >
+              <ContainerRow dynamic>
+                <ContainerColumn
+                  height='auto'
+                  className='col-md-12 col-sm-9 col-9'
+                >
+                  <Input
+                    type='text'
+                    placeholder='search'
+                    onChange={(e) => setSearch(e.target.value)}
+                  />
+                </ContainerColumn>
+                <ContainerColumn height='auto' className='col-md-12 col-3'>
+                  <button
+                    type='submit'
+                    className='form-control  ml-1 btn btn-success'
+                  >
+                    Search
+                  </button>
+                </ContainerColumn>
+              </ContainerRow>
+            </form>
             <ContainerRow dynamic className='row ml-1  mb-2 sticky'>
               <Title className='col-12'>Add to offer</Title>
               <br />
@@ -247,7 +294,11 @@ function ProductView() {
                     top
                   </button>
                   {productDetail.map((value, index) => (
-                    <ContainerColumn key={index} className='col-md-3'>
+                    <ContainerColumn
+                      key={index}
+                      height='40%'
+                      className='col-md-3'
+                    >
                       <Card nohover>
                         <div
                           // onClick={() => handleImageClick(index)}
@@ -279,12 +330,12 @@ function ProductView() {
                             >
                               <Imageview
                                 src={value.image}
-                                width='90%'
+                                width='96%'
                                 height='150px'
                                 onClick={() => {
                                   setIsListProduct(value.id);
                                 }}
-                                style={{ marginTop: '2%', maxHeight: '130px' }}
+                                style={{ marginTop: '2%' }}
                                 // alternate="no image"
                               />
                             </div>
@@ -339,7 +390,10 @@ function ProductView() {
                 </ContainerRow>
                 {productDetail.length % 10 === 0 && (
                   <button
-                    onClick={() => getDetail(productDetail[0].subCategory)}
+                    onClick={() => {
+                      if (search !== '') handleSearch();
+                      else getDetail(productDetail[0].subCategory);
+                    }}
                     className='btn w-100 text-info text-centre col-12 mb-3 '
                   >
                     <b>show more</b>

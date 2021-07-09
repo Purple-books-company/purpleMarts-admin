@@ -47,6 +47,8 @@ function VarientDetail({ varient, productId, refetch }) {
       let type = JSON.parse(JSON.stringify(varient[0].types));
       for (let i in type) {
         type[i].value = '';
+        delete type[i].id;
+        delete type[i].order;
       }
       setTypes(type);
     }
@@ -111,7 +113,9 @@ function VarientDetail({ varient, productId, refetch }) {
         tempDetail.types = types;
         tempDetail.image = Images;
         tempDetail.product = productId;
-        // tempDetail.order = varientDetail.length;
+        tempDetail.order = varientDetail.length;
+        console.log(tempDetail);
+
         let res = await ApiPostService('varient', tempDetail);
         alert(res);
       }
