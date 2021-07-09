@@ -24,6 +24,7 @@ import { decrypt, encrypt } from "../services/encrypt";
 import { CenterAlign } from "../styles/styled";
 import OffersMain from "../screens/OffersMain";
 import SingleProductView from "../components/ViewScreenComponents/SingleProductView";
+import OrdersView from "../components/ViewScreenComponents/OrdersView";
 
 function RouteApp() {
   const [login, setLogin] = useState(false);
@@ -94,6 +95,7 @@ function RouteApp() {
               <Route exact path="/product" component={SingleProductView} />
 
               <Route exact path="/editproduct" component={ProductEditScreen} />
+              <Route exact path="/orders" component={OrdersView} />
               <Route path="*" component={Error} />
             </Switch>
           )}

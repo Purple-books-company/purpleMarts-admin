@@ -6,7 +6,6 @@ import CatagoryView from '../components/ViewScreenComponents/CatagoryView';
 import ProductView from '../components/ViewScreenComponents/ProductView';
 import SupplierView from '../components/ViewScreenComponents/SupplierView';
 import SubCategoryView from '../components/ViewScreenComponents/SubCategoryView';
-
 import Nav from '../components/Nav';
 
 function ViewScreens() {
