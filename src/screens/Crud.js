@@ -50,7 +50,11 @@ function Crud() {
 
   return (
     <>
-      <Nav navItems={['Dashboard', 'offer']} navLinks={['/', '/offer']} />
+      <Nav
+        navItems={['Dashboard', 'offer']}
+        View={true}
+        navLinks={['/', '/offer']}
+      />
       <Container>
         <Card deg='-40' width='100%' height='100%' margin='0%' nohover>
           {fillForm === null && (

@@ -9,7 +9,7 @@ import {
   getSubCategoryDetail,
   OfferData,
 } from '../../services/AdminServices';
-import { ApiPostService } from '../../services/ApiServices';
+import { ApiDeleteService, ApiPostService } from '../../services/ApiServices';
 import { ColorOne, ColorTwo } from '../../styles/color';
 import {
   Card,
@@ -19,6 +19,7 @@ import {
   ContainerRow,
   Title,
   Input,
+  LightColor,
   // Input,
   // Submitbutton,
 } from '../../styles/styled';
@@ -56,6 +57,7 @@ function ProductView() {
       let tempData = JSON.parse(JSON.stringify(productDetail)).concat(res);
       setProductDetail(tempData);
     }
+    setLoader({ ...initialLoader });
   }
   async function getData() {
     let Loader = { ...initialLoader };
@@ -104,6 +106,9 @@ function ProductView() {
     let page;
     if (tempData.length == 0) {
       page = 1;
+    } else if (tempData.length % 10 != 0) {
+      page = 1;
+      tempData = [];
     } else if (tempData[0].subCategory === cat) {
       page = tempData.length / 10 + 1;
     } else {
@@ -125,6 +130,7 @@ function ProductView() {
     } else {
       alert('no products found');
     }
+    setLoader({ ...initialLoader });
   }
   async function handleAddOffer(e) {
     Addtooffer(e.target.value);
@@ -150,7 +156,27 @@ function ProductView() {
   //   console.log(index);
   //   document.getElementById('changeVarient' + index).innerHTML = `hello`;
   // }
+  async function deleteProduct(e) {
+    e.preventDefault();
 
+    if (
+      window.prompt(`enter CONFIRM to delete ${e.target.value}`) === 'CONFIRM'
+    ) {
+      let Loader = { ...initialLoader };
+      Loader.product = true;
+      setLoader(Loader);
+      let res = await ApiDeleteService('product', e.target.id);
+      console.log(res);
+
+      if (res === true) {
+        if (search !== '') {
+          handleSearch(1);
+        } else {
+          getDetail(productDetail[0].subCategory);
+        }
+      }
+    }
+  }
   return (
     <>
       {loader.page ? (
@@ -221,7 +247,7 @@ function ProductView() {
               <ContainerRow dynamic>
                 <ContainerColumn
                   height='auto'
-                  className='col-md-12 col-sm-9 col-9'
+                  className='col-md-11 col-sm-9 col-9 ml-1'
                 >
                   <Input
                     type='text'
@@ -229,7 +255,7 @@ function ProductView() {
                     onChange={(e) => setSearch(e.target.value)}
                   />
                 </ContainerColumn>
-                <ContainerColumn height='auto' className='col-md-12 col-3'>
+                <ContainerColumn height='auto' className='col-md-9 col-6 ml-3'>
                   <button
                     type='submit'
                     className='form-control  ml-1 btn btn-success'
@@ -265,7 +291,6 @@ function ProductView() {
                 height='100%'
                 className='col-md-9 ml-2 col-sm-12'
               >
-                {productDetail.length === 0 && <Nodata />}
                 {isListProduct.length > 0 && (
                   <div style={{ textAlign: 'center' }}>
                     <SingleProductView id={isListProduct} />
@@ -290,7 +315,6 @@ function ProductView() {
                     }
                     title='Go to top'
                   >
-                    {' '}
                     top
                   </button>
                   {productDetail.map((value, index) => (
@@ -361,8 +385,10 @@ function ProductView() {
                             <CenterAlign dark>
                               <br />
                               <button
+                                id={value.id}
                                 className='btn btn-outline-danger mr-2 '
                                 value={value.name}
+                                onClick={deleteProduct}
                               >
                                 <AiFillDelete size='18' />
                                 {'  '}
@@ -385,10 +411,11 @@ function ProductView() {
                           </ContainerColumn>
                         </ContainerRow>
                       </Card>
+                      {productDetail.length === 0 && <Nodata />}
                     </ContainerColumn>
                   ))}
                 </ContainerRow>
-                {productDetail.length % 10 === 0 && (
+                {productDetail.length !== 0 && productDetail.length % 10 === 0 && (
                   <button
                     onClick={() => {
                       if (search !== '') handleSearch();

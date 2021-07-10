@@ -163,6 +163,7 @@ function ProductTest() {
       setProduct(initialDetail);
       setVarientDetail([]);
       setImages([]);
+      e.target.reset();
       setAddVarient(initialVarient);
       setSuccessMsg('product saved');
     } else {
@@ -434,7 +435,7 @@ function ProductTest() {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          handleSubmit();
+          handleSubmit(e);
         }}
       >
         <ContainerRow

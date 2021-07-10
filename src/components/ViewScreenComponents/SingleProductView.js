@@ -36,6 +36,10 @@ const SingleProductView = ({ id }) => {
   // Need to handle corner cases
   async function getProduct(id) {
     let res = await ApiGetService('getSingleProduct', id);
+    if(res===false){
+      setProduct(null);
+      return;
+    }
     console.log(res);
     setProduct(res);
 

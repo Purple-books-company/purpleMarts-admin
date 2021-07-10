@@ -133,6 +133,8 @@ function VarientDetail({ varient, productId, refetch }) {
             isUpdate({ ...initialUpdate });
             for (let i in type) {
               type[i].value = '';
+              delete type[i].id;
+              delete type[i].order;
             }
             setTypes(type);
           } else {

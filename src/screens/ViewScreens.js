@@ -26,10 +26,10 @@ function ViewScreens() {
   useEffect(() => {
     setLoader(true);
     let newState = { ...initialState };
-console.log('rendering');
+    console.log('rendering');
     if (show && show.state) {
       console.log(show.state.show);
-    
+
       newState[show.state.show] = true;
       if (show.state.value) {
         setData(show.state.value);
@@ -61,8 +61,8 @@ console.log('rendering');
     <>
       {!mountView.product && (
         <Nav
-          navItems={['Dashboard']}
-          navLinks={['/']}
+          navItems={['post', 'Dashboard']}
+          navLinks={['/post', '/']}
           Show={!mountView.subCategory ? handleChange : null}
         />
       )}
