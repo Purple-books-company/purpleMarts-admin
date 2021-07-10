@@ -14,6 +14,9 @@ import {
 } from '../../styles/styled';
 import { ColorOne } from '../../styles/color';
 import Loader from '../Loader';
+import Nodata from '../Nodata';
+import { Link } from 'react-router-dom';
+import { AiFillInfoCircle } from 'react-icons/ai';
 
 const SingleProductView = ({ id }) => {
   const [product, setProduct] = useState(null);
@@ -36,8 +39,12 @@ const SingleProductView = ({ id }) => {
   // Need to handle corner cases
   async function getProduct(id) {
     let res = await ApiGetService('getSingleProduct', id);
-    if (res === false) {
-      setProduct(null);
+    if (res === false || !res) {
+      let data = {
+        noData: true,
+      };
+      setProduct(data);
+      setCurrentVarient(data);
       return;
     }
     console.log(res);
@@ -114,206 +121,232 @@ const SingleProductView = ({ id }) => {
       {product === null || currentVarient === null ? (
         <Loader />
       ) : (
-        <ContainerRow full style={{ marginTop: '40px' }}>
-          <ContainerColumn height='40%' className='col-md-5 col-sm-12 mb-5  '>
-            <div
-              id='carouselExampleInterval'
-              className='carousel slide w-100 p-5 ml-4  '
-              data-ride='carousel'
-            >
-              {' '}
-              <CenterAlign style={{ fontWeight: 'bolder', fontSize: '20px' }}>
-                {currentType && currentType.key + ' ' + currentType.value}
-              </CenterAlign>
-              <div className='carousel-inner'>
-                {images.map((image, index) => (
-                  <div
-                    className={`carousel-item w-100 ml-6 ${
-                      index === 0 && 'active'
-                    }`}
-                    data-interval='2000'
-                    key={index}
+        <>
+          {product.noData ? (
+            <Nodata />
+          ) : (
+            <ContainerRow full style={{ marginTop: '40px' }}>
+              <ContainerColumn
+                height='40%'
+                className='col-md-5 col-sm-12 mb-5  '
+              >
+                <div
+                  id='carouselExampleInterval'
+                  className='carousel slide w-100 p-5 ml-4  '
+                  data-ride='carousel'
+                >
+                  {' '}
+                  <CenterAlign
+                    style={{ fontWeight: 'bolder', fontSize: '20px' }}
                   >
-                    <img src={image.image} className='d-block w-75' alt='...' />
+                    {currentType && currentType.key + ' ' + currentType.value}
+                  </CenterAlign>
+                  <div className='carousel-inner'>
+                    {images.map((image, index) => (
+                      <div
+                        className={`carousel-item w-100 ml-6 ${
+                          index === 0 && 'active'
+                        }`}
+                        data-interval='2000'
+                        key={index}
+                      >
+                        <img
+                          src={image.image}
+                          className='d-block w-75'
+                          alt='...'
+                        />
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-              <a
-                className='carousel-control-prev'
-                href='#carouselExampleInterval'
-                role='button'
-                data-slide='prev'
-              >
-                <span
-                  className='carousel-control-prev-icon bg-dark'
-                  aria-hidden='true'
-                ></span>
-                <span className='sr-only'>Previous</span>
-              </a>
-              <a
-                className='carousel-control-next'
-                href='#carouselExampleInterval'
-                role='button'
-                data-slide='next'
-              >
-                <span
-                  className='carousel-control-next-icon bg-dark'
-                  aria-hidden='true'
-                ></span>
-                <span className='sr-only'>Next</span>
-              </a>
-            </div>
-          </ContainerColumn>
-          <ContainerColumn
-            height='65%'
-            className='col-md-7
+                  <a
+                    className='carousel-control-prev'
+                    href='#carouselExampleInterval'
+                    role='button'
+                    data-slide='prev'
+                  >
+                    <span
+                      className='carousel-control-prev-icon bg-dark'
+                      aria-hidden='true'
+                    ></span>
+                    <span className='sr-only'>Previous</span>
+                  </a>
+                  <a
+                    className='carousel-control-next'
+                    href='#carouselExampleInterval'
+                    role='button'
+                    data-slide='next'
+                  >
+                    <span
+                      className='carousel-control-next-icon bg-dark'
+                      aria-hidden='true'
+                    ></span>
+                    <span className='sr-only'>Next</span>
+                  </a>
+                </div>
+              </ContainerColumn>
+              <ContainerColumn
+                height='65%'
+                className='col-md-7
           '
-          >
-            <Card nohover style={{ paddingBottom: '10px' }}>
-              <Title style={{ backgroundColor: ColorOne, color: 'white' }}>
-                {product.name}
-              </Title>
-
-              <table
-                className='table  table-borderless table-sm mt-2 '
-                style={{ width: '80%' }}
               >
-                <tbody>
-                  <tr>
-                    {' '}
-                    <td>
-                      <LightColor>originalPrice:</LightColor>
+                <Card nohover style={{ paddingBottom: '10px' }}>
+                  <Title style={{ backgroundColor: ColorOne, color: 'white' }}>
+                    {product.name}
+                  </Title>
+                  <table
+                    className='table  table-borderless table-sm mt-2 '
+                    style={{ width: '80%' }}
+                  >
+                    <tbody>
+                      <tr>
+                        {' '}
+                        <td>
+                          <LightColor>originalPrice:</LightColor>
 
-                      {currentVarient.originalPrice}
-                    </td>
-                    <td>
-                      <LightColor>OfferPrice:</LightColor>
+                          {currentVarient.originalPrice}
+                        </td>
+                        <td>
+                          <LightColor>OfferPrice:</LightColor>
 
-                      {currentVarient.offerPrice}
-                    </td>
-                    <td>
-                      <LightColor>BuyingPrice:</LightColor>
+                          {currentVarient.offerPrice}
+                        </td>
+                        <td>
+                          <LightColor>BuyingPrice:</LightColor>
 
-                      {currentVarient.buyingPrice}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <LightColor>Unit in stock</LightColor>
+                          {currentVarient.buyingPrice}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <LightColor>Unit in stock</LightColor>
 
-                      {currentVarient.unitInStock === 0 ? (
-                        <ErrorText>no stock</ErrorText>
-                      ) : (
-                        <SuccessText>
-                          available-{currentVarient.unitInStock}
-                        </SuccessText>
-                      )}
-                    </td>
-                    <td>
-                      <LightColor>sub-Category</LightColor>
+                          {currentVarient.unitInStock === 0 ? (
+                            <ErrorText>no stock</ErrorText>
+                          ) : (
+                            <SuccessText>
+                              available-{currentVarient.unitInStock}
+                            </SuccessText>
+                          )}
+                        </td>
+                        <td>
+                          <LightColor>sub-Category</LightColor>
 
-                      {product.subCategory}
-                    </td>
-                    <td>
-                      <LightColor>unit weight</LightColor>
+                          {product.subCategory}
+                        </td>
+                        <td>
+                          <LightColor>unit weight</LightColor>
 
-                      {product.unitWeight}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <LightColor>supplier</LightColor>
+                          {product.unitWeight}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <LightColor>supplier</LightColor>
 
-                      {product.supplier}
-                    </td>
-                    <td>
-                      <LightColor>quantity</LightColor>
+                          {product.supplier}
+                        </td>
+                        <td>
+                          <LightColor>quantity</LightColor>
 
-                      {product.quantityPerUnit}
-                    </td>
-                    <td>
-                      <LightColor>Our profit</LightColor>
-                      {currentVarient.offerPrice - currentVarient.buyingPrice >
-                      0 ? (
-                        <SuccessText>
+                          {product.quantityPerUnit}
+                        </td>
+                        <td>
+                          <LightColor>Our profit</LightColor>
                           {currentVarient.offerPrice -
-                            currentVarient.buyingPrice}
-                        </SuccessText>
-                      ) : (
-                        <ErrorText>
-                          {currentVarient.offerPrice -
-                            currentVarient.buyingPrice}
-                        </ErrorText>
-                      )}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <Title>VARIENTS</Title>
-              <table
-                className='table table-borderless w-auto mb-5'
-                style={{ minWidth: '30%', width: 'auto' }}
-              >
-                <tbody>
-                  <tr>
-                    {currentType &&
-                      Object.keys(product.type).map((value, index) => {
-                        if (
-                          product.typeKey.length > 0 &&
-                          product.typeKey[0].toLowerCase() === 'colour'
-                        )
-                          return (
-                            <td key={index}>
-                              <ColorButton
-                                id='0'
-                                onClick={handleTypeClick}
-                                color={value}
-                                value={value}
-                                active={currentType.key === value}
-                              ></ColorButton>
-                            </td>
-                          );
-                        else {
-                          return (
-                            <td key={index}>
-                              <TypeButton
-                                id='0'
-                                onClick={handleTypeClick}
-                                active={currentType.key === value}
-                                value={value}
-                              >
-                                {value === 'null' ? 'No varients' : value}
-                              </TypeButton>
-                            </td>
-                          );
-                        }
-                      })}
-                  </tr>
-                  <tr>
-                    {currentType !== null &&
-                      product.typeKey.length > 1 &&
-                      product.type[currentType.key].map(
-                        (typeValue, typeIndex) => (
-                          // <p>{typeValue}</p>
-                          <td key={'type' + typeIndex}>
-                            <TypeButton
-                              id='1'
-                              onClick={handleTypeClick}
-                              value={typeValue}
-                              active={currentType.value === typeValue}
-                            >
-                              {typeValue}
-                            </TypeButton>
-                          </td>
-                        )
-                      )}
-                  </tr>
-                </tbody>
-              </table>
-              <button className='btn btn-info'>EDIT PRODUCT</button>
-            </Card>
-          </ContainerColumn>
-        </ContainerRow>
+                            currentVarient.buyingPrice >
+                          0 ? (
+                            <SuccessText>
+                              {currentVarient.offerPrice -
+                                currentVarient.buyingPrice}
+                            </SuccessText>
+                          ) : (
+                            <ErrorText>
+                              {currentVarient.offerPrice -
+                                currentVarient.buyingPrice}
+                            </ErrorText>
+                          )}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <Title>VARIENTS</Title>
+                  <table
+                    className='table table-borderless w-auto mb-5'
+                    style={{ minWidth: '30%', width: 'auto' }}
+                  >
+                    <tbody>
+                      <tr>
+                        {currentType &&
+                          Object.keys(product.type).map((value, index) => {
+                            if (
+                              product.typeKey.length > 0 &&
+                              product.typeKey[0].toLowerCase() === 'colour'
+                            )
+                              return (
+                                <td key={index}>
+                                  <ColorButton
+                                    id='0'
+                                    onClick={handleTypeClick}
+                                    color={value}
+                                    value={value}
+                                    active={currentType.key === value}
+                                  ></ColorButton>
+                                </td>
+                              );
+                            else {
+                              return (
+                                <td key={index}>
+                                  <TypeButton
+                                    id='0'
+                                    onClick={handleTypeClick}
+                                    active={currentType.key === value}
+                                    value={value}
+                                  >
+                                    {value === 'null' ? 'No varients' : value}
+                                  </TypeButton>
+                                </td>
+                              );
+                            }
+                          })}
+                      </tr>
+                      <tr>
+                        {currentType !== null &&
+                          product.typeKey.length > 1 &&
+                          product.type[currentType.key].map(
+                            (typeValue, typeIndex) => (
+                              // <p>{typeValue}</p>
+                              <td key={'type' + typeIndex}>
+                                <TypeButton
+                                  id='1'
+                                  onClick={handleTypeClick}
+                                  value={typeValue}
+                                  active={currentType.value === typeValue}
+                                >
+                                  {typeValue}
+                                </TypeButton>
+                              </td>
+                            )
+                          )}
+                      </tr>
+                    </tbody>
+                  </table>
+                  <Link
+                    to={{
+                      pathname: '/editproduct',
+                      state: { product: product.id },
+                    }}
+                    className='btn purple '
+                    name='addImages'
+                    // value={value}
+                  >
+                    <AiFillInfoCircle size='18' />
+                    Edit Product
+                  </Link>{' '}
+                </Card>
+              </ContainerColumn>
+            </ContainerRow>
+          )}
+        </>
       )}
     </ContainerColumn>
   );

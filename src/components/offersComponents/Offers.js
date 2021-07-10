@@ -1,36 +1,55 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import {
   ApiPostService,
-
   ApiDeleteService,
-} from "../../services/ApiServices";
-import Loader from "../Loader";
+  ApiGetService,
+} from '../../services/ApiServices';
+import Loader from '../Loader';
 import {
   ContainerColumn,
   Input,
   Formlable,
   Title,
-
   ContainerRow,
   Submitbutton,
   LeftAlign,
-} from "../../styles/styled";
-import { getAllOffers, OfferData } from "../../services/AdminServices";
+  LightColor,
+} from '../../styles/styled';
+import { getAllOffers, OfferData } from '../../services/AdminServices';
 
-const API_URL = "offerList";
+const API_URL = 'offerList';
 
 function Offers() {
-  const [offerName, setOffer] = useState("");
-  const [deleteOffer, setDelete] = useState("");
+  const [offerName, setOffer] = useState('');
+  const [deleteOffer, setDelete] = useState('');
   const [offerData, setOfferData] = useState([]);
   const [loader, setLoader] = useState(false);
+  const [offerProduct, setOfferProducts] = useState([]);
   useEffect(() => {
     getOffers();
   }, []);
+  async function handleRemove(e) {
+    setLoader(true);
+    if (!window.confirm('remove that product')) return;
+    let res = await ApiDeleteService('offerProduct', e.target.value);
+    if (res) {
+      let offerProduct = await ApiGetService('offerProduct');
+      if (offerData) {
+        setOfferProducts(offerProduct);
+      }
+    } else {
+      alert('some error Occured');
+    }
+    setLoader(false);
+  }
   async function getOffers() {
     setLoader(true);
-    let res = await OfferData();//api service function
-    if (res === null || res === false) alert("Error occured");
+    let res = await OfferData(); //api service function
+    let offerProduct = await ApiGetService('offerProduct');
+    if (offerData) {
+      setOfferProducts(offerProduct);
+    }
+    if (res === null || res === false) alert('Error occured');
     else {
       if (res.length > 0) {
         setOfferData(res);
@@ -47,32 +66,32 @@ function Offers() {
     setLoader(true);
     let res = await ApiPostService(API_URL, { offerName });
     if (res === null) {
-      alert("Error occured");
+      alert('Error occured');
     } else if (res === true) {
-      alert("success");
-      setOffer("");
+      alert('success');
+      setOffer('');
       await getAllOffers();
       getOffers();
     } else {
-      alert("Improper details");
+      alert('Improper details');
     }
 
     setLoader(false);
   }
   async function handleDelete() {
-    if (!window.confirm("are you sure to delete")) {
+    if (!window.confirm('are you sure to delete')) {
       return;
     }
     setLoader(true);
     let res = await ApiDeleteService(API_URL, deleteOffer);
     if (res === null) {
-      alert("Error occured");
+      alert('Error occured');
     } else if (res === true) {
-      alert("success");
+      alert('success');
       await getAllOffers();
       getOffers();
     } else {
-      alert("Improper details");
+      alert('Improper details');
     }
 
     setLoader(false);
@@ -83,39 +102,39 @@ function Offers() {
       {loader ? (
         <Loader />
       ) : (
-          <>
-            <Title>OFFER PAGE</Title>
+        <>
+          <Title>OFFER PAGE</Title>
 
-            <ContainerRow dynamic>
-              <ContainerColumn className="col-md-6" height="10%">
-                <Formlable>Offer Name</Formlable>
-                <Input
-                  type="text"
-                  name="offer"
-                  value={offerName}
-                  onChange={(e) => setOffer(e.target.value)}
-                />
-                <Submitbutton onClick={handleSubmit}>POST</Submitbutton>
-              </ContainerColumn>
+          <ContainerRow dynamic>
+            <ContainerColumn className='col-md-6' height='10%'>
+              <Formlable>Offer Name</Formlable>
+              <Input
+                type='text'
+                name='offer'
+                value={offerName}
+                onChange={(e) => setOffer(e.target.value)}
+              />
+              <Submitbutton onClick={handleSubmit}>POST</Submitbutton>
+            </ContainerColumn>
 
-              <ContainerColumn className="col-md-6" height="10%">
-                <LeftAlign>Choose Offer to delete</LeftAlign>
-                <select
-                  className="form-control mb-2"
-                  onChange={(e) => setDelete(e.target.value)}
-                >
-                  {offerData.map((value, index) => (
-                    <option value={value.id} key={index}>
-                      {value.offerName}
-                    </option>
-                  ))}
-                </select>
+            <ContainerColumn className='col-md-6' height='10%'>
+              <LeftAlign>Choose Offer to delete</LeftAlign>
+              <select
+                className='form-control mb-2'
+                onChange={(e) => setDelete(e.target.value)}
+              >
+                {offerData.map((value, index) => (
+                  <option value={value.id} key={index}>
+                    {value.offerName}
+                  </option>
+                ))}
+              </select>
 
-                <button className="btn btn-danger mb-2" onClick={handleDelete}>
-                  delete
+              <button className='btn btn-danger mb-2' onClick={handleDelete}>
+                delete
               </button>
-              </ContainerColumn>
-              {/* <table class="table">
+            </ContainerColumn>
+            {/* <table class="table">
           <tr>
  <th scope="col">offername</th>
            <th scope="col">Delete?</th>
@@ -127,9 +146,33 @@ function Offers() {
           </tr>)}
          
         </table> */}
-            </ContainerRow>
-          </>
-        )}
+          </ContainerRow>
+          <ContainerRow dyanamic>
+            <table class='table'>
+              {offerProduct.map((value, index) => (
+                <tr key={index}>
+                  <td>{value.offerName}</td>
+                  <td>
+                    <LightColor>Product-Id</LightColor>#{value.product}
+                    <br /> <br />
+                    <LightColor>Product-Name</LightColor>
+                    {value.productName || 'no Name'}
+                  </td>
+                  <td>
+                    <button
+                      value={value.id}
+                      onClick={handleRemove}
+                      className='btn btn-danger'
+                    >
+                      remove
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </table>
+          </ContainerRow>
+        </>
+      )}
     </>
   );
 }

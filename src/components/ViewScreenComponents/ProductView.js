@@ -9,7 +9,11 @@ import {
   getSubCategoryDetail,
   OfferData,
 } from '../../services/AdminServices';
-import { ApiDeleteService, ApiPostService } from '../../services/ApiServices';
+import {
+  ApiDeleteService,
+  ApiGetService,
+  ApiPostService,
+} from '../../services/ApiServices';
 import { ColorOne, ColorTwo } from '../../styles/color';
 import {
   Card,
@@ -43,6 +47,11 @@ function ProductView() {
     getData();
   }, []);
   async function handleSearch(page = null) {
+    if (search[0] === '#') {
+      let temp = search.slice(1);
+      setIsListProduct(temp);
+      return;
+    }
     if (page === null) {
       page = JSON.parse(JSON.stringify(productDetail)).length / 10 + 1;
     }
