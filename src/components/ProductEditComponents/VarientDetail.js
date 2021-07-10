@@ -5,7 +5,6 @@ import {
   ApiPutService,
 } from '../../services/ApiServices';
 import {
-  Card,
   CenterAlign,
   ContainerColumn,
   ContainerRow,
@@ -253,7 +252,7 @@ function VarientDetail({ varient, productId, refetch }) {
                 <Input
                   type='text'
                   value={types[typeIndex].value}
-                  name='typeIndex'
+                  // name='typeIndex'
                   name={typeIndex}
                   onChange={handleTypeChange}
                 />

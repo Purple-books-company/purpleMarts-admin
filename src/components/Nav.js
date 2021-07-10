@@ -17,7 +17,7 @@ function Nav({ navItems, navLinks, View, Show, logout }) {
           <img
             src='https://raw.githubusercontent.com/Purple-books-company/purple-marts-user-ui/main/src/assets/images/logo.png'
             style={{ height: '45px', textAlign: 'center' }}
-            alt="Purple marts"
+            alt='Purple marts'
           />
         </span>
         <button
@@ -35,7 +35,7 @@ function Nav({ navItems, navLinks, View, Show, logout }) {
           <ul className='navbar-nav  mx-auto mt-2 nav-fill w-75'>
             {View && (
               <li className='nav-item dropdown'>
-                <a
+                <span
                   href='#'
                   className='nav-link  mt-2 purple-text   h6 font-weight-bold'
                   id='navbarDropdown '
@@ -45,7 +45,7 @@ function Nav({ navItems, navLinks, View, Show, logout }) {
                   aria-expanded='false'
                 >
                   View All
-                </a>
+                </span>
                 <div className='dropdown-menu' aria-labelledby='navbarDropdown'>
                   <Link
                     to={{ pathname: '/View', state: { show: 'category' } }}

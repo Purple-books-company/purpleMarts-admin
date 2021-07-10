@@ -20,7 +20,7 @@ function AssetComponents({ catCount, supCount }) {
                 style={{ textDecoration: 'none', color: ColorTwo }}
               >
                 <i
-                  class='fa fa-database mr-2'
+                  className='fa fa-database mr-2'
                   style={{ color: ColorOne }}
                   aria-hidden='true'
                 ></i>
@@ -33,7 +33,7 @@ function AssetComponents({ catCount, supCount }) {
           <Card single nohover>
             <MarginAround>
               <i
-                class='fa fa-cubes mr-2'
+                className='fa fa-cubes mr-2'
                 style={{ color: ColorOne }}
                 aria-hidden='true'
               ></i>
@@ -48,7 +48,7 @@ function AssetComponents({ catCount, supCount }) {
           <Card single nohover>
             <MarginAround>
               <i
-                class='fa fa-users mr-2'
+                className='fa fa-users mr-2'
                 style={{ color: ColorOne }}
                 aria-hidden='true'
               ></i>
@@ -63,7 +63,7 @@ function AssetComponents({ catCount, supCount }) {
           <Card single nohover>
             <MarginAround>
               <i
-                class='fa fa-tags mr-2'
+                className='fa fa-tags mr-2'
                 style={{ color: ColorOne }}
                 aria-hidden='true'
               ></i>

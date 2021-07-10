@@ -77,7 +77,7 @@ if (data !== null && data!==undefined) {
     }
    else
      res = await ApiPostService('category', detail);
-    console.log(res);
+   
 
     if (res === null) {
       alert('some error occured,try later');

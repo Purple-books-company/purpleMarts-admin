@@ -19,14 +19,13 @@ import {
   ContainerRow,
   Title,
   Input,
-  LightColor,
+
   // Input,
   // Submitbutton,
 } from '../../styles/styled';
 import Nodata from '../Nodata';
 import SingleProductView from './SingleProductView';
 import Loader from '../Loader';
-import ProductDetail from '../ProductEditComponents/ProductDetail';
 
 function ProductView() {
   let initialLoader = { product: false, page: false };
@@ -104,9 +103,9 @@ function ProductView() {
     let tempData = JSON.parse(JSON.stringify(productDetail));
 
     let page;
-    if (tempData.length == 0) {
+    if (tempData.length === 0) {
       page = 1;
-    } else if (tempData.length % 10 != 0) {
+    } else if (tempData.length % 10 !== 0) {
       page = 1;
       tempData = [];
     } else if (tempData[0].subCategory === cat) {
@@ -203,7 +202,7 @@ function ProductView() {
               onChange={handleChange}
             >
               {categoryList.map((value, index) => (
-                <option value={value.name} key={value.name}>
+                <option value={value.name} key={value.name + { index }}>
                   {value.name}
                 </option>
               ))}
@@ -214,7 +213,7 @@ function ProductView() {
                 <div
                   className='form-check form-switch col-md-12 col-4   mb-3 rounded'
                   style={{ color: ColorOne }}
-                  key={index + 'check'}
+                  key={value.name + index}
                 >
                   <input
                     type='radio'
@@ -275,6 +274,7 @@ function ProductView() {
                     name='chooseOffer'
                     onClick={handleRadio}
                     value={value.id}
+                    key={index + 'ofeer'}
                   />
                   {value.offerName}
                 </ContainerColumn>
@@ -365,15 +365,16 @@ function ProductView() {
                             </div>
 
                             <button
-                              class='btn btn-outline-primary mt-4'
+                              className='btn btn-outline-primary mt-4'
                               type='button'
                               value={value.id}
                               onClick={handleAddOffer}
                             >
                               <span
                                 className={
-                                  offerId === value.id &&
-                                  'spinner-border spinner-border-sm'
+                                  offerId === value.id
+                                    ? 'spinner-border spinner-border-sm'
+                                    : ''
                                 }
                                 role='status'
                                 aria-hidden='true'
@@ -411,12 +412,13 @@ function ProductView() {
                           </ContainerColumn>
                         </ContainerRow>
                       </Card>
-                      {productDetail.length === 0 && <Nodata />}
                     </ContainerColumn>
                   ))}
+                  {productDetail.length === 0 && <Nodata />}
                 </ContainerRow>
                 {productDetail.length !== 0 && productDetail.length % 10 === 0 && (
                   <button
+                    key={'show more'}
                     onClick={() => {
                       if (search !== '') handleSearch();
                       else getDetail(productDetail[0].subCategory);

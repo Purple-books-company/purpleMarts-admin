@@ -23,6 +23,7 @@ function ProductEditScreen() {
     }
   }, [product]);
   function refetch() {
+    
     ApiGetService('product', detail.id).then((res) => setDetail(res));
   }
   function handleChange(e) {
@@ -70,7 +71,7 @@ function ProductEditScreen() {
           </div>
         </div>
 
-        {detail && productEdit && <ProductDetail res={detail} />}
+        {detail && productEdit && <ProductDetail res={detail} refetch={refetch} />}
         {detail && !productEdit && (
           <VarientDetail
             varient={detail.varients}

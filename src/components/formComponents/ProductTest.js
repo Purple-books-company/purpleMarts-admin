@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+
 import {
   CategoryData,
   getSubCategoryDetail,
@@ -16,7 +16,6 @@ import {
   ErrorText,
   SuccessText,
   ToggleButton,
-  CenterAlign,
 } from '../../styles/styled';
 
 function ProductTest() {
@@ -38,6 +37,8 @@ function ProductTest() {
     category: '',
     subCategory: '',
     varients: '',
+    threshold: '',
+    discount: '',
   };
   let initialVarient = {
     offerPrice: '',
@@ -55,7 +56,7 @@ function ProductTest() {
   const [varientDetail, setVarientDetail] = useState([]);
   const [addVarient, setAddVarient] = useState(initialVarient);
   const [image, setImages] = useState([]);
-  const [loader, setLoader] = useState(false);
+  // const [loader, setLoader] = useState(false);
   const [imageCheck, setImageCheck] = useState('');
   const [key, setKey] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
@@ -101,19 +102,19 @@ function ProductTest() {
       if (e.target.name === 'key') {
         setKey(e.target.value);
       } else {
-        if (varientKey.length == 2) {
+        if (varientKey.length === 2) {
           setErrorMsg('only two varientskey allowed');
           return;
         }
         for (let i in varientKey) {
-          if (varientKey[i].key == key) {
+          if (varientKey[i].key === key) {
             alert('alreay key available');
             return;
           }
         }
         if (key === '') return;
-        if (key.toLowerCase() == 'color' || key.toLowerCase() == 'colour') {
-          if (varientKey.length == 1) {
+        if (key.toLowerCase() === 'color' || key.toLowerCase() === 'colour') {
+          if (varientKey.length === 1) {
             setErrorMsg('colour should be th first key');
           } else {
             setVarientKey([...varientKey, { key: 'colour', value: '' }]);
@@ -156,6 +157,10 @@ function ProductTest() {
     if (data.subCategory === '') data.subCategory = subCategoryData[0].name;
     if (data.category === '') data.category = subCategoryData[0].category;
     if (data.supplier === '') data.supplier = supplierData[0].id;
+    data.discount = Math.round(
+      ((data.originalPrice - data.offerPrice) / data.originalPrice) * 100
+    );
+
     console.log(data);
     let res = await ApiPostService('product', data);
 
@@ -195,6 +200,10 @@ function ProductTest() {
       }
 
       detail.image = JSON.parse(JSON.stringify(image));
+      detail.discount = Math.round(
+        ((detail.originalPrice - detail.offerPrice) / detail.originalPrice) *
+          100
+      );
 
       setVarientDetail([...varientDetail, detail]);
       setAddVarient(initialVarient);
@@ -553,6 +562,17 @@ function ProductTest() {
               ))}
             </select>
           </ContainerColumn>
+          <ContainerColumn className='col-md-4'>
+            <Input
+              type='number'
+              name='threshold'
+              placeholder='threshold'
+              min='0'
+              value={product.threshold}
+              onChange={handleProductChange}
+              required
+            />
+          </ContainerColumn>
           <ContainerColumn className='col-md-6'>
             <textarea
               onChange={handleProductChange}
@@ -589,7 +609,7 @@ function ProductTest() {
               type='checkbox'
               className='btn ml-2 '
               style={{ display: varientDetail.length > 0 ? 'none' : '' }}
-              required={varientDetail.length == 0}
+              required={varientDetail.length === 0}
               title='no varients added'
             />
           </Submitbutton>

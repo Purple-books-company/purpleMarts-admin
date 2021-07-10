@@ -9,7 +9,7 @@ const Request = {
   categoryAdd: `/api/category/add`,
 
   product: `/api/admin/product/`,
-  
+  productImage: `/api/admin/product/image/`,
   Products: `/api/product/admin/subcategory/`,
 
   getSingleProduct: `/api/product/get/`,

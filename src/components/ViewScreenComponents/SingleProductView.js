@@ -36,7 +36,7 @@ const SingleProductView = ({ id }) => {
   // Need to handle corner cases
   async function getProduct(id) {
     let res = await ApiGetService('getSingleProduct', id);
-    if(res===false){
+    if (res === false) {
       setProduct(null);
       return;
     }
@@ -132,6 +132,7 @@ const SingleProductView = ({ id }) => {
                       index === 0 && 'active'
                     }`}
                     data-interval='2000'
+                    key={index}
                   >
                     <img src={image.image} className='d-block w-75' alt='...' />
                   </div>
@@ -262,7 +263,7 @@ const SingleProductView = ({ id }) => {
                           product.typeKey[0].toLowerCase() === 'colour'
                         )
                           return (
-                            <td>
+                            <td key={index}>
                               <ColorButton
                                 id='0'
                                 onClick={handleTypeClick}
@@ -274,7 +275,7 @@ const SingleProductView = ({ id }) => {
                           );
                         else {
                           return (
-                            <td>
+                            <td key={index}>
                               <TypeButton
                                 id='0'
                                 onClick={handleTypeClick}
@@ -294,7 +295,7 @@ const SingleProductView = ({ id }) => {
                       product.type[currentType.key].map(
                         (typeValue, typeIndex) => (
                           // <p>{typeValue}</p>
-                          <td>
+                          <td key={'type' + typeIndex}>
                             <TypeButton
                               id='1'
                               onClick={handleTypeClick}
