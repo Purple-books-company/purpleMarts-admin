@@ -45,10 +45,7 @@ function Offers() {
   async function getOffers() {
     setLoader(true);
     let res = await OfferData(); //api service function
-    let offerProduct = await ApiGetService('offerProduct');
-    if (offerData) {
-      setOfferProducts(offerProduct);
-    }
+
     if (res === null || res === false) alert('Error occured');
     else {
       if (res.length > 0) {
@@ -57,6 +54,18 @@ function Offers() {
       } else {
         setOfferData([]);
       }
+    }
+    let offerProduct = await ApiGetService('offerProduct');
+    if (offerData) {
+      offerProduct.sort((a, b) => {
+        if (a.offerName < b.offerName) return -1;
+        if (a.offerName > b.offerName) {
+          return 1;
+        }
+        return 0;
+      });
+      setOfferProducts(offerProduct);
+      console.log(offerProduct);
     }
 
     setLoader(false);
@@ -149,26 +158,28 @@ function Offers() {
           </ContainerRow>
           <ContainerRow dyanamic>
             <table class='table'>
-              {offerProduct.map((value, index) => (
-                <tr key={index}>
-                  <td>{value.offerName}</td>
-                  <td>
-                    <LightColor>Product-Id</LightColor>#{value.product}
-                    <br /> <br />
-                    <LightColor>Product-Name</LightColor>
-                    {value.productName || 'no Name'}
-                  </td>
-                  <td>
-                    <button
-                      value={value.id}
-                      onClick={handleRemove}
-                      className='btn btn-danger'
-                    >
-                      remove
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {offerProduct.map((value, index) => {
+                return (
+                  <tr key={index}>
+                    <td>{value.offerName}</td>
+                    <td>
+                      <LightColor>Product-Id</LightColor>#{value.product}
+                      <br /> <br />
+                      <LightColor>Product-Name</LightColor>
+                      {value.name || 'no Name'}
+                    </td>
+                    <td>
+                      <button
+                        value={value.id}
+                        onClick={handleRemove}
+                        className='btn btn-danger'
+                      >
+                        remove
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
             </table>
           </ContainerRow>
         </>
