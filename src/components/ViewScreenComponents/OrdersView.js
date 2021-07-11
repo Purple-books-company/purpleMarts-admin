@@ -178,9 +178,9 @@ function OrdersView() {
                                         <div className="card-header" style={{backgroundColor:ColorThree,color:ColorOne}}>
                                             <div className="row">
 
-                                                <span className="col-md-4">Order-ID {order.orderId}</span>
-                                                <span className="col-md-4">Customer-ID {order.customerId}</span>
-                                                <span className="col-md-4">No of products : {order.products.length}</span>
+                                                <span className="col-md-4 purple-text">Order-ID <span style={{color:ColorOne}}>{order.orderId}</span></span>
+                                                <span className="col-md-4 purple-text">Customer-ID <span style={{color:ColorOne}}>{order.customerId}</span></span>
+                                                <span className="col-md-4 purple-text">No of products : <br/><span style={{color:ColorOne}}>{order.products.length}</span></span>
                                             </div>
                                         </div>
                                         <div className="card-body">
@@ -194,7 +194,7 @@ function OrdersView() {
                                         </div>
                                         <div className="card-footer text-muted row" >
                                         {order.cod ? <p className="col" style={{color:ColorOne}}> COD: <FaCheck color='green' size='25'/></p> : <p className="col" style={{color:ColorOne}}> COD: <FaTimes  color='red' size='25'/></p>}
-                                        <a href="/specific" className="btn btn-primary col" style={{backgroundColor:ColorTwo}}>Show More</a>
+                                        <a href="/specific" className="btn btn-primary col" style={{backgroundColor:ColorTwo,maxWidth:'150px'}}>Show More</a>
                                             
                                         </div>
                                     </div>

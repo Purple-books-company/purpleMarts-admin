@@ -3,6 +3,7 @@ import Nav from '../Nav';
 import '../../assets/a.css';
 import { ColorOne, ColorTwo, ColorThree } from '../../styles/color.js';
 import { FaTimes, FaCheck, FaDownload } from "react-icons/fa";
+import { AiOutlineHome } from "react-icons/ai";
 import { Card, CenterText } from '../../styles/styled';
 function SpecificOrder() {
   const style = {
@@ -21,8 +22,8 @@ function SpecificOrder() {
         <div className="row">
           <div className="col-1"></div>
           <div className="col-10 mt-5">
-            <div className="card text-center">
-              <div className="card-header" style={{ backgroundColor: ColorTwo, color: 'white' }}>
+            <div className="card text-center" style={{borderRadius:'20px'}}>
+              <div className="card-header" style={{ backgroundColor: ColorTwo, color: 'white',borderTopLeftRadius:'20px',borderTopRightRadius:'20px' }}>
                 <div className="row">
                   <span className="col-md-3">Order ID - orduioerieni</span>
                   <span className="col-md-3">User ID - 1234567890</span>
@@ -228,11 +229,11 @@ function SpecificOrder() {
                   </div>
                   {/* If Dispatch update*/}
                   <div className="modal-body">
-                    <input type="text" name="" id="" placeholder="Tracking ID" />
-                    <input type="text" name="" id="" placeholder="Tracking URL" />
-                    <input type="text" name="" id="" placeholder="Notification Title" />
-                    <input type="text" name="" id="" placeholder="Notification Description" />
-                    <label htmlFor="">Dispatched<input type="checkbox" name="" id="" /></label>
+                    <input type="text" className="form-control" name="" id="" placeholder="Tracking ID" /><br/>
+                    <input type="text" className="form-control" name="" id="" placeholder="Tracking URL" /><br/>
+                    <input type="text" className="form-control" name="" id="" placeholder="Notification Title" /><br/>
+                    <input type="text" className="form-control" name="" id="" placeholder="Notification Description" /><br/>
+                    <label htmlFor="">Dispatched&nbsp;&nbsp;<input type="checkbox"  name="" id="" /></label>
                   </div>
                   <div className="modal-footer">
                     <button type="button" className="btn btn-primary" style={{ backgroundColor: ColorOne }}>Save changes</button>
@@ -243,7 +244,7 @@ function SpecificOrder() {
             <div className="row d-flex mr-3">
 
               <a href="#" data-toggle="modal" data-target="#exampleModal1" style={{ color: ColorOne }}>
-                <img className="icon ml-1" src="https://i.imgur.com/HdsziHP.png" />
+                <AiOutlineHome size="40"/>
                 <div className="d-flex">
                   <p className="font-weight-bold">Order<br />Delivery</p>
                 </div>
@@ -261,9 +262,9 @@ function SpecificOrder() {
                     {/* If Delivery update*/}
                     <div className="modal-body">
 
-                      <input type="text" name="" id="" placeholder="Notification Title" />
-                      <input type="text" name="" id="" placeholder="Notification Description" />
-                      <label htmlFor="">Delivered<input type="checkbox" name="" id="" /></label>
+                      <input type="text"  className="form-control" name="" id="" placeholder="Notification Title" /><br />
+                      <input type="text" className="form-control"  name="" id="" placeholder="Notification Description" /><br />
+                      <label htmlFor="">Delivered&nbsp;&nbsp;<input type="checkbox" name="" id="" /></label>
                     </div>
                     <div className="modal-footer">
                       <button type="button" className="btn btn-primary" style={{ backgroundColor: ColorOne }}>Save changes</button>
