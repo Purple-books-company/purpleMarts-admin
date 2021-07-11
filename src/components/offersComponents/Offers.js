@@ -55,21 +55,27 @@ function Offers() {
         setOfferData([]);
       }
     }
-    let offerProduct = await ApiGetService('offerProduct');
-    if (offerData) {
-      offerProduct.sort((a, b) => {
-        if (a.offerName < b.offerName) return -1;
-        if (a.offerName > b.offerName) {
-          return 1;
-        }
-        return 0;
-      });
-      setOfferProducts(offerProduct);
-      console.log(offerProduct);
-    }
+    let data = `?offerName__offerName=Flat Sale`;
+
+    let offerProduct = await ApiGetService('offerListProduct', data);
+
+    setOfferProducts(offerProduct);
+    console.log(offerProduct);
 
     setLoader(false);
   }
+  async function handleChange(e) {
+    setDelete(e.target.value);
+    for (let i in offerData)
+      if (String(offerData[i].id) === String(e.target.value)) {
+        let data = `?offerName__offerName=${offerData[i].offerName}`;
+
+        let offerProduct = await ApiGetService('offerListProduct', data);
+        setOfferProducts(offerProduct);
+        return;
+      }
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
     setLoader(true);
@@ -105,6 +111,21 @@ function Offers() {
 
     setLoader(false);
   }
+  async function handleShowMore() {
+    let page = (offerProduct.length % 10) + 1;
+    for (let i in offerData) {
+      if (String(offerData[i].id) === String(deleteOffer)) {
+        let data = `?offerName__offerName=${offerData[i].offerName}&&page=${page}`;
+        let offerproduct = await ApiGetService('offerListProduct', data);
+        alert('');
+        let newData = JSON.parse(JSON.stringify(offerProduct)).concat(
+          offerproduct
+        );
+        setOfferProducts(newData);
+        return;
+      }
+    }
+  }
 
   return (
     <>
@@ -128,10 +149,7 @@ function Offers() {
 
             <ContainerColumn className='col-md-6' height='10%'>
               <LeftAlign>Choose Offer to delete</LeftAlign>
-              <select
-                className='form-control mb-2'
-                onChange={(e) => setDelete(e.target.value)}
-              >
+              <select className='form-control mb-2' onChange={handleChange}>
                 {offerData.map((value, index) => (
                   <option value={value.id} key={index}>
                     {value.offerName}
@@ -180,6 +198,18 @@ function Offers() {
                   </tr>
                 );
               })}
+              <tr>
+                {offerProduct.length % 10 == 0 && offerProduct.length > 0 && (
+                  <td
+                    onClick={handleShowMore}
+                    colSpan='3'
+                    className=' text-center text-info '
+                  >
+                    {' '}
+                    <a href='#'>showMore</a>
+                  </td>
+                )}
+              </tr>
             </table>
           </ContainerRow>
         </>

@@ -26,6 +26,8 @@ const Request = {
   supplierInfo: `/api/admin/user/personal_info/`,
   supplier: `/api/admin/user/supplier/`,
 
+  offerListProduct:`/api/admin/meta/offerproduct/search/`,
+
   varientType: `/api/admin/product/varient/type/`,
   varientImage: `/api/admin/product/varient/image/`,
   varient: `/api/admin/product/varient/`,
@@ -37,13 +39,24 @@ const Token = process.env.REACT_APP_TOKEN;
 async function ApiGetService(method, id = null) {
   let url = API;
   url += Request[method];
-  if (id !== null) url += id + '/';
+  let params;
+  // if(method==="offerListProduct"){
+  //    params=id;
+  // }
+  if(method==="offerListProduct"){
+    url+=id;
+    console.log(url);
+  }
+  
+ else if (id !== null) url += id + '/';
   console.log('getService:' + url);
   try {
     const res = await axios.get(url, {
+      params:params,
       headers: {
         Authorization: Token,
       },
+     
     });
     if (res.data.success) {
       console.log(res);
