@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Nav from '../Nav';
 import SpecificOrder from './SpecificOrder';
-import { ColorOne, ColorTwo } from '../../styles/color.js';
-import {But} from '../../styles/styled.js';
+import { ColorOne, ColorThree, ColorTwo } from '../../styles/color.js';
+import {But, Card} from '../../styles/styled.js';
+
+import { FaTimes, FaCheck } from "react-icons/fa";
+
 function OrdersView() {
 
 
@@ -85,6 +88,48 @@ function OrdersView() {
                     mobile: 9998877655
                 }
             ]
+        },
+        {
+            customerId: "cus12345678911",
+            customerName: "Mohammed",
+            customerEmail: "mohammed@gmail.com",
+            orderId: "ord1111pppppppppq",
+            orderDate: "01 June 2021 12:40 PM",
+            orderStatus: "ordered",
+            trackId: "track112287657",
+            trackUrl: "aaabbaa.coms]qa",
+            deliveryDate: "08 June 2021",
+            cod: true,
+            products: [
+                {
+                    productId: "prod1234567890",
+                    productName: "Case",
+                    buyingPrice: 1000,
+                },
+                {
+                    productId: "prod1234567891",
+                    productName: "Power bank",
+                    buyingPrice: 2000,
+                },
+                {
+                    productId: "prod1234567892",
+                    productName: "laptop",
+                    buyingPrice: 10000,
+                },
+                {
+                    productId: "prod1234567892",
+                    productName: "laptop",
+                    buyingPrice: 10000,
+                }
+            ],
+            address: [
+                {
+                    street: "10 Raman salai",
+                    city: "chennai",
+                    state: "Tamilnadu",
+                    mobile: 9998877655
+                }
+            ]
         }
     ]
 
@@ -92,7 +137,7 @@ function OrdersView() {
         <>
             <Nav />
             <div className="container">
-
+        <nav className="sticky-top pb-5" style={{backgroundColor:'white'}}>
                 <div className="row my-4">
 
                     <div className="col-12">
@@ -122,14 +167,15 @@ function OrdersView() {
                     </div>
                     <div className="col-2"></div>
                 </div>
+                </nav>
                 {orders.map((order) => {
                     return (
                         <>
-                            <div className="row">
+                            <Card className="row">
                                 <div className="col-2"></div>
-                                <div className="col-8 mt-5">
+                                <div className="col-8 mt-1">
                                     <div className="card text-center">
-                                        <div className="card-header" style={{backgroundColor:ColorTwo,color:'white',fontSize:'large'}}>
+                                        <div className="card-header" style={{backgroundColor:ColorThree,color:ColorOne}}>
                                             <div className="row">
 
                                                 <span className="col-md-4">Order-ID {order.orderId}</span>
@@ -138,18 +184,23 @@ function OrdersView() {
                                             </div>
                                         </div>
                                         <div className="card-body">
-                                            <h5 className="card-title">Name - {order.customerName}</h5>
-                                            <p className="card-text">Order Amount - Rs.3000</p>
-                                            <p className="card-text">Order Date {order.orderDate} </p>
-                                            <a href="/specific" className="btn btn-primary btn-block" style={{backgroundColor:ColorOne}}>Show More</a>
+                                            <div className="row">
+                                            <p className="card-title col-md-4">{order.customerName}</p>
+                                            <p className="card-text col-md-4">Rs.3000</p>
+                                            <p className="card-text col-md-4">{order.orderDate} </p>
+                                            </div>
+                                            
+                                            
                                         </div>
-                                        <div className="card-footer text-muted" >
-                                            {order.cod ? <p style={{color:ColorOne}}> COD: TRUE</p> : <p style={{color:ColorOne}}> COD: FALSE</p>}
+                                        <div className="card-footer text-muted row" >
+                                        {order.cod ? <p className="col" style={{color:ColorOne}}> COD: <FaCheck color='green' size='25'/></p> : <p className="col" style={{color:ColorOne}}> COD: <FaTimes  color='red' size='25'/></p>}
+                                        <a href="/specific" className="btn btn-primary col" style={{backgroundColor:ColorTwo}}>Show More</a>
+                                            
                                         </div>
                                     </div>
                                 </div>
                                 <div className="col-2"></div>
-                            </div>
+                            </Card>
                         </>
                     )
                 })}

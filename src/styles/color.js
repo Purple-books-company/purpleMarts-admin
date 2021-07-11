@@ -5,3 +5,5 @@
 export const ColorOne = '#4b3049';
 
 export const ColorTwo = '#b097bd';
+
+export const ColorThree = '#e9e3f4';

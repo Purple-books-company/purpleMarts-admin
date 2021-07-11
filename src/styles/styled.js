@@ -10,7 +10,7 @@ export const Msg = styled.h1`
 `;
 // End
 export const But = styled.button`
-background-color:${ColorOne};
+background-color:${ColorTwo};
 color:white;
 border-radius:10px;
 `;
