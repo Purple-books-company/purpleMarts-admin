@@ -9,7 +9,11 @@ export const Msg = styled.h1`
   color: ${ColorOne};
 `;
 // End
-
+export const But = styled.button`
+background-color:${ColorOne};
+color:white;
+border-radius:10px;
+`;
 export const Heading = styled.h2.attrs(() => ({
   className: 'text-primary',
 }))`
