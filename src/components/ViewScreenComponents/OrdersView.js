@@ -3,135 +3,141 @@ import Nav from '../Nav';
 import SpecificOrder from './SpecificOrder';
 import { ColorOne, ColorThree, ColorTwo } from '../../styles/color.js';
 import {But, Card} from '../../styles/styled.js';
-
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    // Redirect,
+  } from "react-router-dom";
 import { FaTimes, FaCheck } from "react-icons/fa";
 
-function OrdersView() {
+function OrdersView({orders}) {
 
 
-    let orders = [
-        {
-            customerId: "cus12345678910",
-            customerName: "Reahaan Sheriff",
-            customerEmail: "reahaan@gmail.com",
-            orderId: "ord1111pppppppppp",
-            orderDate: "01 May 2021 12:40 PM",
-            orderStatus: "ordered",
-            trackId: "track112287657",
-            trackUrl: "aaabbaa.coms]qa",
-            deliveryDate: "08 May 2021",
-            cod: false,
-            products: [
-                {
-                    productId: "prod1234567890",
-                    productName: "Headphone",
-                    buyingPrice: 1000,
-                },
-                {
-                    productId: "prod1234567891",
-                    productName: "charger",
-                    buyingPrice: 2000,
-                },
-                {
-                    productId: "prod1234567892",
-                    productName: "mobile",
-                    buyingPrice: 10000,
-                }
-            ],
-            address: [
-                {
-                    street: "20 East Cemetry Road",
-                    city: "chennai",
-                    state: "Tamilnadu",
-                    mobile: 9998877654
-                }
-            ]
-        },
-        {
-            customerId: "cus12345678911",
-            customerName: "Mohammed",
-            customerEmail: "mohammed@gmail.com",
-            orderId: "ord1111pppppppppq",
-            orderDate: "01 June 2021 12:40 PM",
-            orderStatus: "ordered",
-            trackId: "track112287657",
-            trackUrl: "aaabbaa.coms]qa",
-            deliveryDate: "08 June 2021",
-            cod: true,
-            products: [
-                {
-                    productId: "prod1234567890",
-                    productName: "Case",
-                    buyingPrice: 1000,
-                },
-                {
-                    productId: "prod1234567891",
-                    productName: "Power bank",
-                    buyingPrice: 2000,
-                },
-                {
-                    productId: "prod1234567892",
-                    productName: "laptop",
-                    buyingPrice: 10000,
-                },
-                {
-                    productId: "prod1234567892",
-                    productName: "laptop",
-                    buyingPrice: 10000,
-                }
-            ],
-            address: [
-                {
-                    street: "10 Raman salai",
-                    city: "chennai",
-                    state: "Tamilnadu",
-                    mobile: 9998877655
-                }
-            ]
-        },
-        {
-            customerId: "cus12345678911",
-            customerName: "Mohammed",
-            customerEmail: "mohammed@gmail.com",
-            orderId: "ord1111pppppppppq",
-            orderDate: "01 June 2021 12:40 PM",
-            orderStatus: "ordered",
-            trackId: "track112287657",
-            trackUrl: "aaabbaa.coms]qa",
-            deliveryDate: "08 June 2021",
-            cod: true,
-            products: [
-                {
-                    productId: "prod1234567890",
-                    productName: "Case",
-                    buyingPrice: 1000,
-                },
-                {
-                    productId: "prod1234567891",
-                    productName: "Power bank",
-                    buyingPrice: 2000,
-                },
-                {
-                    productId: "prod1234567892",
-                    productName: "laptop",
-                    buyingPrice: 10000,
-                },
-                {
-                    productId: "prod1234567892",
-                    productName: "laptop",
-                    buyingPrice: 10000,
-                }
-            ],
-            address: [
-                {
-                    street: "10 Raman salai",
-                    city: "chennai",
-                    state: "Tamilnadu",
-                    mobile: 9998877655
-                }
-            ]
-        }
-    ]
+    // let orders = [
+    //     {
+    //         customerId: "cus12345678910",
+    //         customerName: "Reahaan Sheriff",
+    //         customerEmail: "reahaan@gmail.com",
+    //         orderId: "ord1111pppppppppp",
+    //         orderDate: "01 May 2021 12:40 PM",
+    //         orderStatus: "ordered",
+    //         trackId: "track112287657",
+    //         trackUrl: "aaabbaa.coms]qa",
+    //         deliveryDate: "08 May 2021",
+    //         cod: false,
+    //         products: [
+    //             {
+    //                 productId: "prod1234567890",
+    //                 productName: "Headphone",
+    //                 buyingPrice: 1000,
+    //             },
+    //             {
+    //                 productId: "prod1234567891",
+    //                 productName: "charger",
+    //                 buyingPrice: 2000,
+    //             },
+    //             {
+    //                 productId: "prod1234567892",
+    //                 productName: "mobile",
+    //                 buyingPrice: 10000,
+    //             }
+    //         ],
+    //         address: [
+    //             {
+    //                 street: "20 East Cemetry Road",
+    //                 city: "chennai",
+    //                 state: "Tamilnadu",
+    //                 mobile: 9998877654
+    //             }
+    //         ]
+    //     },
+    //     {
+    //         customerId: "cus12345678911",
+    //         customerName: "Mohammed",
+    //         customerEmail: "mohammed@gmail.com",
+    //         orderId: "ord1111pppppppppq",
+    //         orderDate: "01 June 2021 12:40 PM",
+    //         orderStatus: "ordered",
+    //         trackId: "track112287657",
+    //         trackUrl: "aaabbaa.coms]qa",
+    //         deliveryDate: "08 June 2021",
+    //         cod: true,
+    //         products: [
+    //             {
+    //                 productId: "prod1234567890",
+    //                 productName: "Case",
+    //                 buyingPrice: 1000,
+    //             },
+    //             {
+    //                 productId: "prod1234567891",
+    //                 productName: "Power bank",
+    //                 buyingPrice: 2000,
+    //             },
+    //             {
+    //                 productId: "prod1234567892",
+    //                 productName: "laptop",
+    //                 buyingPrice: 10000,
+    //             },
+    //             {
+    //                 productId: "prod1234567892",
+    //                 productName: "laptop",
+    //                 buyingPrice: 10000,
+    //             }
+    //         ],
+    //         address: [
+    //             {
+    //                 street: "10 Raman salai",
+    //                 city: "chennai",
+    //                 state: "Tamilnadu",
+    //                 mobile: 9998877655
+    //             }
+    //         ]
+    //     },
+    //     {
+    //         customerId: "cus12345678911",
+    //         customerName: "Mohammed",
+    //         customerEmail: "mohammed@gmail.com",
+    //         orderId: "ord1111pppppppppq",
+    //         orderDate: "01 June 2021 12:40 PM",
+    //         orderStatus: "ordered",
+    //         trackId: "track112287657",
+    //         trackUrl: "aaabbaa.coms]qa",
+    //         deliveryDate: "08 June 2021",
+    //         cod: true,
+    //         products: [
+    //             {
+    //                 productId: "prod1234567890",
+    //                 productName: "Case",
+    //                 buyingPrice: 1000,
+    //             },
+    //             {
+    //                 productId: "prod1234567891",
+    //                 productName: "Power bank",
+    //                 buyingPrice: 2000,
+    //             },
+    //             {
+    //                 productId: "prod1234567892",
+    //                 productName: "laptop",
+    //                 buyingPrice: 10000,
+    //             },
+    //             {
+    //                 productId: "prod1234567892",
+    //                 productName: "laptop",
+    //                 buyingPrice: 10000,
+    //             }
+    //         ],
+    //         address: [
+    //             {
+    //                 street: "10 Raman salai",
+    //                 city: "chennai",
+    //                 state: "Tamilnadu",
+    //                 mobile: 9998877655
+    //             }
+    //         ]
+    //     }
+    // ]
 
     return (
         <>
@@ -186,7 +192,7 @@ function OrdersView() {
                                         <div className="card-body">
                                             <div className="row">
                                             <p className="card-title col-md-4">{order.customerName}</p>
-                                            <p className="card-text col-md-4">Rs.3000</p>
+                                            <p className="card-text col-md-4">Rs. {order.products.reduce((a,v) => a = a+(v.buyingPrice)*(v.quantity) , 0)}</p>
                                             <p className="card-text col-md-4">{order.orderDate} </p>
                                             </div>
                                             
@@ -194,7 +200,7 @@ function OrdersView() {
                                         </div>
                                         <div className="card-footer text-muted row" >
                                         {order.cod ? <p className="col" style={{color:ColorOne}}> COD: <FaCheck color='green' size='25'/></p> : <p className="col" style={{color:ColorOne}}> COD: <FaTimes  color='red' size='25'/></p>}
-                                        <a href="/specific" className="btn btn-primary col" style={{backgroundColor:ColorTwo,maxWidth:'150px'}}>Show More</a>
+                                        <Link to={"/specific/"+order.orderId} className="btn btn-primary col" style={{backgroundColor:ColorTwo,maxWidth:'150px'}}>Show More</Link>
                                             
                                         </div>
                                     </div>

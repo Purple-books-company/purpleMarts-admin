@@ -28,6 +28,149 @@ import OrdersView from "../components/ViewScreenComponents/OrdersView";
 import SpecificOrder from "../components/ViewScreenComponents/SpecificOrder";
 
 function RouteApp() {
+
+  const [orders, setOrders] = useState(
+  [
+    {
+        customerId: "cus12345678910",
+        customerName: "Reahaan Sheriff",
+        customerEmail: "reahaan@gmail.com",
+        orderId: "ord1111pppppppppp",
+        orderDate: "01 May 2021 12:40 PM",
+        orderStatus: "ordered",
+        trackId: "track112287657",
+        trackUrl: "aaabbaa.coms]qa",
+        deliveryDate: "08 May 2021",
+        cod: false,
+        products: [
+            {
+                productId: "prod1234567890",
+                productName: "Headphone",
+                buyingPrice: 1000,
+                quantity:2,
+            },
+            {
+                productId: "prod1234567891",
+                productName: "charger",
+                buyingPrice: 2000,
+                quantity:2,
+            },
+            {
+                productId: "prod1234567892",
+                productName: "mobile",
+                buyingPrice: 10000,
+                quantity:7,
+            }
+        ],
+        address: [
+            {
+                street: "20 East Cemetry Road",
+                city: "chennai",
+                state: "Tamilnadu",
+                mobile: 9998877654
+            }
+        ]
+    },
+    {
+        customerId: "cus12345678911",
+        customerName: "Mohammed",
+        customerEmail: "mohammed@gmail.com",
+        orderId: "ord1111pkkkkkkpq",
+        orderDate: "01 June 2021 12:40 PM",
+        orderStatus: "ordered",
+        trackId: "track112287657",
+        trackUrl: "aaabbaa.coms]qa",
+        deliveryDate: "08 June 2021",
+        cod: true,
+        products: [
+            {
+                productId: "prod1234567890",
+                productName: "Case",
+                buyingPrice: 1000,
+                quantity:2,
+            },
+            {
+                productId: "prod1234567891",
+                productName: "Power bank",
+                buyingPrice: 2000,
+                quantity:2,
+            },
+            {
+                productId: "prod1234567892",
+                productName: "laptop",
+                buyingPrice: 10000,
+                quantity:5,
+            },
+            {
+                productId: "prod1234567892",
+                productName: "laptop",
+                buyingPrice: 10000,
+                quantity:2,
+            }
+        ],
+        address: [
+            {
+                street: "10 Raman salai",
+                city: "chennai",
+                state: "Tamilnadu",
+                mobile: 9998877655
+            }
+        ]
+    },
+    {
+        customerId: "cus12345678912",
+        customerName: "Mohammed",
+        customerEmail: "mohammed@gmail.com",
+        orderId: "ord1111ttttttttpppq",
+        orderDate: "01 June 2021 12:40 PM",
+        orderStatus: "ordered",
+        trackId: "track112287657",
+        trackUrl: "aaabbaa.coms]qa",
+        deliveryDate: "08 June 2021",
+        cod: true,
+        products: [
+            {
+                productId: "prod1234567890",
+                productName: "Case",
+                buyingPrice: 1000,
+                quantity:3,
+            },
+            {
+                productId: "prod1234567891",
+                productName: "Power bank",
+                buyingPrice: 2000,
+                quantity:2,
+            },
+            {
+                productId: "prod1234567892",
+                productName: "laptop",
+                buyingPrice: 10000,
+                quantity:2,
+            },
+            {
+                productId: "prod1234567892",
+                productName: "laptop",
+                buyingPrice: 10000,
+                quantity:1,
+            }
+        ],
+        address: [
+            {
+                street: "10 Raman salai",
+                city: "chennai",
+                state: "Tamilnadu",
+                mobile: 9998877655
+            }
+        ]
+    }
+  ]
+    );
+
+    const addUrl = (tid,url) =>{
+      alert("added");
+    
+    }
+
   const [login, setLogin] = useState(false);
   const [loader, setLoader] = useState(false);
 
@@ -96,8 +239,10 @@ function RouteApp() {
               <Route exact path="/product" component={SingleProductView} />
 
               <Route exact path="/editproduct" component={ProductEditScreen} />
-              <Route exact path="/orders" component={OrdersView} />
-              <Route exact path="/specific" component={SpecificOrder} />
+              <Route exact path="/orders"><OrdersView orders={orders}/></Route>
+              <Route exact path="/specific/:id">
+                <SpecificOrder orders={orders} addUrl={addUrl}/>  
+              </Route>
               <Route path="*" component={Error} />
             </Switch>
           )}
