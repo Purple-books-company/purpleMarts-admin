@@ -26,6 +26,7 @@ import OffersMain from "../screens/OffersMain";
 import SingleProductView from "../components/ViewScreenComponents/SingleProductView";
 import OrdersView from "../components/ViewScreenComponents/OrdersView";
 import SpecificOrder from "../components/ViewScreenComponents/SpecificOrder";
+import Invoice from "../components/ViewScreenComponents/Invoice";
 
 function RouteApp() {
 
@@ -67,7 +68,8 @@ function RouteApp() {
                 street: "20 East Cemetry Road",
                 city: "chennai",
                 state: "Tamilnadu",
-                mobile: 9998877654
+                mobile: 9998877654,
+                pincode:600110
             }
         ]
     },
@@ -113,7 +115,8 @@ function RouteApp() {
                 street: "10 Raman salai",
                 city: "chennai",
                 state: "Tamilnadu",
-                mobile: 9998877655
+                mobile: 9998877655,
+                pincode:600110
             }
         ]
     },
@@ -159,7 +162,8 @@ function RouteApp() {
                 street: "10 Raman salai",
                 city: "chennai",
                 state: "Tamilnadu",
-                mobile: 9998877655
+                mobile: 9998877655,
+                pincode:600110
             }
         ]
     }
@@ -239,9 +243,14 @@ function RouteApp() {
               <Route exact path="/product" component={SingleProductView} />
 
               <Route exact path="/editproduct" component={ProductEditScreen} />
-              <Route exact path="/orders"><OrdersView orders={orders}/></Route>
+              <Route exact path="/orders">
+                <OrdersView orders={orders}/>
+              </Route>
               <Route exact path="/specific/:id">
                 <SpecificOrder orders={orders} addUrl={addUrl}/>  
+              </Route>
+              <Route exact path="/invoice/:id">
+                <Invoice orders={orders}/>  
               </Route>
               <Route path="*" component={Error} />
             </Switch>

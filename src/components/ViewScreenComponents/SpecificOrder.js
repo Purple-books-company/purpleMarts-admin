@@ -72,7 +72,7 @@ function SpecificOrder({orders,addUrl}) {
                   <span className="col-md-3">Order ID -{id}</span>
                   <span className="col-md-3">User ID - {filteredOrder.customerId}</span>
                   <span className="col-md-3">No of products : {filteredOrder.products.length}</span>
-                  <a href="#" style={{ color: 'white' }} className="col-md-3"><FaDownload />Invoice</a>
+                  <Link to={"/invoice/"+filteredOrder.orderId} style={{ color: 'white' }} className="col-md-3"><FaDownload />Invoice</Link>
                 </div>
               </div>
               <div className="card-body d-none d-md-block" style={{ backgroundColor: ColorThree }}>
@@ -149,8 +149,8 @@ return(
                     <p className="card-text">Order Amount Rs.3000</p>
                     <p className="card-text">Order Date 08-07-2021 </p>
                     <a href="#" className="btn btn-primary btn-block">Show More</a> */}
-                <span>Delivery Charge Rs. 60</span><br />
-                <span>Total Rs. 3000</span>
+                <span style={{ fontSize: 'large' }}>Delivery Charge Rs. 60</span><br />
+                <span style={{ fontSize: 'large' }}>Total Rs. {filteredOrder.products.reduce((a,v) => a = a+(v.buyingPrice)*(v.quantity) , 0)+60}</span>
 
               </div>
               <div style={{ color: ColorOne, fontSize: 'medium', backgroundColor: ColorThree }}>
