@@ -1,6 +1,7 @@
 import React from 'react'
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
+
+import html2pdf from 'html2pdf.js';
+import logo from '../../assets/logo/logo.png';
 import {
     BrowserRouter as Router,
     Switch,
@@ -9,27 +10,25 @@ import {
     useParams,
     // Redirect,
   } from "react-router-dom";
+  
+
 function Invoice({orders}) {
+
     const invoiceId='invoice12345678';
     const {id} = useParams();
     const printDocument = () =>{
-    const input = document.getElementById('divToPrint');
-    html2canvas(input)
-      .then((canvas) => {
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF();
-        pdf.addImage(imgData, 'JPEG', 0, 0);
-        // pdf.output('dataurlnewwindow');
-        pdf.save("download.pdf");
-      })
-    ;
-    }
+    const input = document.getElementById('print');
+        html2pdf()
+        .from(input)
+        .save();
+  
+     }
     return (
         <>
-        <h1>Assalamualaikum</h1>
         <button onClick={printDocument}>download</button>
-        <div id="divToPrint">
-            
+        
+        <div id="print">
+        
              {orders.filter(order => order.orderId == id).map(filteredOrder => (
     <table>
         <tr>
@@ -66,7 +65,7 @@ function Invoice({orders}) {
             <td colspan="3">
                 <table>
                     <tr>
-                        <td><img height="80" src='https://drive.google.com/thumbnail?id=1H9jddQXwNw14nD4xY5iqP6NdftlyQsPH' alt="Card image cap" /></td>
+                        <td><img src={logo}></img></td>
                     </tr>
                 </table>
             </td>
@@ -138,7 +137,8 @@ return(
                 </table>
             </td>
         </tr>
-        <thead style={{fontSize: "12px"}}>
+        
+            <tr style={{fontSize: "12px"}}>
             <td colspan="1"></td>
             <th colspan="7" style={{paddingTop:"15px",textAlign: "left"}}>
                 Item Name
@@ -155,20 +155,24 @@ return(
             <th colspan="1" style={{paddingTop:"15px"}}>
                 Price
             </th>
-        </thead>
+            </tr>
+       
         
         
         
         {/* {% for x in books %} */}
+        {filteredOrder.products.map((product) =>{
+
+return(
         <tr style={{fontSize:" 11px"}}>
             <td colspan="1"> 
                 {/* {{x.count}} */}
             </td>
             <td colspan="7"> 
-                {/* {{x.title}} */}
+               {product.productName}
             </td>
             <td colspan="1" style={{textAlign: "center"}}>
-                1
+            {product.quantity}
             </td>
             <td colspan="1" style={{textAlign: "center;"}}>
                 {/* Rs.{{x.original}} */}
@@ -177,9 +181,11 @@ return(
                 {/* Rs.{{x.discount}} */}
              </td>
             <td colspan="1" style={{textAlign: "center"}}> 
-                {/* Rs.{{x.price}} */}
+            {product.buyingPrice*product.quantity}
             </td>
         </tr> 
+         )
+        })}
         {/* {% endfor%} */}
         
         <tr style={{paddingTop:"10px", fontSize: "10px"}}>
