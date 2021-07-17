@@ -9,6 +9,7 @@ export const Msg = styled.h1`
   color: ${ColorOne};
 `;
 // End
+
 export const But = styled.button`
 background-color:${ColorTwo};
 color:white;

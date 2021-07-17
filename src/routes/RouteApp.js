@@ -27,6 +27,7 @@ import SingleProductView from "../components/ViewScreenComponents/SingleProductV
 import OrdersView from "../components/ViewScreenComponents/OrdersView";
 import SpecificOrder from "../components/ViewScreenComponents/SpecificOrder";
 import Invoice from "../components/ViewScreenComponents/Invoice";
+import Bill from "../components/ViewScreenComponents/Bill";
 
 function RouteApp() {
 
@@ -252,6 +253,7 @@ function RouteApp() {
               <Route exact path="/invoice/:id">
                 <Invoice orders={orders}/>  
               </Route>
+              <Route exact path='/bill' component={Bill}/>
               <Route path="*" component={Error} />
             </Switch>
           )}
